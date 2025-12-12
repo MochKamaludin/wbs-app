@@ -1,46 +1,38 @@
-<section id="tulis_pengaduan" class="py-20 bg-white">
-    <div class="max-w-5xl mx-auto text-center px-6">
-        {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2">Tulis Pengaduan</h4>
-        <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-        <form action="" class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg space-y-5">
+@extends('layouts.app')
 
-            <div>
-                <label for="nama" class="block font-medium text-gray-700 mb-1 text-left">Nama</label>
-                <input 
-                    type="text" 
-                    id="nama" 
-                    name="nama" 
-                    class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Masukkan nama Anda">
+@section('content')
+<section class="py-24">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-xl">
+
+        <h2 class="text-2xl font-bold mb-6 text-center">Form Pengaduan</h2>
+
+        <form method="POST" action="#">
+            @csrf
+
+            <div class="mb-5">
+                <label class="font-semibold text-sm">Nama Pelapor</label>
+                <input type="text" class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600">
             </div>
 
-            <div>
-                <label for="alamat" class="block font-medium text-gray-700 mb-1 text-left">Alamat</label>
-                <input 
-                    type="text" 
-                    id="alamat" 
-                    name="alamat" 
-                    class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Masukkan alamat">
+            <div class="mb-5">
+                <label class="font-semibold text-sm">Jenis Pelanggaran</label>
+                <select class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600">
+                    <option>Pilih jenis pelanggaran</option>
+                </select>
             </div>
 
-            <div>
-                <label for="tanggal" class="block font-medium text-gray-700 mb-1 text-left">Tanggal</label>
-                <input 
-                    type="date" 
-                    id="tanggal" 
-                    name="tanggal"
-                    class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <div class="mb-5">
+                <label class="font-semibold text-sm">Deskripsi Laporan</label>
+                <textarea class="w-full mt-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600" rows="5"></textarea>
             </div>
 
-            <button 
-                type="submit" 
-                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-                Submit
-            </button>
-
+            <div class="flex justify-end">
+                <button class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Kirim Laporan
+                </button>
+            </div>
         </form>
 
     </div>
 </section>
+@endsection

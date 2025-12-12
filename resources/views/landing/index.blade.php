@@ -20,12 +20,12 @@
 
         <div class="flex justify-center space-x-4">
             <a href="#tentang_wbs" 
-               class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-semibold">
+               class="px-5 py-2 bg-blue-600 hover:bg-white rounded-lg text-sm text-white hover:text-blue-600 font-semibold">
                 Tentang WBS
             </a>
 
             <a href="#tulis" 
-               class="px-5 py-2 bg-orange-600 hover:bg-orange-700 rounded-lg text-sm font-semibold">
+               class="px-5 py-2 bg-white hover:bg-blue-600 rounded-lg text-sm text-blue-600 hover:text-white font-semibold">
                 Tulis Pengaduan
             </a>
         </div>
@@ -33,10 +33,8 @@
 </section>
 
 
-{{-- SECTION LAIN — dipisah ke file masing-masing --}}
 @include('landing.tentang_wbs')
 @include('landing.cara_pengaduan')
-@include('landing.tulis_pengaduan')
 @include('landing.dasar_wbs')
 @include('landing.dashboard')
 @include('landing.faq')
