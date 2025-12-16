@@ -1,4 +1,4 @@
-<section id="tentang_wbs" class="py-20 bg-white">
+<section id="tentang_wbs" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2">Whistleblowing System</h4>
@@ -49,7 +49,7 @@
 
 
 {{-- ======================= Siapa saja yang dapat menjadi pelapor dalam WBS ======================= --}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-<section id="pelapor" class="py-20 bg-white">
+<section id="pelapor" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
 
         {{-- Judul --}}
@@ -90,7 +90,7 @@
 </section>
 
 {{-- ======================= Kapan WBS Dapat Digunakan? ======================= --}}
-<section id="kapan_wbs" class="py-20 bg-white">
+<section id="kapan_wbs" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2">Kapan WBS Dapat Digunakan?</h4>
@@ -105,7 +105,7 @@
 </section>
 
 {{-- ======================= Jenis Pelanggaran ======================= --}}
-<section id="jenis_pelanggaran" class="relative py-32">
+<section id="jenis_pelanggaran" class="relative py-32 reveal">
     <!-- Background image -->
     <div class="absolute inset-0">
         <img src="{{ asset('images/n219.jpg') }}" 
@@ -162,7 +162,7 @@
 
 
 
-<section id="laporkan" class="py-20 bg-white">
+<section id="laporkan" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2">Syarat Melaporkan Dugaan Pelanggaran & Bukti Pendukung</h4>
@@ -220,7 +220,7 @@
     </div>
 </section>
 
-<section id="perlindungan" class="py-20 bg-white">
+<section id="perlindungan" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2">Perlindungan Terhadap Pelapor</h4>

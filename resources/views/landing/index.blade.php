@@ -5,7 +5,7 @@
 
 {{-- SECTION HERO — gambar --}}
 <section id="home" 
-    class="h-screen bg-cover bg-center flex items-center justify-center text-white"
+    class="h-screen bg-cover bg-center flex items-center justify-center text-white reveal"
     style="background-image: url('{{ asset('images/n219.jpg') }}');">
 
     <div class="text-center p-6 rounded-xl">

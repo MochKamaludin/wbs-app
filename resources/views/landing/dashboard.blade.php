@@ -11,7 +11,7 @@ $kategori = [
 ];
 @endphp
 
-<section id="dashboard" class="py-20 bg-gray-50">
+<section id="dashboard" class="py-20 bg-gray-50 reveal">
 
     {{-- JUDUL SECTION --}}
     <div class="text-center mt-6">

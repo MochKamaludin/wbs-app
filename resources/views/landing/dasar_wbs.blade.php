@@ -1,4 +1,4 @@
-<section id="dasar_wbs" class="py-20 bg-white">
+<section id="dasar_wbs" class="py-30 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2">Dasar WBS</h4>

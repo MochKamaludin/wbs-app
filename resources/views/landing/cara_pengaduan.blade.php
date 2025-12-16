@@ -1,4 +1,4 @@
-<section id="cara_pengaduan" class="py-20 bg-white">
+<section id="cara_pengaduan" class="py-30 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
 
         {{-- Judul --}}
