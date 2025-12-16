@@ -169,60 +169,54 @@
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
 
         <!-- Dua Kolom -->
-        <div style="display: flex; gap: 20px;">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
 
-            <!-- Identitas Diri -->
-            <div style="flex: 1;">
-                <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-                    <img src="{{ asset('images/identitas.png') }}" alt="Identitas Diri"
-                         style="width: 55px; height: auto;">
-                </div>
-
-                <div style="background-color: #007bff; color: white; padding: 15px; border-radius: 5px; text-align: center;">
-                    <h3 style="font-size: 18px; font-weight: bold; margin: 0;">Identitas Diri</h3>
-                </div>
-
-                <div style="padding: 15px; background-color: #ffffff; text-align: justify;">
-                    <p style="font-size: 15px; line-height: 1.6; margin: 0;">
-                        Pelapor dapat mencantumkan identitas diri berupa:
-                    </p>
-                    <ul style="font-size: 15px; padding-left: 18px; margin-top: 8px; line-height: 1.6;">
-                        <li>1. Alamat rumah/kantor</li>
-                        <li>2. Alamat e-mail</li>
-                        <li>3. Faksimile</li>
-                        <li>4. Nomor kontak yang dapat dihubungi</li>
-                        <li>5. Dapat juga tanpa mencantumkan data diri (anonim)</li>
-                    </ul>
-                </div>
+        {{-- Identitas Diri --}}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="flex justify-center mt-6">
+                <img src="{{ asset('images/identitas.png') }}" alt="Identitas Diri" class="w-14">
             </div>
 
-            <!-- Bukti Pendukung -->
-            <div style="flex: 1;">
-                <div style="display: flex; justify-content: center; margin-bottom: 10px;">
-                    <img src="{{ asset('images/bukti_pendukung.png') }}" alt="Bukti Pendukung"
-                         style="width: 55px; height: auto;">
-                </div>
-
-                <div style="background-color: #007bff; color: white; padding: 15px; border-radius: 5px; text-align: center;">
-                    <h3 style="font-size: 18px; font-weight: bold; margin: 0;">Bukti Pendukung</h3>
-                </div>
-
-                <div style="padding: 15px; background-color: #ffffff; text-align: justify;">
-                    <p style="font-size: 15px; line-height: 1.6; margin: 0;">
-                        Laporan harus disertai bukti pendukung, meliputi:
-                    </p>
-
-                    <ul style="font-size: 15px; padding-left: 18px; margin-top: 8px; line-height: 1.6;">
-                        <li>1. Pokok masalah yang diadukan</li>
-                        <li>2. Pihak-pihak yang terlibat dan yang dirugikan/diuntungkan</li>
-                        <li>3. Waktu dan lokasi kejadian</li>
-                        <li>4. Kronologis kasus</li>
-                        <li>5. Dokumen pendukung terkait</li>
-                    </ul>
-                </div>
+            <div class="bg-blue-600 text-white py-4 text-center mt-4">
+                <h3 class="text-lg font-bold">Identitas Diri</h3>
             </div>
 
+            <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify">
+                <p>Pelapor dapat mencantumkan identitas diri berupa:</p>
+                <ul class="list-decimal pl-5 mt-2 space-y-1">
+                    <li>Alamat rumah/kantor</li>
+                    <li>Alamat e-mail</li>
+                    <li>Faksimile</li>
+                    <li>Nomor kontak yang dapat dihubungi</li>
+                    <li>Dapat juga tanpa mencantumkan data diri (anonim)</li>
+                </ul>
+            </div>
         </div>
+
+        {{-- Bukti Pendukung --}}
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="flex justify-center mt-6">
+                <img src="{{ asset('images/bukti_pendukung.png') }}" alt="Bukti Pendukung" class="w-14">
+            </div>
+
+            <div class="bg-blue-600 text-white py-4 text-center mt-4">
+                <h3 class="text-lg font-bold">Bukti Pendukung</h3>
+            </div>
+
+            <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify">
+                <p>Laporan harus disertai bukti pendukung, meliputi:</p>
+                <ul class="list-decimal pl-5 mt-2 space-y-1">
+                    <li>Pokok masalah yang diadukan</li>
+                    <li>Pihak-pihak yang terlibat dan yang dirugikan/diuntungkan</li>
+                    <li>Waktu dan lokasi kejadian</li>
+                    <li>Kronologis kasus</li>
+                    <li>Dokumen pendukung terkait</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
     </div>
 </section>
 

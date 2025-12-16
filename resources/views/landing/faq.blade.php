@@ -1,64 +1,20 @@
 <!-- FAQ SECTION -->
-<section id="faq" style="padding: 40px; background-color: white;">
-    <div style="max-width: 900px; margin: 0 auto;">
+<section id="faq" class="py-20 bg-white scroll-mt-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
         <!-- TITLE -->
-        <h2 style="font-size: 24px; font-weight: bold; text-align:center;">
+        <h2 class="text-2xl font-bold text-center">
             Frequently Asked Questions
         </h2>
-        <div style="width: 80px; height: 4px; background:#007bff; margin:10px auto 30px;"></div>
-
-        <!-- FAQ ITEM TEMPLATE -->
-        <style>
-            .faq-item {
-                border-bottom: 1px solid #e0e0e0;
-                padding: 15px 0;
-                cursor: pointer;
-            }
-            .faq-question {
-                font-weight: bold;
-                color: #007bff;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                font-size: 16px;
-            }
-            .faq-answer {
-                display: none;
-                margin-top: 10px;
-                color: #333;
-                line-height: 1.6;
-            }
-            .faq-toggle {
-                font-size: 22px;
-                font-weight: bold;
-                color: #007bff;
-                transition: 0.3s;
-            }
-        </style>
-
-        <script>
-            function toggleFAQ(index) {
-                const answer = document.getElementById('faq-answer-' + index);
-                const toggle = document.getElementById('faq-toggle-' + index);
-
-                if (answer.style.display === "block") {
-                    answer.style.display = "none";
-                    toggle.innerHTML = "+";
-                } else {
-                    answer.style.display = "block";
-                    toggle.innerHTML = "-";
-                }
-            }
-        </script>
+        <div class="w-20 h-1 bg-blue-600 mx-auto my-4"></div>
 
         <!-- FAQ LIST -->
-        <div>
+        <div class="mt-8 space-y-4">
 
-            <!-- 1 -->
+            <!-- ITEM -->
             <div class="faq-item" onclick="toggleFAQ(1)">
                 <div class="faq-question">
-                    Apakah aplikasi Whistleblowing System (WBS) PT Dirgantara Indonesia ?
+                    Apakah aplikasi Whistleblowing System (WBS) PT Dirgantara Indonesia?
                     <span id="faq-toggle-1" class="faq-toggle">+</span>
                 </div>
                 <div id="faq-answer-1" class="faq-answer">
@@ -69,10 +25,9 @@
                 </div>
             </div>
 
-            <!-- 2 -->
             <div class="faq-item" onclick="toggleFAQ(2)">
                 <div class="faq-question">
-                    Apakah bentuk respon yang diberikan kepada pelapor atas pengaduan yang disampaikan ?
+                    Apakah bentuk respon yang diberikan kepada pelapor atas pengaduan yang disampaikan?
                     <span id="faq-toggle-2" class="faq-toggle">+</span>
                 </div>
                 <div id="faq-answer-2" class="faq-answer">
@@ -81,10 +36,9 @@
                 </div>
             </div>
 
-            <!-- 3 -->
             <div class="faq-item" onclick="toggleFAQ(3)">
                 <div class="faq-question">
-                    Berapa lama respon atas pengaduan yang disampaikan diberikan kepada pelapor ?
+                    Berapa lama respon atas pengaduan yang disampaikan diberikan kepada pelapor?
                     <span id="faq-toggle-3" class="faq-toggle">+</span>
                 </div>
                 <div id="faq-answer-3" class="faq-answer">
@@ -92,7 +46,6 @@
                 </div>
             </div>
 
-            <!-- 4 -->
             <div class="faq-item" onclick="toggleFAQ(4)">
                 <div class="faq-question">
                     Apakah pengaduan yang saya berikan akan selalu mendapatkan respon?
@@ -105,29 +58,76 @@
                 </div>
             </div>
 
-            <!-- 5 -->
-            <div class="faq-item text-center" onclick="toggleFAQ(5)">
+            <div class="faq-item" onclick="toggleFAQ(5)">
                 <div class="faq-question">
-                    Bagaimana tahapan proses pengaduan yang anda laporkan ?
+                    Bagaimana tahapan proses pengaduan yang anda laporkan?
                     <span id="faq-toggle-5" class="faq-toggle">+</span>
                 </div>
-                <div id="faq-answer-5" class="faq-answer">
-                    <img src="{{ asset('images/proses_pengaduan.jpg') }}" class="w-full max-w-[500px] mx-auto" alt="Proses Pengaduan">
+                <div id="faq-answer-5" class="faq-answer text-center">
+                    <img src="{{ asset('images/proses_pengaduan.jpg') }}"
+                        class="w-full max-w-xs sm:max-w-md mx-auto rounded-lg"
+                        alt="Proses Pengaduan">
                 </div>
             </div>
 
-            <!-- 6 -->
             <div class="faq-item" onclick="toggleFAQ(6)">
                 <div class="faq-question">
                     Apakah kerahasiaan identitas saya sebagai pengadu/pelapor terjaga?
                     <span id="faq-toggle-6" class="faq-toggle">+</span>
                 </div>
                 <div id="faq-answer-6" class="faq-answer">
-                    -
+                    Identitas pelapor dijamin kerahasiaannya sesuai dengan kebijakan Whistleblowing System.
                 </div>
             </div>
 
         </div>
-
     </div>
 </section>
+
+<!-- FAQ STYLE -->
+<style>
+    .faq-item {
+        border-bottom: 1px solid #e5e7eb;
+        padding: 14px 0;
+        cursor: pointer;
+    }
+    .faq-question {
+        font-weight: 600;
+        color: #2563eb;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 15px;
+    }
+    .faq-answer {
+        display: none;
+        margin-top: 10px;
+        color: #374151;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+    .faq-toggle {
+        font-size: 20px;
+        font-weight: bold;
+        color: #2563eb;
+        flex-shrink: 0;
+    }
+</style>
+
+<!-- FAQ SCRIPT -->
+<script>
+    function toggleFAQ(index) {
+        const answer = document.getElementById('faq-answer-' + index);
+        const toggle = document.getElementById('faq-toggle-' + index);
+
+        const isOpen = answer.style.display === "block";
+
+        document.querySelectorAll('.faq-answer').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.faq-toggle').forEach(el => el.innerHTML = '+');
+
+        if (!isOpen) {
+            answer.style.display = "block";
+            toggle.innerHTML = "-";
+        }
+    }
+</script>
