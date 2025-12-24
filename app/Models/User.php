@@ -2,47 +2,55 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
+use Filament\Panel;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasName
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    protected $table = 'trwblsadm';
+    protected $primaryKey = 'i_wbls_adm';
+    public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = false;
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'i_wbls_adm',
+        'c_wbls_admpswd',
+        'n_wbls_adm',
+        'i_emp',
+        'c_wbls_admauth',
+        'i_entry',
+        'd_entry',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['c_wbls_admpswd'];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    /* ================= AUTH ================= */
+
+    public function getAuthPassword(): string
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return (string) $this->c_wbls_admpswd;
+    }
+
+    public function getAuthIdentifierName(): string
+    {
+        return 'i_wbls_adm';
+    }
+
+    /* ================= FILAMENT v4 ================= */
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true; 
+    }
+
+    public function getFilamentName(): string
+    {
+        return (string) ($this->n_wbls_adm ?: $this->i_wbls_adm);
     }
 }
