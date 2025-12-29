@@ -28,10 +28,10 @@ class UserForm
 
             TextInput::make('i_emp')
                 ->label('NIP')
-                ->numeric()                 // ❌ huruf tidak bisa diketik
-                ->maxLength(6)              // ❌ tidak bisa lebih dari 6
-                ->rule('digits:6')          // ❌ validasi backend
-                ->inputMode('numeric')      // keyboard angka (mobile)
+                ->numeric()                 
+                ->maxLength(6)              
+                ->rule('digits:6')          
+                ->inputMode('numeric')      
                 ->autocomplete(false)
                 ->required(),
 

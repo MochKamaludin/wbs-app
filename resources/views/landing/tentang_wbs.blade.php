@@ -1,16 +1,17 @@
 <section id="tentang_wbs" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2">Whistleblowing System</h4>
+        <h4 class="text-3xl font-bold mb-2 text-center">
+            {{ $about?->n_wbls_about ?? 'Tentang WBS' }}
+        </h4>
+
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
 
         {{-- Deskripsi --}}
-        <p class="text-black leading-relaxed mb-12 text-justify">
-            Whistleblowing System / Pelaporan Pelanggaran / Pengaduan adalah aplikasi yang disediakan oleh 
-            Satuan Pengawasan Intern PT Dirgantara Indonesia bagi Anda yang memiliki informasi dan ingin 
-            melaporkan suatu perbuatan berindikasi pelanggaran yang terjadi di lingkungan PT Dirgantara 
-            Indonesia. Identitas Anda akan <span class="font-bold bg-gray-200 px-1">DIRAHASIAKAN</span>. 
-        </p>
+        <div class="text-black leading-relaxed mb-12 text-justify prose max-w-none">
+            {!! $about?->e_wbls_about !!}
+        </div>
+
 
         {{-- 3 Kartu --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
