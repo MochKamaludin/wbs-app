@@ -22,7 +22,7 @@ class DefinisiWbsResource extends Resource
 {
     protected static ?string $model = DefinisiWbs::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBookOpen;
 
 
     protected static ?string $navigationLabel = 'Definisi WBS';
@@ -30,7 +30,7 @@ class DefinisiWbsResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Tentang';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {

@@ -2,30 +2,44 @@
 
 namespace App\Filament\Resources\DefinisiWbs\Schemas;
 
-use Filament\Schemas\Schema;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Flex;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class DefinisiWbsInfolist
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextEntry::make('n_wbls_about')
-                    ->label('Judul'),
-
-                TextEntry::make('e_wbls_about')
-                    ->label('Deskripsi')
-                    ->html()
-                    ->alignJustify()
-                    ->columnSpanFull(),
-
-                TextEntry::make('user.n_wbls_adm')
-                    ->label('Dibuat Oleh'),
-
-                TextEntry::make('d_wbls_about')
-                    ->label('Tanggal')
-                    ->dateTime(),
-            ]);
+        ->components([ 
+                Section::make()
+                    ->schema([
+                        Flex::make([
+                            Grid::make(2)
+                                ->schema([
+                                    Group::make([
+                                        TextEntry::make('n_wbls_about')
+                                            ->label('Judul'),
+                                        TextEntry::make('user.n_wbls_adm')
+                                            ->label('Dibuat Oleh'),
+                                        TextEntry::make('d_wbls_about')
+                                            ->label('Tanggal')
+                                            ->dateTime(),
+                                    ]),
+                                ]),
+                        ])->from('lg'),
+                    ]),
+            Section::make('Deskripsi')
+              ->schema([
+                  TextEntry::make('e_wbls_about')
+                      ->html()
+                      ->alignJustify()
+                      ->hiddenLabel(),
+              ])
+              ->collapsible(),
+              ]);
     }
 }

@@ -21,14 +21,14 @@ class TujuanWbsResource extends Resource
 {
     protected static ?string $model = TujuanWbs::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFlag;
 
     protected static ?string $navigationLabel = 'Tujuan WBS';
     protected static ?string $pluralModelLabel = 'Tujuan WBS';
 
     protected static string|UnitEnum|null $navigationGroup = 'Tentang';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema
     {

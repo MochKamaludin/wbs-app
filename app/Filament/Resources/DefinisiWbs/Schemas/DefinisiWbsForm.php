@@ -20,7 +20,10 @@ class DefinisiWbsForm
             RichEditor::make('e_wbls_about')
                 ->label('Deskripsi')
                 ->required()
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->fileAttachmentsDisk('public')
+                ->fileAttachmentsDirectory('faq')
+                ->fileAttachmentsVisibility('public'),
         ]);
     }
 }

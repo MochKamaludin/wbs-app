@@ -27,6 +27,8 @@ class UserResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pengguna';
 
+    protected static ?int $navigationSort = 8;
+
     public static function getRecordRouteKeyName(): string
     {
         return 'i_wbls_adm';

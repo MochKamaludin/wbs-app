@@ -2,48 +2,50 @@
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2 text-center">
-            {{ $about?->n_wbls_about ?? 'Tentang WBS' }}
+            {{ $definisi?->n_wbls_about ?? 'Whistleblowing System' }}
         </h4>
 
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
 
         {{-- Deskripsi --}}
         <div class="text-black leading-relaxed mb-12 text-justify prose max-w-none">
-            {!! $about?->e_wbls_about !!}
+            {!! $definisi?->e_wbls_about !!}
         </div>
 
 
         {{-- 3 Kartu --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
 
-            {{-- Kartu 1 --}}
-            <div class="group p-8 border rounded-xl shadow-md bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <img src="{{ asset('images/acuan.png') }}" class="h-24 w-auto mx-auto mb-4 group-hover:scale-110 transition" alt="">
-                <h3 class="text-xl font-bold mb-3">ACUAN</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                    Menjadi acuan dalam tata cara penanganan pengaduan (Whistleblowing System) di lingkungan PTDI.
-                </p>
-            </div>
+            @forelse ($tujuanWbs as $item)
+                <div
+                    class="group p-8 border rounded-xl shadow-md bg-white
+                        hover:shadow-lg hover:-translate-y-1
+                        transition-all duration-300">
 
-            {{-- Kartu 2 --}}
-            <div class="group p-8 border rounded-xl shadow-md bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <img src="{{ asset('images/upaya.png') }}" class="h-24 w-auto mx-auto mb-4 group-hover:scale-110 transition" alt="">
-                <h3 class="text-xl font-bold mb-3">UPAYA</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                    Mengungkap pelanggaran yang tidak sesuai standar etika dan hukum sebelum meluas.
-                </p>
-            </div>
+                    {{-- <img
+                        src="{{ asset('storage/images/tujuan/tujuan_' . $item->c_wbls_purposeord . '.png') }}"
+                        onerror="this.src='{{ asset('images/tujuan/default.png') }}'"
+                        class="h-24 mx-auto mb-4"
+                    > --}}
 
-            {{-- Kartu 3 --}}
-            <div class="group p-8 border rounded-xl shadow-md bg-white hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <img src="{{ asset('images/risiko.png') }}" class="h-24 w-auto mx-auto mb-4 group-hover:scale-110 transition" alt="">
-                <h3 class="text-xl font-bold mb-3">MENGURANGI RISIKO</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                    Mengurangi risiko operasional, keuangan, dan reputasi perusahaan.
-                </p>
-            </div>
+                    {{-- Judul --}}
+                    <h3 class="text-xl font-bold mb-3 text-center">
+                        {{ strtoupper($item->n_wbls_purpose) }}
+                    </h3>
+
+                    {{-- Deskripsi --}}
+                    <div class="text-gray-600 text-sm leading-relaxed text-justify prose max-w-none">
+                        {!! $item->e_wbls_purpose !!}
+                    </div>
+                </div>
+            @empty
+                <div class="col-span-full text-center text-gray-500">
+                    Tujuan WBS belum tersedia.
+                </div>
+            @endforelse
 
         </div>
+
     </div>
 </section>
 
@@ -165,140 +167,84 @@
 
 <section id="laporkan" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
+
         {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2">Syarat Melaporkan Dugaan Pelanggaran & Bukti Pendukung</h4>
+        <h4 class="text-3xl font-bold mb-2">
+            Syarat Melaporkan Dugaan Pelanggaran & Bukti Pendukung
+        </h4>
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
 
-        <!-- Dua Kolom -->
+        {{-- Grid Dinamis --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
 
-        {{-- Identitas Diri --}}
-        <div class="bg-white rounded-xl shadow-md overflow-hidden">
-            <div class="flex justify-center mt-6">
-                <img src="{{ asset('images/identitas.png') }}" alt="Identitas Diri" class="w-14">
-            </div>
+            @foreach ($syaratMelapor as $item)
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
 
-            <div class="bg-blue-600 text-white py-4 text-center mt-4">
-                <h3 class="text-lg font-bold">Identitas Diri</h3>
-            </div>
+                    <div class="flex justify-center mt-6">
+                        <img
+                            src="{{ asset(
+                                $loop->iteration == 1
+                                    ? 'images/identitas.png'
+                                    : 'images/bukti_pendukung.png'
+                            ) }}"
+                            class="w-14"
+                            alt="{{ $item->n_wbls_req }}"
+                        >
+                    </div>
 
-            <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify">
-                <p>Pelapor dapat mencantumkan identitas diri berupa:</p>
-                <ul class="list-decimal pl-5 mt-2 space-y-1">
-                    <li>Alamat rumah/kantor</li>
-                    <li>Alamat e-mail</li>
-                    <li>Faksimile</li>
-                    <li>Nomor kontak yang dapat dihubungi</li>
-                    <li>Dapat juga tanpa mencantumkan data diri (anonim)</li>
-                </ul>
-            </div>
+                    {{-- Header --}}
+                    <div class="bg-blue-600 text-white py-4 text-center mt-4">
+                        <h3 class="text-lg font-bold">
+                            {{ $item->n_wbls_req }}
+                        </h3>
+                    </div>
+
+                    {{-- Deskripsi --}}
+                    <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify prose max-w-none">
+                        {!! $item->e_wbls_req !!}
+                    </div>
+
+                </div>
+            @endforeach
+
         </div>
-
-        {{-- Bukti Pendukung --}}
-        <div class="bg-white rounded-xl shadow-md overflow-hidden">
-            <div class="flex justify-center mt-6">
-                <img src="{{ asset('images/bukti_pendukung.png') }}" alt="Bukti Pendukung" class="w-14">
-            </div>
-
-            <div class="bg-blue-600 text-white py-4 text-center mt-4">
-                <h3 class="text-lg font-bold">Bukti Pendukung</h3>
-            </div>
-
-            <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify">
-                <p>Laporan harus disertai bukti pendukung, meliputi:</p>
-                <ul class="list-decimal pl-5 mt-2 space-y-1">
-                    <li>Pokok masalah yang diadukan</li>
-                    <li>Pihak-pihak yang terlibat dan yang dirugikan/diuntungkan</li>
-                    <li>Waktu dan lokasi kejadian</li>
-                    <li>Kronologis kasus</li>
-                    <li>Dokumen pendukung terkait</li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
 
     </div>
 </section>
 
-<section id="perlindungan" class="py-20 bg-white reveal">
-    <div class="max-w-5xl mx-auto text-center px-6">
-        {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2">Perlindungan Terhadap Pelapor</h4>
-        <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-        
-        <!-- Grid 2 Kolom -->
-        <div style="
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+<section id="perlindungan" class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="text-center mb-12">
+            <h4 class="text-3xl font-bold mb-2">
+                Perlindungan Terhadap Pelapor
+            </h4>
+            <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    @foreach ($perlindungan as $item)
+        <div class="
+            bg-white rounded-xl shadow-md p-6
+            {{ $perlindungan->count() === 1 ? 'md:col-span-2' : '' }}
         ">
+            <h3 class="text-lg font-bold text-center mb-4">
+                {{ $item->n_wbls_protect }}
+            </h3>
 
-            <!-- Kolom Kiri -->
-            <div class="leading-relaxed text-[15px] text-black text-justify">
-
-                <h3 class="font-bold text-[16px] mb-3">
-                    Perlindungan Pelapor & Pelaksana Investigasi
-                </h3>
-
-                <p>
-                    Perusahaan dalam kapasitasnya secara maksimal akan memberikan perlindungan 
-                    dan informasi kepada pelapor pelanggaran (whistleblower), sebagai berikut:
-                </p>
-
-                <ul class="list-disc pl-6 mt-3 space-y-1">
-                    <li>Perlindungan kerahasiaan atas identitas Pelapor.</li>
-                    <li>
-                        Perlindungan dari pemecatan, penurunan jabatan atau grade, penundaan kenaikan grade,
-                        tekanan, tindakan fisik sesuai situasi dan kondisi.
-                    </li>
-                    <li>
-                        Perlindungan catatan merugikan dalam file data pribadinya (personal file record).
-                    </li>
-                    <li>
-                        Informasi mengenai proses tindak lanjut yang sedang dilakukan. Informasi ini disampaikan 
-                        secara rahasia kepada Pelapor.
-                    </li>
-                </ul>
-
-                <p class="mt-3">
-                    Poin 2 dan 3 juga berlaku bagi pihak yang melaksanakan investigasi maupun pihak-pihak yang 
-                    memberikan informasi terkait pengaduan/penyingkapan.
-                </p>
-
+            <div class="
+                prose prose-sm max-w-none
+                prose-ol:list-decimal
+                prose-ol:pl-6
+                prose-li:my-1
+            ">
+                {!! $item->e_wbls_protect !!}
             </div>
-
-            <!-- Kolom Kanan -->
-            <div class="leading-relaxed text-[15px] text-black text-justify">
-
-                <p>
-                    Dalam hal Pelapor merasa perlu, ia juga dapat meminta bantuan pada Lembaga
-                    Perlindungan Saksi dan Korban (LPSK).
-                </p>
-
-                <p class="mt-3">
-                    Pihak yang melanggar prinsip kerahasiaan tersebut akan diberikan sanksi yang berat 
-                    sesuai ketentuan yang berlaku di perusahaan.
-                </p>
-
-                <p class="mt-3">
-                    Kebijakan perlindungan dan jaminan kerahasiaan tidak diberikan pada Pelapor yang 
-                    terbukti melakukan pelaporan palsu dan/atau fitnah.
-                </p>
-
-                <p class="mt-3">
-                    Apabila hasil Investigasi Terkait Pelaporan Pelanggaran (Whistleblowing) terbukti 
-                    laporan palsu, fitnah, tanpa dasar yang jelas, maka Pelapor dapat digugat balik atau 
-                    dikenai sanksi sesuai dengan peraturan perundangan yang berlaku terkait perbuatan 
-                    tidak menyenangkan atau pencemaran nama baik, serta peraturan internal perusahaan.
-                </p>
-
-            </div>
-
-
         </div>
+    @endforeach
+</div>
+
     </div>
 </section>
-
 
 

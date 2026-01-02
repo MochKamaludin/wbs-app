@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('trwblsadm', function (Blueprint $table) {
-            $table->string('i_wbls_adm', 20)->primary(); // EMAIL / USERNAME
-            $table->string('c_wbls_admpswd', 100);      // PASSWORD
-            $table->string('n_wbls_adm', 200);          // NAMA LENGKAP
-            $table->string('i_emp', 6)->nullable();     // NIK
-            $table->string('c_wbls_admauth', 1);        // 0,1,2
-            $table->string('i_entry', 20)->nullable();  // AKTOR INPUT
-            $table->dateTime('d_entry')->nullable();    // TANGGAL INPUT
+            $table->string('i_wbls_adm', 20)->primary(); 
+            $table->string('c_wbls_admpswd', 100);      
+            $table->string('n_wbls_adm', 200);          
+            $table->string('i_emp', 6)->nullable();     
+            $table->string('c_wbls_admauth', 1);        
+            $table->string('i_entry', 20)->nullable();  
+            $table->dateTime('d_entry')->nullable();    
         });
     }
 

@@ -17,7 +17,7 @@
             </a>
         </div>
 
-        <!-- DESKTOP MENU (LG KE ATAS) -->
+        <!-- DESKTOP MENU -->
         <ul class="hidden lg:flex space-x-6 font-bold text-[15px] text-black">
             <li><a href="{{ url('/') }}#home" class="nav-link hover:text-blue-600">HOME</a></li>
             <li><a href="{{ url('/') }}#tentang_wbs" class="nav-link hover:text-blue-600">TENTANG WBS</a></li>

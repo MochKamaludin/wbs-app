@@ -9,6 +9,9 @@ class TujuanWbs extends Model
     protected $table = 'tmwblspurpose';
     protected $primaryKey = 'i_wbls_purpose';
     public $timestamps = false;
+    protected $casts = [
+        'f_wbls_purposestat' => 'string',
+    ];
 
     protected $fillable = [
         'n_wbls_purpose',
