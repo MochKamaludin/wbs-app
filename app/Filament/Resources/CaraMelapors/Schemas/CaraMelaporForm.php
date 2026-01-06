@@ -31,6 +31,7 @@ class CaraMelaporForm
 
                 TextInput::make('c_wbls_procord')
                     ->label('Urutan Tampil')
+                    ->required()
                     ->numeric()
                     ->maxLength(10),
 
