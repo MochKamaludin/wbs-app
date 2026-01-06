@@ -2,7 +2,7 @@
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2 text-center">
-            {{ $definisi?->n_wbls_about ?? 'Whistleblowing System' }}
+            {{ $definisi?->n_wbls_about }}
         </h4>
 
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
@@ -96,14 +96,13 @@
 <section id="kapan_wbs" class="py-20 bg-white reveal">
     <div class="max-w-5xl mx-auto text-center px-6">
         {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2">Kapan WBS Dapat Digunakan?</h4>
+        <h4 class="text-3xl font-bold mb-2">
+            {{ $kapanDigunakan?->n_wbls_about }}
+        </h4>
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-        <p class="text-gray-700 leading-relaxed mb-8 text-justify">
-            Pelaporan Pelanggaran dengan menggunakan WBS digunakan apabila pengaduan atau penyimpangan melalui jalur formal 
-            (melalui atasan langsung atau fungsi terkait yaitu Divisi SDM dan SPI) dianggap tidak efektif atau ada keraguan 
-            (kerahasiaan dan tindak lanjutnya), maka Pelapor dapat menyampaikan pengaduan melalui Sistem Pelaporan Pelanggaran 
-            (Whistleblowing System).
-        </p>
+        <div class="text-black leading-relaxed mb-12 text-justify prose max-w-none">
+            {!! $kapanDigunakan?->e_wbls_about !!}
+        </div>
     </div>
 </section>
 

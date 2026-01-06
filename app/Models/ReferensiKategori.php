@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Referensi extends Model
+class ReferensiKategori extends Model
 {
     protected $table = 'trwblscateg';
     protected $primaryKey = 'c_wbls_categ';

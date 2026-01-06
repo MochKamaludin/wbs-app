@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Filament\Resources\Referensis\Schemas;
+namespace App\Filament\Resources\ReferensiStatuses\Schemas;
 
-use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Schema;
 use Filament\Forms\Components\RichEditor;
 
-class ReferensiForm
+class ReferensiStatusForm
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextInput::make('c_wbls_categ')
-                    ->label('Kode')
-                    ->required()
-                    ->numeric()
-                    ->unique(ignoreRecord: true),
+                TextInput::make('c_wbls_stat')
+                ->label('Kode Status')
+                ->required()
+                ->maxLength(1)
+                ->disabledOn('edit'),
 
-                TextInput::make('n_wbls_categ')
-                    ->label('Nama Kategori')
-                    ->required()
-                    ->maxLength(100),
+            TextInput::make('n_wbls_stat')
+                ->label('Nama Status')
+                ->required()
+                ->maxLength(100),
 
-                RichEditor::make('e_wbls_categ')
+            RichEditor::make('e_wbls_stat')
                     ->label('Deskripsi')
                     ->required()
                     ->maxLength(100)
@@ -31,6 +31,6 @@ class ReferensiForm
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('faq')
                     ->fileAttachmentsVisibility('public'),
-            ]);
+        ]);
     }
 }

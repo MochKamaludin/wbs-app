@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\DefinisiWbs\Schemas;
+namespace App\Filament\Resources\WaktuDigunakans\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 
-class DefinisiWbsForm
+class WaktuDigunakanForm
 {
     public static function configure(Schema $schema): Schema
     {

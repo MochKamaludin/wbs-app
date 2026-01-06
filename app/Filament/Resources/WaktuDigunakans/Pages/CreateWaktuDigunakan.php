@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\DefinisiWbs\Pages;
+namespace App\Filament\Resources\WaktuDigunakans\Pages;
 
-use App\Filament\Resources\DefinisiWbs\DefinisiWbsResource;
+use App\Filament\Resources\WaktuDigunakans\WaktuDigunakanResource;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Facades\Filament;
 use App\Models\DefinisiWbs;
 
-class CreateDefinisiWbs extends CreateRecord
+class CreateWaktuDigunakan extends CreateRecord
 {
-    protected static string $resource = DefinisiWbsResource::class;
+    protected static ?string $title = 'Tambah';
+    protected static string $resource = WaktuDigunakanResource::class;
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
@@ -28,6 +29,6 @@ class CreateDefinisiWbs extends CreateRecord
 
     protected function authorizeAccess(): void
     {
-        abort_if(DefinisiWbs::count() > 0, 403);
+        abort_if(DefinisiWbs::where('i_wbls_about', '2')->count() > 0, 403);
     }
 }

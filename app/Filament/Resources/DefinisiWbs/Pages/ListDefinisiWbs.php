@@ -5,6 +5,7 @@ namespace App\Filament\Resources\DefinisiWbs\Pages;
 use App\Filament\Resources\DefinisiWbs\DefinisiWbsResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use App\Models\DefinisiWbs;
 
 class ListDefinisiWbs extends ListRecords
 {
@@ -14,7 +15,8 @@ class ListDefinisiWbs extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Tambah'),
+                ->label('Tambah')
+                ->visible(fn() => DefinisiWbs::count() === 0),
         ];
     }
 }

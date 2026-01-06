@@ -22,6 +22,7 @@ class UserInfolist
                                 ->schema([
                                     Group::make([
                                         TextEntry::make('i_wbls_adm')
+                                            ->icon('heroicon-m-envelope')
                                             ->label('Email'),
 
                                         TextEntry::make('n_wbls_adm')

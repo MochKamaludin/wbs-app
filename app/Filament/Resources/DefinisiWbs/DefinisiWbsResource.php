@@ -16,7 +16,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use UnitEnum;
-
+use Illuminate\Database\Eloquent\Builder;
 
 class DefinisiWbsResource extends Resource
 {
@@ -30,7 +30,13 @@ class DefinisiWbsResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Tentang';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 1;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('i_wbls_about', '1');
+    }
 
     public static function form(Schema $schema): Schema
     {

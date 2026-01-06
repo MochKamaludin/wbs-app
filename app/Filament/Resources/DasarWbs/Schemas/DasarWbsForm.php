@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\DefinisiWbs\Schemas;
+namespace App\Filament\Resources\DasarWbs\Schemas;
 
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 
-class DefinisiWbsForm
+class DasarWbsForm
 {
     public static function configure(Schema $schema): Schema
     {
@@ -24,6 +24,6 @@ class DefinisiWbsForm
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('faq')
                     ->fileAttachmentsVisibility('public'),
-        ]);
+            ]);
     }
 }

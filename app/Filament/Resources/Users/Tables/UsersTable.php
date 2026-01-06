@@ -17,6 +17,7 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('i_wbls_adm')
+                    ->icon('heroicon-m-envelope')
                     ->label('Email')
                     ->searchable()
                     ->sortable(),

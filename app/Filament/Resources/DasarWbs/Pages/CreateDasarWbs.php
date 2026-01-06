@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\DefinisiWbs\Pages;
+namespace App\Filament\Resources\DasarWbs\Pages;
 
-use App\Filament\Resources\DefinisiWbs\DefinisiWbsResource;
+use App\Filament\Resources\DasarWbs\DasarWbsResource;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Facades\Filament;
 use App\Models\DefinisiWbs;
 
-class CreateDefinisiWbs extends CreateRecord
+class CreateDasarWbs extends CreateRecord
 {
-    protected static string $resource = DefinisiWbsResource::class;
+    protected static string $resource = DasarWbsResource::class;
+
+    protected static ?string $title = 'Tambah';
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
@@ -28,6 +30,6 @@ class CreateDefinisiWbs extends CreateRecord
 
     protected function authorizeAccess(): void
     {
-        abort_if(DefinisiWbs::count() > 0, 403);
+        abort_if(DefinisiWbs::where('i_wbls_about', '3')->count() > 0, 403);
     }
 }

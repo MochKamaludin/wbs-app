@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\Referensis\Tables;
+namespace App\Filament\Resources\ReferensiKategoris\Tables;
 
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
-class ReferensisTable
+class ReferensiKategorisTable
 {
     public static function configure(Table $table): Table
     {

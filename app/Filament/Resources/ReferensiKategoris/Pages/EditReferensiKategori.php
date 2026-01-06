@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Referensis\Pages;
+namespace App\Filament\Resources\ReferensiKategoris\Pages;
 
-use App\Filament\Resources\Referensis\ReferensiResource;
+use App\Filament\Resources\ReferensiKategoris\ReferensiKategoriResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditReferensi extends EditRecord
+class EditReferensiKategori extends EditRecord
 {
-    protected static string $resource = ReferensiResource::class;
+    protected static string $resource = ReferensiKategoriResource::class;
 
     protected function getHeaderActions(): array
     {
