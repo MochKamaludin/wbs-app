@@ -32,9 +32,10 @@ class FaqInfolist
                                             ->placeholder('-'),
                                         TextEntry::make('f_wbls_faqstat')
                                             ->label('Status')
+                                            ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
                                             ->badge()
                                             ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
-                                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Publish' : 'Draft'),
+                                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
 
                                         TextEntry::make('d_wbls_faq')
                                             ->label('Tanggal Dibuat')

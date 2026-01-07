@@ -27,11 +27,12 @@ class SyaratMelaporsTable
 
             TextColumn::make('f_wbls_reqstat')
                 ->label('Status')
+                ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
                 ->badge()
                 ->state(fn ($record) => (string) $record->f_wbls_reqstat)
-                ->color(fn ($state) => $state === '1' ? 'success' : 'gray')
+                ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
                 ->formatStateUsing(fn ($state) =>
-                    $state === '1' ? 'Publish' : 'Draft'
+                    $state === '1' ? 'Published' : 'Draft'
                 ),
 
             TextColumn::make('user.n_wbls_adm')

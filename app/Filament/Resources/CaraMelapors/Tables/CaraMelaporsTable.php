@@ -29,9 +29,10 @@ class CaraMelaporsTable
 
                 TextColumn::make('f_wbls_procstat')
                     ->label('Status')
+                    ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
                     ->badge()
                     ->formatStateUsing(fn ($state) =>
-                        $state === '1' ? 'Publish' : 'Draft'
+                        $state === '1' ? 'Published' : 'Draft'
                     )
                     ->color(fn ($state) =>
                         $state === '1' ? 'success' : 'warning'

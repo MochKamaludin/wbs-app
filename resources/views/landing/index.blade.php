@@ -4,7 +4,7 @@
 
 
 {{-- SECTION HERO — gambar --}}
-<section id="home" 
+<section id="home"
     class="h-screen bg-cover bg-center flex items-center justify-center text-white reveal"
     style="background-image: url('{{ asset('images/n219.jpg') }}');">
 
@@ -14,8 +14,8 @@
             (Whistleblowing System)
         </h1>
 
-        <h2 class="text-lg md:text-2xl mb-6">
-            PT Dirgantara Indonesia
+        <h2 class="text-lg font-bold md:text-2xl mb-6">
+            PT DIRGANTARA INDONESIA
         </h2>
 
         <div class="flex justify-center space-x-4">

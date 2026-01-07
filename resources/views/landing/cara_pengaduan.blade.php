@@ -4,17 +4,23 @@
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2">Cara Pengaduan</h4>
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-
-        <div class="cara-nav"
-            style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 30px;">
-            @foreach($steps as $index => $step)
-                <button
-                    class="step-btn {{ $index === 0 ? 'active' : '' }}"
-                    data-step="{{ $step->c_wbls_procord }}">
-                    Step#{{ $step->c_wbls_procord }}
-                </button>
-            @endforeach
+        <div class="flex justify-center py-10 bg-gray-50">
+            <div class="bg-white rounded-xl shadow-sm px-8 py-4 w-full max-w-4xl">
+                <nav class="flex justify-center space-x-10 border-b border-gray-200">
+                    @foreach($steps as $index => $step)
+                        <button
+                            class="step-btn pb-3 text-sm font-medium transition
+                                {{ $index === 0 
+                                        ? 'text-blue-600 border-b-2 border-blue-600' 
+                                        : 'text-gray-500 hover:text-blue-600 border-b-2 border-transparent' }}"
+                            data-step="{{ $step->c_wbls_procord }}">
+                            Step#{{ $step->c_wbls_procord }}
+                        </button>
+                        @endforeach
+                </nav>
+            </div>
         </div>
+
 
         <div id="step-content"
             style="background: #f9f9f9; padding: 25px; border-radius: 10px; text-align: left; font-size: 15px; color: #444; line-height: 1.7;">
@@ -30,8 +36,6 @@
 
 </section>
 
-
-<!-- STEP CONTENT SCRIPT -->
 <script>
     const stepContents = {
         @foreach($steps as $step)
@@ -45,45 +49,32 @@
     document.querySelectorAll(".step-btn").forEach(btn => {
         btn.addEventListener("click", function () {
 
-            document.querySelectorAll(".step-btn")
-                .forEach(b => b.classList.remove("active"));
+            // RESET semua tab
+            document.querySelectorAll(".step-btn").forEach(b => {
+                b.classList.remove(
+                    "text-blue-600",
+                    "border-blue-600"
+                );
+                b.classList.add(
+                    "text-gray-500",
+                    "border-transparent"
+                );
+            });
 
-            this.classList.add("active");
+            // AKTIFKAN tab yang diklik
+            this.classList.remove("text-gray-500", "border-transparent");
+            this.classList.add("text-blue-600", "border-blue-600");
 
-            const step = this.getAttribute("data-step");
+            // Update konten
+            const step = this.dataset.step;
             const box = document.getElementById("step-content");
 
             box.innerHTML = `
-                <h3 style="font-size: 18px; font-weight: bold;">
+                <h3 class="text-lg font-bold mb-2">
                     ${stepContents[step].title}
                 </h3>
-                <p>${stepContents[step].text}</p>
+                ${stepContents[step].text}
             `;
         });
     });
 </script>
-
-
-
-<!-- CSS -->
-<style>
-    .step-btn {
-        padding: 8px 15px;
-        border-radius: 6px;
-        border: 1px solid #007bff;
-        background: white;
-        font-size: 14px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .step-btn:hover {
-        background: #007bff;
-        color: white;
-    }
-
-    .step-btn.active {
-        background: #007bff;
-        color: white;
-    }
-</style>

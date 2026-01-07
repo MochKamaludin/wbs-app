@@ -28,20 +28,12 @@ class TujuanWbsForm
 
             TextInput::make('c_wbls_purposeord')
                 ->label('Urutan Tampilan')
-                ->numeric(),
+                ->numeric()
+                ->required(),
 
             Toggle::make('f_wbls_purposestat')
                 ->label('Publish')
                 ->default(true),
-
-            FileUpload::make('icon_temp')
-                ->label('Unggah Gambar')
-                ->image()
-                ->acceptedFileTypes(['image/png'])
-                ->maxSize(5120)
-                ->directory('tmp')
-                ->dehydrated(false)
-
-                    ]);
-                }
+            ]);
+    }
 }

@@ -22,8 +22,9 @@ class PerlindunganPelaporsTable
 
                 TextColumn::make('f_wbls_protectstat')
                     ->label('Status')
+                    ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
                     ->badge()
-                    ->formatStateUsing(fn ($state) => $state == '1' ? 'Publish' : 'Draft')
+                    ->formatStateUsing(fn ($state) => $state == '1' ? 'Published' : 'Draft')
                     ->color(fn ($state) => $state == '1' ? 'success' : 'warning'),
 
                 TextColumn::make('d_wbls_protect')

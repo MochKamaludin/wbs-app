@@ -32,7 +32,8 @@ class FaqForm
                 TextInput::make('i_wbls_faqseq')
                     ->label('Urutan Tampil')
                     ->numeric()
-                    ->maxLength(3),
+                    ->maxLength(3)
+                    ->required(),
 
                 Toggle::make('f_wbls_faqstat')
                     ->label('Publish')

@@ -29,9 +29,10 @@ class FaqsTable
 
                 TextColumn::make('f_wbls_faqstat')
                     ->label('Status')
+                    ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
                     ->badge()
                     ->formatStateUsing(fn ($state) =>
-                        $state === '1' ? 'Publish' : 'Draft'
+                        $state === '1' ? 'Published' : 'Draft'
                     )
                     ->color(fn ($state) =>
                         $state === '1' ? 'success' : 'warning'

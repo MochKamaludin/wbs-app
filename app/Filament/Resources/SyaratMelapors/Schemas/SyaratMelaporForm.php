@@ -30,7 +30,8 @@ class SyaratMelaporForm
             TextInput::make('c_wbls_reqord')
                 ->label('Urutan')
                 ->numeric()
-                ->maxLength(1),
+                ->maxLength(1)
+                ->required(),
 
             Toggle::make('f_wbls_reqstat')
                 ->label('Publish')

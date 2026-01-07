@@ -1,96 +1,114 @@
-<section id="tentang_wbs" class="py-20 bg-white reveal">
-    <div class="max-w-5xl mx-auto text-center px-6">
-        {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2 text-center">
-            {{ $definisi?->n_wbls_about }}
-        </h4>
+<section id="tentang_wbs" class="py-24 bg-white reveal">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
 
-        <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-16 items-center">
 
-        {{-- Deskripsi --}}
-        <div class="text-black leading-relaxed mb-12 text-justify prose max-w-none">
-            {!! $definisi?->e_wbls_about !!}
-        </div>
+            {{-- KONTEN TEKS --}}
+            <div>
+                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
+                    {{ $definisi?->n_wbls_about }}
+                </h2>
 
-
-        {{-- 3 Kartu --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-
-            @forelse ($tujuanWbs as $item)
-                <div
-                    class="group p-8 border rounded-xl shadow-md bg-white
-                        hover:shadow-lg hover:-translate-y-1
-                        transition-all duration-300">
-
-                    {{-- <img
-                        src="{{ asset('storage/images/tujuan/tujuan_' . $item->c_wbls_purposeord . '.png') }}"
-                        onerror="this.src='{{ asset('images/tujuan/default.png') }}'"
-                        class="h-24 mx-auto mb-4"
-                    > --}}
-
-                    {{-- Judul --}}
-                    <h3 class="text-xl font-bold mb-3 text-center">
-                        {{ strtoupper($item->n_wbls_purpose) }}
-                    </h3>
-
-                    {{-- Deskripsi --}}
-                    <div class="text-gray-600 text-sm leading-relaxed text-justify prose max-w-none">
-                        {!! $item->e_wbls_purpose !!}
-                    </div>
+                <div class="mt-6 text-gray-600 text-base leading-relaxed text-justify">
+                    {!! $definisi?->e_wbls_about !!}
                 </div>
-            @empty
-                <div class="col-span-full text-center text-gray-500">
-                    Tujuan WBS belum tersedia.
+
+                <dl class="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12">
+                    @foreach ($tujuanWbs as $item)
+                        <div class="pt-4 border-t border-gray-200">
+                            <dt class="text-sm font-semibold text-gray-900 tracking-wide">
+                                {{ strtoupper($item->n_wbls_purpose) }}
+                            </dt>
+                            <dd class="mt-3 text-sm text-gray-600 leading-relaxed text-justify">
+                                {!! $item->e_wbls_purpose !!}
+                            </dd>
+                        </div>
+                    @endforeach
+                </dl>
+            </div>
+
+            {{-- KONTEN GAMBAR --}}
+            <div class="flex justify-center">
+                <div class="grid grid-cols-2 grid-rows-2 gap-6 max-w-md w-full">
+
+                    <img
+                        src="{{ asset('images/acuan.png') }}"
+                        alt="Acuan"
+                        class="w-full aspect-square rounded-xl object-cover"
+                    />
+
+                    <img
+                        src="{{ asset('images/upaya.png') }}"
+                        alt="Upaya"
+                        class="w-full aspect-square rounded-xl object-cover"
+                    />
+
+                    <img
+                        src="{{ asset('images/risiko.png') }}"
+                        alt="Risiko"
+                        class="w-full aspect-2/1 col-span-2 rounded-xl object-cover"
+                    />
+
                 </div>
-            @endforelse
+            </div>
 
         </div>
-
     </div>
 </section>
-
-
 
 {{-- ======================= Siapa saja yang dapat menjadi pelapor dalam WBS ======================= --}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-<section id="pelapor" class="py-20 bg-white reveal">
-    <div class="max-w-5xl mx-auto text-center px-6">
+<section id="pelapor" class="bg-white">
 
-        {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2">Siapa saja yang dapat menjadi pelapor dalam WBS?</h4>
-        <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
+    <!-- Judul -->
+    <div class="py-16 text-center px-6">
+        <h4 class="text-3xl font-bold mb-3">
+            Siapa saja yang dapat menjadi pelapor dalam WBS?
+        </h4>
+        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+    </div>
 
-        {{-- Grid 4 kolom seperti contoh --}}
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {{-- Karyawan --}}                                                  
-            <div class="bg-blue-600 text-white p-10 rounded-xl shadow-md hover:shadow-xl transition">
-                <img src="{{ asset('images/karyawan.png') }}" 
-                     class="h-20 mx-auto mb-6 object-contain" alt="">
-                <h3 class="text-lg font-semibold">Karyawan (Internal)</h3>
-            </div>
+    <!-- GRID FULL WIDTH -->
+    <div class="grid grid-cols-1 md:grid-cols-4 w-full">
 
-            {{-- Pemasok --}}
-            <div class="bg-blue-600 text-white p-10 rounded-xl shadow-md hover:shadow-xl transition">
-                <img src="{{ asset('images/pemasok.png') }}" 
-                     class="h-20 mx-auto mb-6 object-contain" alt="">
-                <h3 class="text-lg font-semibold">Pemasok / Supplier</h3>
-            </div>
-
-            {{-- Pelanggan --}}
-            <div class="bg-blue-600 text-white p-10 rounded-xl shadow-md hover:shadow-xl transition">
-                <img src="{{ asset('images/pelanggan.png') }}" 
-                     class="h-20 mx-auto mb-6 object-contain" alt="">
-                <h3 class="text-lg font-semibold">Pelanggan / Customer</h3>
-            </div>
-
-            {{-- Masyarakat --}}
-            <div class="bg-blue-600 text-white p-10 rounded-xl shadow-md hover:shadow-xl transition">
-                <img src="{{ asset('images/masyarakat.png') }}" 
-                     class="h-20 mx-auto mb-6 object-contain" alt="">
-                <h3 class="text-lg font-semibold">Masyarakat</h3>
-            </div>
+        <!-- Karyawan -->
+        <div
+            class="bg-blue-700 text-white flex flex-col items-center justify-center py-24 border-b md:border-b-0 md:border-r border-white/40">
+            <img src="{{ asset('images/karyawan.png') }}" class="h-16 mb-5" alt="">
+            <h3 class="text-lg font-semibold text-center">
+                Karyawan (Internal)
+            </h3>
         </div>
+
+        <!-- Pemasok -->
+        <div
+            class="bg-blue-600 text-white flex flex-col items-center justify-center py-24 border-b md:border-b-0 md:border-r border-white/40">
+            <img src="{{ asset('images/pemasok.png') }}" class="h-16 mb-5" alt="">
+            <h3 class="text-lg font-semibold text-center">
+                Pemasok / Supplier
+            </h3>
+        </div>
+
+        <!-- Pelanggan -->
+        <div
+            class="bg-blue-500 text-white flex flex-col items-center justify-center py-24 border-b md:border-b-0 md:border-r border-white/40">
+            <img src="{{ asset('images/pelanggan.png') }}" class="h-16 mb-5" alt="">
+            <h3 class="text-lg font-semibold text-center">
+                Pelanggan / Customer
+            </h3>
+        </div>
+
+        <!-- Masyarakat -->
+        <div
+            class="bg-blue-400 text-white flex flex-col items-center justify-center py-24">
+            <img src="{{ asset('images/masyarakat.png') }}" class="h-16 mb-5" alt="">
+            <h3 class="text-lg font-semibold text-center">
+                Masyarakat
+            </h3>
+        </div>
+
     </div>
 </section>
+
 
 {{-- ======================= Kapan WBS Dapat Digunakan? ======================= --}}
 <section id="kapan_wbs" class="py-20 bg-white reveal">
