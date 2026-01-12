@@ -35,10 +35,10 @@ class SyaratMelaporResource extends Resource
         return SyaratMelaporForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return SyaratMelaporInfolist::configure($schema);
-    }
+    // public static function infolist(Schema $schema): Schema
+    // {
+    //     return SyaratMelaporInfolist::configure($schema);
+    // }
 
     public static function table(Table $table): Table
     {
@@ -57,7 +57,7 @@ class SyaratMelaporResource extends Resource
         return [
             'index' => ListSyaratMelapors::route('/'),
             'create' => CreateSyaratMelapor::route('/create'),
-            'view' => ViewSyaratMelapor::route('/{record}'),
+            // 'view' => ViewSyaratMelapor::route('/{record}'),
             'edit' => EditSyaratMelapor::route('/{record}/edit'),
         ];
     }

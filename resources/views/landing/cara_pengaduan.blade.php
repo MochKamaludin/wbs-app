@@ -4,22 +4,45 @@
         {{-- Judul --}}
         <h4 class="text-3xl font-bold mb-2">Cara Pengaduan</h4>
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-        <div class="flex justify-center py-10 bg-gray-50">
-            <div class="bg-white rounded-xl shadow-sm px-8 py-4 w-full max-w-4xl">
-                <nav class="flex justify-center space-x-10 border-b border-gray-200">
+        
+        <div class="flex justify-center py-6 bg-gray-50">
+            <div class="bg-white rounded-xl shadow-sm px-4 sm:px-6 py-4 w-full max-w-4xl">
+
+                <nav
+                    class="
+                        flex items-center
+                        gap-6 sm:gap-8
+                        overflow-x-auto
+                        sm:overflow-visible
+                        border-b border-gray-200
+                        scrollbar-hide
+                    "
+                >
                     @foreach($steps as $index => $step)
                         <button
-                            class="step-btn pb-3 text-sm font-medium transition
-                                {{ $index === 0 
-                                        ? 'text-blue-600 border-b-2 border-blue-600' 
-                                        : 'text-gray-500 hover:text-blue-600 border-b-2 border-transparent' }}"
-                            data-step="{{ $step->c_wbls_procord }}">
-                            Step#{{ $step->c_wbls_procord }}
+                            class="
+                                step-btn
+                                whitespace-nowrap
+                                pb-3
+                                text-sm sm:text-base
+                                font-medium
+                                transition
+                                border-b-2
+                                {{ $index === 0
+                                    ? 'text-blue-600 border-blue-600'
+                                    : 'text-gray-500 hover:text-blue-600 border-transparent'
+                                }}
+                            "
+                            data-step="{{ $step->c_wbls_procord }}"
+                        >
+                            Step# {{ $step->c_wbls_procord }}
                         </button>
-                        @endforeach
+                    @endforeach
                 </nav>
+
             </div>
         </div>
+
 
 
         <div id="step-content"

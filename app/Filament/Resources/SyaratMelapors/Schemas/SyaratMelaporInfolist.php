@@ -8,6 +8,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\HtmlString;
 
 class SyaratMelaporInfolist
 {
@@ -50,6 +51,8 @@ class SyaratMelaporInfolist
               ->schema([
                   TextEntry::make('e_wbls_req')
                       ->html()
+                    //   ->extraAttributes([ 'class' => 'list-disc list-inside [&_ul]:list-disc [&_ol]:list-decimal [&_ul]:ml-4 [&_ol]:ml-4'])
+                    //   ->formatStateUsing(fn ($state)=> new HtmlString($state))
                       ->alignJustify()
                       ->hiddenLabel(),
               ])

@@ -30,8 +30,6 @@ class User extends Authenticatable implements FilamentUser, HasName
 
     protected $hidden = ['c_wbls_admpswd'];
 
-    /* ================= AUTH ================= */
-
     public function getAuthPassword(): string
     {
         return (string) $this->c_wbls_admpswd;
@@ -52,5 +50,20 @@ class User extends Authenticatable implements FilamentUser, HasName
     public function getFilamentName(): string
     {
         return (string) ($this->n_wbls_adm ?: $this->i_wbls_adm);
+    }
+
+    public function isAdmin()
+    {
+        return $this->c_wbls_admauth === "0";
+    }
+
+    public function isVerifikator()
+    {
+        return $this->c_wbls_admauth === "1";
+    }
+
+    public function isInvestigator()
+    {
+        return $this->c_wbls_admauth === "2";
     }
 }

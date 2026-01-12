@@ -26,4 +26,19 @@ class Faq extends Model
     {
         return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
     }
+
+    public function isAdmin()
+    {
+        return $this->c_wbls_admauth === "0";
+    }
+
+    public function isVerifikator()
+    {
+        return $this->c_wbls_admauth === "1";
+    }
+
+    public function isInvestigator()
+    {
+        return $this->c_wbls_admauth === "2";
+    }
 }

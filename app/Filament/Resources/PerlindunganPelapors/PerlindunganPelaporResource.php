@@ -34,10 +34,10 @@ class PerlindunganPelaporResource extends Resource
         return PerlindunganPelaporForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return PerlindunganPelaporInfolist::configure($schema);
-    }
+    // public static function infolist(Schema $schema): Schema
+    // {
+    //     return PerlindunganPelaporInfolist::configure($schema);
+    // }
 
     public static function table(Table $table): Table
     {
@@ -56,7 +56,7 @@ class PerlindunganPelaporResource extends Resource
         return [
             'index' => ListPerlindunganPelapors::route('/'),
             'create' => CreatePerlindunganPelapor::route('/create'),
-            'view' => ViewPerlindunganPelapor::route('/{record}'),
+            // 'view' => ViewPerlindunganPelapor::route('/{record}'),
             'edit' => EditPerlindunganPelapor::route('/{record}/edit'),
         ];
     }

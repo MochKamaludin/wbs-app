@@ -17,4 +17,19 @@ class ReferensiStatus extends Model
         'n_wbls_stat',
         'e_wbls_stat',
     ];
+
+    public function isAdmin()
+    {
+        return $this->c_wbls_admauth === "0";
+    }
+
+    public function isVerifikator()
+    {
+        return $this->c_wbls_admauth === "1";
+    }
+
+    public function isInvestigator()
+    {
+        return $this->c_wbls_admauth === "2";
+    }
 }

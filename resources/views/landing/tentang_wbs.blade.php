@@ -9,7 +9,7 @@
                     {{ $definisi?->n_wbls_about }}
                 </h2>
 
-                <div class="mt-6 text-gray-600 text-base leading-relaxed text-justify">
+                <div class="mt-6 text-gray-900 text-base leading-relaxed text-justify">
                     {!! $definisi?->e_wbls_about !!}
                 </div>
 
@@ -67,9 +67,7 @@
         <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
     </div>
 
-    <!-- GRID FULL WIDTH -->
     <div class="grid grid-cols-1 md:grid-cols-4 w-full">
-
         <!-- Karyawan -->
         <div
             class="bg-blue-700 text-white flex flex-col items-center justify-center py-24 border-b md:border-b-0 md:border-r border-white/40">
@@ -128,7 +126,7 @@
 <section id="jenis_pelanggaran" class="relative py-32 reveal">
     <!-- Background image -->
     <div class="absolute inset-0">
-        <img src="{{ asset('images/n219.jpg') }}" 
+        <img src="{{ asset('images/bg2.jpeg') }}" 
              class="w-full h-full object-cover opacity-100" 
              alt="Background jenis pelanggaran">
     </div>
@@ -191,7 +189,6 @@
         </h4>
         <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
 
-        {{-- Grid Dinamis --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
 
             @foreach ($syaratMelapor as $item)
@@ -217,7 +214,7 @@
                     </div>
 
                     {{-- Deskripsi --}}
-                    <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify prose max-w-none">
+                    <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify editor-content prose prose-sm max-w-none">
                         {!! $item->e_wbls_req !!}
                     </div>
 
@@ -229,39 +226,43 @@
     </div>
 </section>
 
-<section id="perlindungan" class="py-20 bg-white">
+<section id="perlindungan" class="py-20 bg-gray-50">
     <div class="max-w-6xl mx-auto px-6">
 
-        <div class="text-center mb-12">
-            <h4 class="text-3xl font-bold mb-2">
+        <!-- Judul -->
+        <div class="text-center mb-14">
+            <h4 class="text-3xl font-bold mb-3 text-gray-900">
                 Perlindungan Terhadap Pelapor
             </h4>
-            <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    @foreach ($perlindungan as $item)
-        <div class="
-            bg-white rounded-xl shadow-md p-6
-            {{ $perlindungan->count() === 1 ? 'md:col-span-2' : '' }}
-        ">
-            <h3 class="text-lg font-bold text-center mb-4">
-                {{ $item->n_wbls_protect }}
-            </h3>
-
-            <div class="
-                prose prose-sm max-w-none
-                prose-ol:list-decimal
-                prose-ol:pl-6
-                prose-li:my-1
-            ">
-                {!! $item->e_wbls_protect !!}
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            @foreach ($perlindungan as $item)
+                <div
+                    class="
+                        bg-white rounded-2xl shadow-sm hover:shadow-md transition
+                        p-8
+                        {{ $perlindungan->count() === 1 ? 'md:col-span-2 max-w-4xl mx-auto' : '' }}
+                    "
+                >
+                
+                    <div
+                        class="
+                            editor-content prose prose-sm max-w-none
+                            md:columns-2 md:gap-8
+                            text-justify
+                        "
+                    >
+                    <h3 class="text-xl font-semibold text-justify text-black mb-6">
+                        
+                        {{ $item->n_wbls_protect }}
+                    </h3>
+                        {!! $item->e_wbls_protect !!}
+                    </div>
+                </div>
+            @endforeach
         </div>
-    @endforeach
-</div>
 
     </div>
 </section>
-
-

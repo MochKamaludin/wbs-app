@@ -8,7 +8,7 @@
 
     <div class="max-w-5xl mx-auto px-6 space-y-6">
         @foreach ($items as $index => $item)
-            <div class="bg-white shadow-md rounded-xl p-5">
+            <div class="bg-blue-900 shadow-md rounded-xl p-5">
                 <div class="flex flex-col md:flex-row md:items-center gap-4">
 
                     {{-- Nomor --}}
@@ -21,7 +21,7 @@
                     <div class="hidden md:block flex-1 border-b-2 border-dashed border-blue-300"></div>
 
                     {{-- Teks --}}
-                    <p class="md:w-1/2 text-gray-700 text-left">
+                    <p class="md:w-1/2 text-white text-left">
                         {!! $item !!}
                     </p>
 
