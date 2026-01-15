@@ -1,19 +1,33 @@
-<section id="cara_pengaduan" class="py-30 bg-white reveal">
+<section
+    id="cara_pengaduan"
+    class="py-28 bg-linear-to-b from-white via-blue-50 to-white reveal"
+>
     <div class="max-w-5xl mx-auto text-center px-6">
 
         {{-- Judul --}}
-        <h4 class="text-3xl font-bold mb-2">Cara Pengaduan</h4>
-        <div class="w-20 h-1 bg-blue-600 mx-auto mb-6"></div>
-        
-        <div class="flex justify-center py-6 bg-gray-50">
-            <div class="bg-white rounded-xl shadow-sm px-4 sm:px-6 py-4 w-full max-w-4xl">
+        <h4 class="text-3xl font-bold text-gray-900 mb-3">
+            Cara Pengaduan
+        </h4>
+        <div
+            class="w-24 h-1 bg-linear-to-r from-blue-500 to-indigo-600 mx-auto rounded-full mb-12"
+        ></div>
 
+        {{-- TAB STEP --}}
+        <div class="flex justify-center">
+            <div
+                class="
+                    bg-white
+                    rounded-2xl
+                    shadow-md
+                    px-4 sm:px-6 py-4
+                    w-full max-w-4xl
+                "
+            >
                 <nav
                     class="
                         flex items-center
-                        gap-6 sm:gap-8
+                        gap-4 sm:gap-8
                         overflow-x-auto
-                        sm:overflow-visible
                         border-b border-gray-200
                         scrollbar-hide
                     "
@@ -22,11 +36,12 @@
                         <button
                             class="
                                 step-btn
+                                relative
                                 whitespace-nowrap
                                 pb-3
                                 text-sm sm:text-base
-                                font-medium
-                                transition
+                                font-semibold
+                                transition-all duration-300
                                 border-b-2
                                 {{ $index === 0
                                     ? 'text-blue-600 border-blue-600'
@@ -35,30 +50,41 @@
                             "
                             data-step="{{ $step->c_wbls_procord }}"
                         >
-                            Step# {{ $step->c_wbls_procord }}
+                            Step {{ $step->c_wbls_procord }}
                         </button>
                     @endforeach
                 </nav>
-
             </div>
         </div>
 
-
-
-        <div id="step-content"
-            style="background: #f9f9f9; padding: 25px; border-radius: 10px; text-align: left; font-size: 15px; color: #444; line-height: 1.7;">
-
+        {{-- KONTEN STEP --}}
+        <div
+            id="step-content"
+            class="
+                mt-10
+                bg-white
+                rounded-2xl
+                shadow-lg
+                p-8
+                text-left
+                text-gray-700
+                leading-relaxed
+                prose prose-sm max-w-none
+            "
+        >
             @if($steps->count())
-                <h3 style="font-size: 18px; font-weight: bold;">
-                    {{ $steps->first()->c_wbls_procord }}. {{ $steps->first()->n_wbls_proc }}
+                <h3 class="text-lg font-bold text-gray-900 mb-4">
+                    {{ $steps->first()->c_wbls_procord }}.
+                    {{ $steps->first()->n_wbls_proc }}
                 </h3>
                 {!! $steps->first()->e_wbls_proc !!}
             @endif
-
         </div>
 
+    </div>
 </section>
 
+{{-- SCRIPT --}}
 <script>
     const stepContents = {
         @foreach($steps as $step)
@@ -72,19 +98,13 @@
     document.querySelectorAll(".step-btn").forEach(btn => {
         btn.addEventListener("click", function () {
 
-            // RESET semua tab
+            // Reset semua tab
             document.querySelectorAll(".step-btn").forEach(b => {
-                b.classList.remove(
-                    "text-blue-600",
-                    "border-blue-600"
-                );
-                b.classList.add(
-                    "text-gray-500",
-                    "border-transparent"
-                );
+                b.classList.remove("text-blue-600", "border-blue-600");
+                b.classList.add("text-gray-500", "border-transparent");
             });
 
-            // AKTIFKAN tab yang diklik
+            // Aktifkan tab yang diklik
             this.classList.remove("text-gray-500", "border-transparent");
             this.classList.add("text-blue-600", "border-blue-600");
 
@@ -93,7 +113,7 @@
             const box = document.getElementById("step-content");
 
             box.innerHTML = `
-                <h3 class="text-lg font-bold mb-2">
+                <h3 class="text-lg font-bold text-gray-900 mb-4">
                     ${stepContents[step].title}
                 </h3>
                 ${stepContents[step].text}

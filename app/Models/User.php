@@ -40,8 +40,6 @@ class User extends Authenticatable implements FilamentUser, HasName
         return 'i_wbls_adm';
     }
 
-    /* ================= FILAMENT v4 ================= */
-
     public function canAccessPanel(Panel $panel): bool
     {
         return true; 

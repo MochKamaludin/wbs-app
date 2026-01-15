@@ -1,32 +1,59 @@
-<section id="dasar_wbs" class="py-24 bg-white reveal">
-    <div class="max-w-5xl mx-auto text-center px-6">
-        <h4 class="text-3xl font-bold mb-2">
+<section id="dasar_wbs" class="py-24 bg-linear-to-b from-white via-blue-50 to-white reveal">
+
+    {{-- Judul --}}
+    <div class="max-w-5xl mx-auto text-center px-6 mb-14">
+        <h4 class="text-3xl font-bold text-gray-900 mb-3">
             {{ $dasarWbs->n_wbls_about }}
         </h4>
-        <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+        <div class="w-24 h-1 bg-linear-to-r from-blue-500 to-indigo-600 mx-auto rounded-full"></div>
     </div>
 
-    <div class="max-w-5xl mx-auto px-6 space-y-6">
+    {{-- List --}}
+    <div class="max-w-5xl mx-auto px-6 space-y-8">
         @foreach ($items as $index => $item)
-            <div class="bg-blue-900 shadow-md rounded-xl p-5">
-                <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <div
+                class="
+                    relative
+                    rounded-2xl
+                    p-6
+                    bg-linear-to-r from-blue-600 to-indigo-700
+                    shadow-lg
+                    transition
+                    hover:-translate-y-3 hover:shadow-2xl
+                "
+            >
+                <div class="flex flex-col md:flex-row md:items-center gap-5">
 
                     {{-- Nomor --}}
-                    <div class="w-10 h-10 shrink-0 flex items-center justify-center
-                                bg-blue-600 text-white font-bold rounded-full">
+                    <div
+                        class="
+                            w-12 h-12 shrink-0
+                            flex items-center justify-center
+                            rounded-full
+                            bg-linear-to-br from-blue-400 to-indigo-500
+                            text-white font-bold text-lg
+                            shadow-md
+                        "
+                    >
                         {{ $index + 1 }}
                     </div>
 
                     {{-- Garis --}}
-                    <div class="hidden md:block flex-1 border-b-2 border-dashed border-blue-300"></div>
+                    <div class="hidden md:block flex-1 relative">
+                        <div class="absolute inset-y-1/2 w-full border-t-2 border-dashed border-blue-300/50"></div>
+                    </div>
 
-                    {{-- Teks --}}
-                    <p class="md:w-1/2 text-white text-left">
+                    {{-- Konten --}}
+                    <div class="md:w-1/2 text-white text-left leading-relaxed">
                         {!! $item !!}
-                    </p>
+                    </div>
 
                 </div>
+
+                {{-- efek glow --}}
+                <div class="absolute inset-0 rounded-2xl ring-1 ring-white/10 pointer-events-none"></div>
             </div>
         @endforeach
     </div>
+
 </section>

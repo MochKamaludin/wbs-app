@@ -42,10 +42,10 @@ class DasarWbsResource extends Resource
         return DasarWbsForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return DasarWbsInfolist::configure($schema);
-    }
+    // public static function infolist(Schema $schema): Schema
+    // {
+    //     return DasarWbsInfolist::configure($schema);
+    // }
 
     public static function table(Table $table): Table
     {
@@ -64,7 +64,7 @@ class DasarWbsResource extends Resource
         return [
             'index' => ListDasarWbs::route('/'),
             'create' => CreateDasarWbs::route('/create'),
-            'view' => ViewDasarWbs::route('/{record}'),
+            // 'view' => ViewDasarWbs::route('/{record}'),
             'edit' => EditDasarWbs::route('/{record}/edit'),
         ];
     }

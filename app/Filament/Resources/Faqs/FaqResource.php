@@ -26,7 +26,17 @@ class FaqResource extends Resource
 
     protected static ?string $pluralModelLabel = 'FAQ';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return Faq::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return "warning";
+    }
 
     public static function form(Schema $schema): Schema
     {

@@ -27,7 +27,17 @@ class UserResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Pengguna';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 3;
+
+    public static function getNavigationBadge(): ?string
+    {
+        return User::count();
+    }
+
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return "success";
+    }
 
     public static function getRecordRouteKeyName(): string
     {
