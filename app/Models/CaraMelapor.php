@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class CaraMelapor extends Model
 {
+    use LogsActivity;
     protected $table = 'tmwblsproc';
     protected $primaryKey = 'i_wbls_proc';
     public $incrementing = false;
@@ -39,5 +42,26 @@ class CaraMelapor extends Model
     public function isInvestigator()
     {
         return $this->c_wbls_admauth === "2";
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $user = auth()->user();
+        $logName = 'default';
+        
+        if ($user) {
+            $logName = match($user->c_wbls_admauth) {
+                '0' => 'admin_activity',
+                '1' => 'operator_activity',
+                '2' => 'verifikator_activity',
+                default => 'default',
+            };
+        }
+
+        return LogOptions::defaults()
+            ->logOnly(['n_wbls_proc', 'e_wbls_proc', 'c_wbls_procord', 'f_wbls_procstat'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->useLogName($logName);
     }
 }

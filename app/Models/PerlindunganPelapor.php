@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class PerlindunganPelapor extends Model
 {
+    use LogsActivity;
     protected $table = 'tmwblsprotect';
     protected $primaryKey = 'i_wbls_protect';
     public $timestamps = false;
@@ -37,5 +40,26 @@ class PerlindunganPelapor extends Model
     public function isInvestigator()
     {
         return $this->c_wbls_admauth === "2";
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $user = auth()->user();
+        $logName = 'default';
+        
+        if ($user) {
+            $logName = match($user->c_wbls_admauth) {
+                '0' => 'admin_activity',
+                '1' => 'operator_activity',
+                '2' => 'verifikator_activity',
+                default => 'default',
+            };
+        }
+
+        return LogOptions::defaults()
+            ->logAll()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->useLogName($logName);
     }
 }

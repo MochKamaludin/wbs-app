@@ -3,14 +3,14 @@
     {{-- Judul --}}
     <div class="max-w-5xl mx-auto text-center px-6 mb-14">
         <h4 class="text-3xl font-bold text-gray-900 mb-3">
-            {{ $dasarWbs->n_wbls_about }}
+            {{ $dasarWbs->n_wbls_about ?? 'Dasar WBS' }}
         </h4>
         <div class="w-24 h-1 bg-linear-to-r from-blue-500 to-indigo-600 mx-auto rounded-full"></div>
     </div>
 
     {{-- List --}}
     <div class="max-w-5xl mx-auto px-6 space-y-8">
-        @foreach ($items as $index => $item)
+        @forelse ($items as $index => $item)
             <div
                 class="
                     relative
@@ -53,7 +53,11 @@
                 {{-- efek glow --}}
                 <div class="absolute inset-0 rounded-2xl ring-1 ring-white/10 pointer-events-none"></div>
             </div>
-        @endforeach
+        @empty
+            <div class="text-center text-gray-500 py-8">
+                <p>Belum ada data Dasar WBS. Silakan tambahkan data melalui admin panel.</p>
+            </div>
+        @endforelse
     </div>
 
 </section>

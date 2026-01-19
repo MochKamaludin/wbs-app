@@ -7,10 +7,12 @@ use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable implements FilamentUser, HasName
 {
-    use Notifiable;
+    use Notifiable, LogsActivity;
 
     protected $table = 'trwblsadm';
     protected $primaryKey = 'i_wbls_adm';
@@ -63,5 +65,21 @@ class User extends Authenticatable implements FilamentUser, HasName
     public function isInvestigator()
     {
         return $this->c_wbls_admauth === "2";
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        $logName = match($this->c_wbls_admauth) {
+            '0' => 'admin_activity',
+            '1' => 'operator_activity',
+            '2' => 'verifikator_activity',
+            default => 'default',
+        };
+
+        return LogOptions::defaults()
+            ->logOnly(['n_wbls_adm', 'i_emp', 'c_wbls_admauth'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->useLogName($logName);
     }
 }
