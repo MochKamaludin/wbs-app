@@ -131,9 +131,8 @@ class ActivityLogResource extends Resource
 
                 SelectFilter::make('causer_id')
                     ->label('User')
-                    ->relationship('causer', 'n_wbls_adm')
+                    ->options(fn () => \App\Models\User::pluck('n_wbls_adm', 'i_wbls_adm')->toArray())
                     ->searchable()
-                    ->preload()
                     ->placeholder('Semua User'),
 
                 Filter::make('created_at')
@@ -164,14 +163,10 @@ class ActivityLogResource extends Resource
                         }
                         return $indicators;
                     }),
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+            // ])
+            // ->actions([
+            //     ViewAction::make()
+            //         ->label('Detail'),
             ]);
     }
 
@@ -186,7 +181,6 @@ class ActivityLogResource extends Resource
     {
         return [
             'index' => Pages\ListActivityLogs::route('/'),
-            'view' => Pages\ViewActivityLog::route('/{record}'),
         ];
     }
 
