@@ -17,18 +17,12 @@ class StatWidget extends StatsOverviewWidget
         return [
             Stat::make("Total Pengguna", User::count())
                 ->description("Total Pengguna Tahun Ini")
-                ->descriptionIcon(Heroicon::ArrowDownLeft, IconPosition::Before)
-                ->chart([
-                    2,4,6,7,12,15,17
-                ])
+                ->descriptionIcon(Heroicon::ArrowUpLeft, IconPosition::Before)
                 ->descriptionColor("success")
                 ->color("success"),
             Stat::make("Kategori", ReferensiKategori::count())
                 ->description("Jumlah Kategori Pelanggaran")
-                ->descriptionIcon(Heroicon::ArrowDownLeft, IconPosition::Before)
-                ->chart([
-                    54,34,23,3,4,7,1
-                ])
+                ->descriptionIcon(Heroicon::ArrowUpLeft, IconPosition::Before)
                 ->descriptionColor("warning")
                 ->color("warning")
         ];
