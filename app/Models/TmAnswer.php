@@ -7,39 +7,17 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
 
-class DefinisiWbs extends Model
+class TmAnswer extends Model
 {
     use LogsActivity;
-    protected $table = 'tmwblsabout';
-    protected $primaryKey = 'i_wbls_about';
+    protected $table = 'tmanswer';
+    protected $primaryKey = 'i_id_answer';
     public $timestamps = false;
 
     protected $fillable = [
-        'n_wbls_about',
-        'e_wbls_about',
-        'i_wbls_adm',
-        'd_wbls_about',
+        'i_id_yyy','i_id_question','i_id_questionchoice',
+        'e_answer','i_entry'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
-    }
-
-    public function isAdmin()
-    {
-        return $this->c_wbls_admauth === "0";
-    }
-
-    public function isVerifikator()
-    {
-        return $this->c_wbls_admauth === "1";
-    }
-
-    public function isInvestigator()
-    {
-        return $this->c_wbls_admauth === "2";
-    }
 
     public function getActivitylogOptions(): LogOptions
     {

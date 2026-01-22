@@ -7,6 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Checkbox;
 use Filament\Schemas\Schema;
 use Illuminate\Validation\ValidationException;
+use Filament\Forms\Components\Actions\Action as FormAction;
 
 class Login extends BaseLogin
 {
@@ -20,13 +21,11 @@ class Login extends BaseLogin
                     ->email()
                     ->autofocus(),
 
-                TextInput::make('password')
+                $this->getPasswordFormComponent()
                     ->label('Password')
-                    ->password()
                     ->required(),
 
-                Checkbox::make('remember')
-                    ->label('Remember me'),
+                $this->getRememberFormComponent(),
             ])
             ->statePath('data');
     }
@@ -42,7 +41,7 @@ class Login extends BaseLogin
     protected function throwFailureValidationException(): never
     {
         throw ValidationException::withMessages([
-            'data.i_wbls_adm' => __('filament-panels::auth.pages.login.messages.failed'),
+            'data.i_wbls_adm' => __('Maaf, email atau password yang Anda masukkan salah.'),
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
 
 class CaraMelapor extends Model
 {
@@ -46,7 +47,7 @@ class CaraMelapor extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $logName = 'default';
         
         if ($user) {

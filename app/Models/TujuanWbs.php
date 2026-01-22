@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
 
 class TujuanWbs extends Model
 {
@@ -47,14 +48,14 @@ class TujuanWbs extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $logName = 'default';
         
         if ($user) {
             $logName = match($user->c_wbls_admauth) {
                 '0' => 'admin_activity',
-                '1' => 'operator_activity',
-                '2' => 'verifikator_activity',
+                '1' => 'verifikator_activity',
+                '2' => 'investigator_activity',
                 default => 'default',
             };
         }

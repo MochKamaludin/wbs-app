@@ -12,8 +12,11 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\Activitylog\Models\Activity;
+use Filament\Actions\ViewAction;
 use BackedEnum;
 use Filament\Support\Icons\Heroicon;
+use Filament\Forms\Components\DatePicker;
+
 
 class ActivityLogResource extends Resource
 {
@@ -25,7 +28,7 @@ class ActivityLogResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Activity Logs';
 
-    protected static ?int $navigationSort = 100;
+    protected static ?int $navigationSort = 5;
 
     public static function form(Schema $schema): Schema
     {
@@ -44,8 +47,8 @@ class ActivityLogResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn ($state) => match ($state) {
                         'admin_activity' => 'Admin Activity',
-                        'operator_activity' => 'Operator Activity',
                         'verifikator_activity' => 'Verifikator Activity',
+                        'investigator_activity' => 'Investigator Activity',
                         default => $state,
                     })
                     ->color(fn ($state) => match ($state) {
@@ -91,8 +94,8 @@ class ActivityLogResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn ($state) => match ($state) {
                         '0' => 'Admin',
-                        '1' => 'Operator',
-                        '2' => 'Verifikator',
+                        '1' => 'Verifikator',
+                        '2' => 'Investigator',
                         default => 'Unknown',
                     })
                     ->color(fn ($state) => match ($state) {
@@ -113,8 +116,8 @@ class ActivityLogResource extends Resource
                     ->label('Log Type')
                     ->options([
                         'admin_activity' => 'Admin Activity',
-                        'operator_activity' => 'Operator Activity',
                         'verifikator_activity' => 'Verifikator Activity',
+                        'investigator_activity' => 'Investigator Activity',
                     ])
                     ->placeholder('Semua Log Type'),
 
@@ -137,9 +140,9 @@ class ActivityLogResource extends Resource
 
                 Filter::make('created_at')
                     ->form([
-                        \Filament\Forms\Components\DatePicker::make('created_from')
+                        DatePicker::make('created_from')
                             ->label('Dari Tanggal'),
-                        \Filament\Forms\Components\DatePicker::make('created_until')
+                        DatePicker::make('created_until')
                             ->label('Sampai Tanggal'),
                     ])
                     ->query(function (Builder $query, array $data): Builder {
@@ -163,11 +166,11 @@ class ActivityLogResource extends Resource
                         }
                         return $indicators;
                     }),
-            // ])
+                ]);
             // ->actions([
             //     ViewAction::make()
             //         ->label('Detail'),
-            ]);
+            // ]);
     }
 
     public static function getRelations(): array

@@ -71,8 +71,8 @@ class User extends Authenticatable implements FilamentUser, HasName
     {
         $logName = match($this->c_wbls_admauth) {
             '0' => 'admin_activity',
-            '1' => 'operator_activity',
-            '2' => 'verifikator_activity',
+            '1' => 'verifikator_activity',
+            '2' => 'investigator_activity',
             default => 'default',
         };
 
