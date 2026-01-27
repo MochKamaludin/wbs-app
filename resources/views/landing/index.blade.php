@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-{{-- SECTION HERO — gambar --}}
 <section id="home"
     class="h-screen bg-cover bg-center flex items-center justify-center text-white reveal"
     style="background-image: url('{{ asset('images/n219.jpg') }}');">

@@ -62,12 +62,10 @@ $kategori = [
             @foreach ($kategori as $item)
             <div class="rounded-lg overflow-hidden shadow border bg-white">
 
-                <!-- HEADER BIRU -->
                 <div class="bg-linear-to-b from-blue-800 to-blue-600 text-white text-center py-4 px-1 text-xs font-semibold leading-tight">
                     {{ strtoupper($item[0]) }}
                 </div>
 
-                <!-- BODY PUTIH -->
                 <div class="text-center py-4 bg-white">
                     <div class="text-2xl font-bold text-gray-800">{{ $item[1] }}</div>
                     <div class="text-green-500 text-sm font-semibold">{{ $item[2] }}</div>

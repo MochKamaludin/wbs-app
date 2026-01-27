@@ -16,8 +16,8 @@ class TrQuestionInfolist
             ->components([ 
                 Section::make('Informasi Pertanyaan')
                     ->schema([
-                        TextEntry::make('i_id_xxx')
-                            ->label('Topik'),
+                        TextEntry::make('kategori.n_wbls_categ')
+                            ->label('Kategori'),
 
                         TextEntry::make('i_question_sort')
                             ->label('Urutan'),

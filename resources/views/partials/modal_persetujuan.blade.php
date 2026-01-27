@@ -43,7 +43,7 @@
         }
 
         function goToPengaduan() {
-            window.location.href = "{{ route('tulis.pengaduan') }}";
+            window.location.href = "{{ route('pengaduan.index') }}";
         }
         document.getElementById("btnNavbarPengaduan")
             ?.addEventListener("click", (e) => {

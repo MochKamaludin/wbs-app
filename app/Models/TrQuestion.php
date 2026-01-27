@@ -15,7 +15,7 @@ class TrQuestion extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'i_id_xxx',
+        'c_wbls_categ',
         'c_question',
         'i_question_sort',
         'n_question',
@@ -34,7 +34,20 @@ class TrQuestion extends Model
 
     public function choices()
     {
-        return $this->hasMany(TrQuestionChoice::class, 'i_id_question');
+        return $this->hasMany(
+            TrQuestionChoice::class,
+            'i_id_question',
+            'i_id_question'
+        )->orderBy('i_choice_sort');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(
+            ReferensiKategori::class,
+            'c_wbls_categ',
+            'c_wbls_categ'
+        );
     }
 
     public function answers()
@@ -45,6 +58,21 @@ class TrQuestion extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
+    }
+
+    public function isAdmin()
+    {
+        return $this->c_wbls_admauth === "0";
+    }
+
+    public function isVerifikator()
+    {
+        return $this->c_wbls_admauth === "1";
+    }
+
+    public function isInvestigator()
+    {
+        return $this->c_wbls_admauth === "2";
     }
 
     public function getActivitylogOptions(): LogOptions

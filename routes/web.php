@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PengaduanController;
 
 // Route::get('/', function () {
 //     return view('landing.index');
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/tulis-pengaduan', function () {
-    return view('pengaduan.create');
-})->name('tulis.pengaduan');
+Route::get('/pengaduan', [PengaduanController::class, 'index'])
+    ->name('pengaduan.index');
+
+Route::post('/pengaduan', [PengaduanController::class, 'store'])
+    ->name('pengaduan.store');

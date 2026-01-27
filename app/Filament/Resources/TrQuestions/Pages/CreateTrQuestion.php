@@ -27,33 +27,29 @@ class CreateTrQuestion extends CreateRecord
     {
         $userId = (int) Filament::auth()->user()->i_wbls_adm_id;
 
-        $this->choices = is_array($data['choices'] ?? null)
-            ? $data['choices']
-            : [];
-
+        $this->choices = $data['choices'] ?? [];
         unset($data['choices']);
 
         $data['i_entry'] = $userId;
         $data['d_entry'] = now();
-        $data['f_active'] = (bool) ($data['f_active'] ?? true);
 
         return $data;
     }
 
     protected function afterCreate(): void
     {
-        if (empty($this->choices)) {
-            return;
-        }
+        if (empty($this->choices)) return;
 
-        DB::transaction(function () {
+        $userId = (int) Filament::auth()->user()->i_wbls_adm_id;
+
+        DB::transaction(function () use ($userId) {
             foreach ($this->choices as $choice) {
                 DB::table('trquestionchoice')->insert([
                     'i_id_question' => $this->record->i_id_question,
                     'i_choice_sort' => (int) $choice['i_choice_sort'],
                     'n_choice'      => $choice['n_choice'],
-                    'f_active'      => (bool) ($choice['f_active'] ?? true),
-                    'i_entry'       => (int) Filament::auth()->user()->i_wbls_adm_id,
+                    'f_active'      => $choice['f_active'] ? 1 : 0,
+                    'i_entry'       => $userId,
                     'd_entry'       => now(),
                 ]);
             }

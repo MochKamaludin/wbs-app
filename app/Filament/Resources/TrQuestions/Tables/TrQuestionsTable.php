@@ -17,6 +17,9 @@ class TrQuestionsTable
     {
         return $table
             ->columns([
+                TextColumn::make('kategori.n_wbls_categ')
+                    ->label('Kategori'),
+                    
                 TextColumn::make('i_question_sort')
                     ->label('Urutan Pertanyaan')
                     ->sortable(),

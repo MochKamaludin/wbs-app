@@ -11,18 +11,16 @@
     <style>
         html { scroll-behavior: smooth; }
 
-        /* Background modal transparan (bukan hitam) */
         #modalPersetujuan {
-            background: rgba(0, 0, 0, 0.25); /* transparan */
+            background: rgba(0, 0, 0, 0.25); 
         }
-        /* ===== SCROLL REVEAL ===== */
+
         html { scroll-behavior: smooth; }
 
         #modalPersetujuan {
             background: rgba(0, 0, 0, 0.25);
         }
 
-        /* ===== SCROLL REVEAL ===== */
         .reveal {
             opacity: 0;
             transform: translateY(40px);

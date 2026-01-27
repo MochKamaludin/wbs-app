@@ -28,7 +28,6 @@
             <li><a href="{{ url('/') }}#faq" class="nav-link hover:text-blue-600">FAQ</a></li>
         </ul>
 
-        <!-- HAMBURGER (MOBILE + IPAD) -->
         <button id="menu-btn" class="lg:hidden focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-gray-700"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -59,12 +58,10 @@
     const mobileMenu = document.getElementById('mobile-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Toggle menu
     menuBtn.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
     });
 
-    // Active menu & auto close
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             navLinks.forEach(l => l.classList.remove('active'));
@@ -74,14 +71,12 @@
         });
     });
 
-    // Close mobile menu when resize to desktop
     window.addEventListener('resize', () => {
         if (window.innerWidth >= 1024) {
             mobileMenu.classList.add('hidden');
         }
     });
 
-    // Active menu from hash
     function setActiveByHash() {
         const hash = window.location.hash;
         if (!hash) return;

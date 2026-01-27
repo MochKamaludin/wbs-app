@@ -10,6 +10,8 @@ use Filament\Forms\Components\{
     Toggle,
     Repeater
 };
+use Illuminate\Support\Facades\DB;
+use App\Models\ReferensiKategori;
 
 class TrQuestionForm
 {
@@ -17,65 +19,73 @@ class TrQuestionForm
     {
         return $schema
             ->components([
-                TextInput::make('i_id_xxx')
-                    ->label('Topik')
-                    ->numeric()
-                    ->required(),
+            Select::make('c_wbls_categ')
+                ->label('Kategori WBS')
+                ->options(
+                    ReferensiKategori::pluck('n_wbls_categ', 'c_wbls_categ')
+                )
+                ->required(),
 
-                Select::make('c_question')
-                    ->label('Jenis Pertanyaan')
-                    ->options([
-                        1 => 'Field',
-                        2 => 'Radio Button',
-                        3 => 'Text Area',
-                        4 => 'Radio + Text Area',
-                        5 => 'Dropdown',
-                        6 => 'Currency (Dropdown + Field)',
-                        7 => 'File Upload',
-                    ])
-                    ->reactive()
-                    ->required(),
+            TextInput::make('n_question')
+                ->label('Pertanyaan')
+                ->required()
+                ->columnSpanFull(),
+            
+            TextInput::make('i_question_sort')
+                ->label('Urutan Pertanyaan')
+                ->numeric()
+                ->required()
+                ->unique(
+                    table: 'trquestion',
+                    column: 'i_question_sort',
+                    ignoreRecord: true,
+                    modifyRuleUsing: fn ($rule, $get) =>
+                        $rule->where('c_wbls_categ', $get('c_wbls_categ'))
+                ),
 
-                TextInput::make('i_question_sort')
-                    ->label('Urutan Pertanyaan')
-                    ->numeric()
-                    ->required(),
+            Select::make('c_question')
+                ->label('Jenis Pertanyaan')
+                ->options([
+                    1 => 'Field',
+                    2 => 'Radio',
+                    3 => 'Textarea',
+                    4 => 'Radio + Textarea',
+                    5 => 'Dropdown',
+                    6 => 'Currency',
+                    7 => 'File',
+                ])
+                ->reactive()
+                ->required(),
 
-                Textarea::make('n_question')
-                    ->label('Teks Pertanyaan')
-                    ->required(),
+            Toggle::make('f_required')
+                ->label('Wajib Diisi')
+                ->default(true),
 
-                Toggle::make('f_required')
-                    ->label('Wajib Diisi')
-                    ->default(true),
+            Toggle::make('f_active')
+                ->label('Aktif')
+                ->default(true),
 
-                Toggle::make('f_active')
-                    ->label('Status Aktif')
-                    ->default(true),
+            Repeater::make('choices')
+                ->label('Opsi Jawaban')
+                ->schema([
+                    TextInput::make('n_choice')
+                        ->label('Opsi')
+                        ->required(),
 
-                Repeater::make('choices')
-                    ->label('Pilihan Jawaban')
-                    ->schema([
-                        TextInput::make('i_choice_sort')
-                            ->label('Urutan')
-                            ->numeric()
-                            ->required(),
+                    TextInput::make('i_choice_sort')
+                        ->label('Urutan')
+                        ->numeric()
+                        ->required(),
 
-                        TextInput::make('n_choice')
-                            ->label('Pilihan')
-                            ->required(),
-
-                        Toggle::make('f_active')
-                            ->label('Aktif')
-                            ->default(true),
-                    ])
-                    ->visible(fn ($get) => in_array(
-                        $get('c_question'),
-                        [2, 4, 5, 6] 
-                    ))
-                    ->minItems(1)
-                    ->defaultItems(1)
-                    ->collapsible(),
+                    Toggle::make('f_active')
+                        ->label('Aktif')
+                        ->default(true),
+                ])
+                ->columnSpanFull()
+                ->visible(fn ($get) => in_array($get('c_question'), [2,4,5,6]))
+                ->minItems(1)
+                ->defaultItems(0)
+                ->collapsible(),
             ]);
     }
 }
