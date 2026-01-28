@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('trquestion', function (Blueprint $table) {
-            $table->char('c_wbls_categ', 1)
+            $table->string('c_wbls_categ', 1)
                 ->after('i_id_question')
                 ->comment('Kategori WBS');
 
