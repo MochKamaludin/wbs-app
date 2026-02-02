@@ -13,7 +13,7 @@ class ReferensiStatusPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -21,7 +21,7 @@ class ReferensiStatusPolicy
      */
     public function view(User $user, ReferensiStatus $referensiStatus): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -29,7 +29,7 @@ class ReferensiStatusPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -37,7 +37,7 @@ class ReferensiStatusPolicy
      */
     public function update(User $user, ReferensiStatus $referensiStatus): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -45,7 +45,7 @@ class ReferensiStatusPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -53,7 +53,7 @@ class ReferensiStatusPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -61,7 +61,7 @@ class ReferensiStatusPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -69,7 +69,7 @@ class ReferensiStatusPolicy
      */
     public function delete(User $user, ReferensiStatus $referensiStatus): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -77,7 +77,7 @@ class ReferensiStatusPolicy
      */
     public function restore(User $user, ReferensiStatus $referensiStatus): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -85,6 +85,6 @@ class ReferensiStatusPolicy
      */
     public function forceDelete(User $user, ReferensiStatus $referensiStatus): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 }

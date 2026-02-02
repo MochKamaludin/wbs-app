@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class TmwblsFile extends Model
 {
@@ -28,6 +29,12 @@ class TmwblsFile extends Model
             'i_wbls',
             'i_wbls'
         );
+    }
+
+    
+    public function getDownloadUrlAttribute()
+    {
+        return Storage::url($this->n_wbls_file);
     }
 
     public function category()

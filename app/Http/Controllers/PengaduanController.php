@@ -37,12 +37,20 @@ class PengaduanController extends Controller
     {
         DB::transaction(function () use ($request) {
 
-            $seq = DB::table('tmwbls')->max('i_wbls_seq') + 1;
+            $seq = DB::table('tmwbls')->lockForUpdate()->max('i_wbls_seq') + 1;
+
+            $bulan = now()->format('m');
+            $tahun = now()->format('Y');
 
             $i_wbls = 'WBS/' .
-                $request->c_wbls_categ . '/' .
-                now()->format('m/Y') . '/' .
-                str_pad($seq, 4, '0', STR_PAD_LEFT);
+                str_pad($seq, 4, '0', STR_PAD_LEFT) . '/' .
+                'PTD' . '/' .
+                $bulan . '/' .
+                $tahun;
+            
+            $stat = DB::table('trwblsstat')
+                ->where('c_wbls_stat', '1')
+                ->first();
 
             DB::table('tmwbls')->insert([
                 'i_wbls'          => $i_wbls,
@@ -50,7 +58,9 @@ class PengaduanController extends Controller
                 'c_wbls_categ'    => $request->c_wbls_categ,
                 'e_wbls'          => $request->uraian,
                 'd_wbls_incident' => $request->d_wbls_incident,
-                'c_wbls_stat'     => '1',
+                'c_wbls_stat'     => $stat->c_wbls_stat,
+                'e_wbls_stat'     => $stat->e_wbls_stat,
+                'f_wbls_agree'    => null,
                 'd_wbls'          => now(),
                 'd_entry'         => now(),
             ]);
@@ -76,7 +86,7 @@ class PengaduanController extends Controller
                 $data = [
                     'i_wbls'         => $i_wbls,
                     'i_id_question' => $questionId,
-                    'i_entry'       => 'guest',
+                    'i_entry'       => 'Pelapor',
                     'd_entry'       => now(),
                 ];
 

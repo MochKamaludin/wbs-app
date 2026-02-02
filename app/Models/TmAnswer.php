@@ -19,6 +19,14 @@ class TmAnswer extends Model
         'e_answer','i_entry'
     ];
 
+    public function pertanyaan()
+    {
+        return $this->belongsTo(
+            TrQuestion::class,
+            'i_id_question',
+        );
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $user = Auth::user();

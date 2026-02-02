@@ -13,7 +13,7 @@ class FaqPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -21,7 +21,7 @@ class FaqPolicy
      */
     public function view(User $user, Faq $faq): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -29,7 +29,7 @@ class FaqPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -37,7 +37,7 @@ class FaqPolicy
      */
     public function update(User $user, Faq $faq): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -45,7 +45,7 @@ class FaqPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -53,7 +53,7 @@ class FaqPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -61,7 +61,7 @@ class FaqPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -69,7 +69,7 @@ class FaqPolicy
      */
     public function delete(User $user, Faq $faq): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -77,7 +77,7 @@ class FaqPolicy
      */
     public function restore(User $user, Faq $faq): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -85,6 +85,6 @@ class FaqPolicy
      */
     public function forceDelete(User $user, Faq $faq): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 }

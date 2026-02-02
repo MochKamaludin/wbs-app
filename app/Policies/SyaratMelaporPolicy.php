@@ -13,7 +13,7 @@ class SyaratMelaporPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -21,7 +21,7 @@ class SyaratMelaporPolicy
      */
     public function view(User $user, SyaratMelapor $syaratMelapor): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -29,7 +29,7 @@ class SyaratMelaporPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -37,7 +37,7 @@ class SyaratMelaporPolicy
      */
     public function update(User $user, SyaratMelapor $syaratMelapor): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -45,7 +45,7 @@ class SyaratMelaporPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -53,7 +53,7 @@ class SyaratMelaporPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -61,7 +61,7 @@ class SyaratMelaporPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -69,7 +69,7 @@ class SyaratMelaporPolicy
      */
     public function delete(User $user, SyaratMelapor $syaratMelapor): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -77,7 +77,7 @@ class SyaratMelaporPolicy
      */
     public function restore(User $user, SyaratMelapor $syaratMelapor): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -85,6 +85,6 @@ class SyaratMelaporPolicy
      */
     public function forceDelete(User $user, SyaratMelapor $syaratMelapor): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 }

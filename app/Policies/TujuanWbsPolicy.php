@@ -13,7 +13,7 @@ class TujuanWbsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -21,7 +21,7 @@ class TujuanWbsPolicy
      */
     public function view(User $user, TujuanWbs $tujuanWbs): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -29,7 +29,7 @@ class TujuanWbsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -37,7 +37,7 @@ class TujuanWbsPolicy
      */
     public function update(User $user, TujuanWbs $tujuanWbs): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -45,7 +45,7 @@ class TujuanWbsPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -53,7 +53,7 @@ class TujuanWbsPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -61,7 +61,7 @@ class TujuanWbsPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -69,7 +69,7 @@ class TujuanWbsPolicy
      */
     public function delete(User $user, TujuanWbs $tujuanWbs): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -77,7 +77,7 @@ class TujuanWbsPolicy
      */
     public function restore(User $user, TujuanWbs $tujuanWbs): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -85,6 +85,6 @@ class TujuanWbsPolicy
      */
     public function forceDelete(User $user, TujuanWbs $tujuanWbs): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 }

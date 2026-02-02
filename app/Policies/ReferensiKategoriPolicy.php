@@ -13,7 +13,7 @@ class ReferensiKategoriPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -21,7 +21,7 @@ class ReferensiKategoriPolicy
      */
     public function view(User $user, ReferensiKategori $referensiKategori): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -29,7 +29,7 @@ class ReferensiKategoriPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -37,7 +37,7 @@ class ReferensiKategoriPolicy
      */
     public function update(User $user, ReferensiKategori $referensiKategori): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -45,7 +45,7 @@ class ReferensiKategoriPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -53,7 +53,7 @@ class ReferensiKategoriPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -61,7 +61,7 @@ class ReferensiKategoriPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -69,7 +69,7 @@ class ReferensiKategoriPolicy
      */
     public function delete(User $user, ReferensiKategori $referensiKategori): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -77,7 +77,7 @@ class ReferensiKategoriPolicy
      */
     public function restore(User $user, ReferensiKategori $referensiKategori): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 
     /**
@@ -85,6 +85,6 @@ class ReferensiKategoriPolicy
      */
     public function forceDelete(User $user, ReferensiKategori $referensiKategori): bool
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || $user->isVerifikator();
     }
 }
