@@ -9,6 +9,8 @@ use App\Models\PerlindunganPelapor;
 use App\Models\TujuanWbs;
 use App\Models\SyaratMelapor;
 use App\Models\CaraMelapor;
+use App\Models\Tmwbls;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -58,6 +60,43 @@ class HomeController extends Controller
             ->get();
 
 
-        return view('landing.index', compact('definisi', 'kapanDigunakan', 'dasarWbs','items', 'tujuanWbs', 'syaratMelapor', 'perlindungan', 'faq', 'steps'));
+        $total = Tmwbls::count();
+
+        $belum = Tmwbls::where('c_wbls_stat', 1)->count();
+        $proses = Tmwbls::where('c_wbls_stat', 4)->count();
+        $selesai = Tmwbls::whereIn('c_wbls_stat', [5, 6])->count();
+
+        $kategori = Tmwbls::select(
+                'c_wbls_categ',
+                DB::raw('COUNT(*) as total')
+            )
+            ->groupBy('c_wbls_categ')
+            ->get();
+
+        $grandTotal = $kategori->sum('total');
+
+        $kategoriData = $kategori->map(function ($item) use ($grandTotal) {
+            return [
+                'nama' => $item->c_wbls_categ,
+                'jumlah' => $item->total,
+                'persen' => $grandTotal > 0
+                    ? round(($item->total / $grandTotal) * 100, 2) . '%'
+                    : '0%',
+            ];
+        });
+
+        $labels = $kategoriData->pluck('nama');
+        $dataKategori = $kategoriData->pluck('jumlah');
+
+
+        return view('landing.index', compact('definisi', 'kapanDigunakan', 'dasarWbs','items', 'tujuanWbs', 'syaratMelapor', 'perlindungan', 'faq', 'steps'
+                                            ,'total',
+                                            'belum',
+                                            'proses',
+                                            'selesai',
+                                            'kategoriData',
+                                            'labels',
+                                            'dataKategori'
+    ));
     }
 }  

@@ -3,7 +3,6 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-16 items-center">
 
-            {{-- KONTEN TEKS --}}
             <div>
                 <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
                     {{ $definisi?->n_wbls_about }}
@@ -27,7 +26,6 @@
                 </dl>
             </div>
 
-            {{-- KONTEN GAMBAR --}}
             <div class="flex justify-center">
                 <div class="grid grid-cols-2 grid-rows-2 gap-6 max-w-md w-full">
 
@@ -126,7 +124,7 @@
 <section id="jenis_pelanggaran" class="relative py-32 reveal">
     <!-- Background image -->
     <div class="absolute inset-0">
-        <img src="{{ asset('images/bg2.jpeg') }}" 
+        <img src="{{ asset('images/background/bg2.jpeg') }}" 
              class="w-full h-full object-cover opacity-100" 
              alt="Background jenis pelanggaran">
     </div>

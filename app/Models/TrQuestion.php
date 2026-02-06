@@ -15,6 +15,7 @@ class TrQuestion extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'i_question_seq',
         'c_wbls_categ',
         'c_question',
         'i_question_sort',
@@ -38,7 +39,7 @@ class TrQuestion extends Model
             TrQuestionChoice::class,
             'i_id_question',
             'i_id_question'
-        )->orderBy('i_choice_sort');
+        );
     }
 
     public function kategori()

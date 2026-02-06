@@ -25,36 +25,54 @@
 
             {{-- URAIAN --}}
             <div class="mb-5">
-                <label class="font-semibold block mb-1">Uraian Singkat</label>
+                <label class="font-semibold block mb-1">
+                    Uraian Singkat <span class="text-red-600">*</span>
+                </label>
                 <textarea name="uraian" rows="3"
-                    class="w-full border rounded-lg px-4 py-2
-                           focus:ring focus:ring-blue-300"></textarea>
+                    class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300">{{ old('uraian') }}</textarea>
             </div>
 
             {{-- TANGGAL KEJADIAN --}}
             <div class="mb-6">
                 <label class="font-semibold block mb-1">
-                    Perkiraan Waktu Kejadian
+                    Perkiraan Waktu Kejadian <span class="text-red-600">*</span>
                 </label>
                 <input type="date"
                     name="d_wbls_incident"
-                    class="w-full border rounded-lg px-4 py-2
-                           focus:ring focus:ring-blue-300">
+                    value="{{ old('d_wbls_incident') }}"
+                    class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300">
             </div>
 
             {{-- KATEGORI --}}
             <div class="mb-6">
-                <label class="font-semibold block mb-1">Kategori Pengaduan</label>
+                <label class="font-semibold block mb-1">
+                    Kategori Pengaduan <span class="text-red-600">*</span>
+                </label>
                 <select id="kategori" name="c_wbls_categ"
                     class="w-full border rounded-lg px-4 py-2">
                     <option value="">-- Pilih Kategori --</option>
                     @foreach($kategori as $k)
-                        <option value="{{ $k->c_wbls_categ }}">
+                        <option value="{{ $k->c_wbls_categ }}"
+                            {{ old('c_wbls_categ') == $k->c_wbls_categ ? 'selected' : '' }}>
                             {{ $k->n_wbls_categ }}
                         </option>
                     @endforeach
                 </select>
             </div>
+
+            {{-- KATEGORI LAINNYA --}}
+            <div class="mb-6 hidden" id="kategori-lainnya-wrapper">
+                <label class="font-semibold block mb-1">
+                    Kategori Lainnya <span class="text-red-600">*</span>
+                </label>
+                <input type="text"
+                    name="n_wbls_categother"
+                    value="{{ old('n_wbls_categother') }}"
+                    class="w-full border rounded-lg px-4 py-2"
+                    placeholder="Tuliskan kategori lainnya">
+            </div>
+            {{-- DEBUG --}}
+
 
 
             {{-- ================= PERTANYAAN ================= --}}
@@ -64,28 +82,33 @@
 
                     <label class="font-semibold block mb-2">
                         {{ $q->n_question }}
+                        @if($q->f_required == 1)
+                            <span class="text-red-600">*</span>
+                        @endif
                     </label>
 
                     {{-- TEXT / CURRENCY --}}
                     @if(in_array($q->c_question, [1,6]))
                         <input type="text"
                             name="answers[{{ $q->i_id_question }}]"
+                            value="{{ old('answers.' . $q->i_id_question) }}"
                             class="w-full border rounded-lg px-4 py-2">
 
                     {{-- TEXTAREA --}}
                     @elseif($q->c_question == 3)
                         <textarea
                             name="answers[{{ $q->i_id_question }}]"
-                            class="w-full border rounded-lg px-4 py-2"></textarea>
+                            class="w-full border rounded-lg px-4 py-2">{{ old('answers.' . $q->i_id_question) }}</textarea>
 
                     {{-- RADIO --}}
-                    @elseif($q->c_question == 4)
+                    @elseif($q->c_question == 2)
                         <div class="space-y-2">
                             @foreach($q->choices as $c)
                                 <label class="flex items-center gap-2 cursor-pointer">
                                     <input type="radio"
                                         name="answers[{{ $q->i_id_question }}]"
                                         value="{{ $c->i_id_questionchoice }}"
+                                        {{ old('answers.' . $q->i_id_question) == $c->i_id_questionchoice ? 'checked' : '' }}
                                         class="text-blue-600">
                                     <span>{{ $c->n_choice }}</span>
                                 </label>
@@ -98,7 +121,8 @@
                             class="w-full border rounded-lg px-4 py-2">
                             <option value="">-- pilih --</option>
                             @foreach($q->choices as $c)
-                                <option value="{{ $c->i_id_questionchoice }}">
+                                <option value="{{ $c->i_id_questionchoice }}"
+                                    {{ old('answers.' . $q->i_id_question) == $c->i_id_questionchoice ? 'selected' : '' }}>
                                     {{ $c->n_choice }}
                                 </option>
                             @endforeach
@@ -129,8 +153,7 @@
             {{-- SUBMIT --}}
             <div class="mt-10 text-right">
                 <button
-                    class="bg-blue-600 text-white px-6 py-3 rounded-lg
-                           hover:bg-blue-700">
+                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
                     Kirim Pengaduan
                 </button>
             </div>
@@ -139,13 +162,33 @@
 </div>
 
 <script>
-document.getElementById('kategori').addEventListener('change', function () {
-    document.querySelectorAll('.question').forEach(q => {
-        q.classList.add('hidden');
-        if (q.dataset.kategori === this.value) {
-            q.classList.remove('hidden');
+document.addEventListener('DOMContentLoaded', function () {
+    const kategori = document.getElementById('kategori');
+    const wrapper = document.getElementById('kategori-lainnya-wrapper');
+    const input = wrapper.querySelector('input');
+
+    function handleKategoriChange() {
+        const selectedValue = kategori.value;
+
+        document.querySelectorAll('.question').forEach(q => {
+            q.classList.add('hidden');
+            if (q.dataset.kategori === selectedValue) {
+                q.classList.remove('hidden');
+            }
+        });
+
+        if (selectedValue === '8') {
+            wrapper.classList.remove('hidden');
+            input.required = true;
+        } else {
+            wrapper.classList.add('hidden');
+            input.required = false;
+            input.value = '';
         }
-    });
+    }
+
+    kategori.addEventListener('change', handleKategoriChange);
+    handleKategoriChange();
 });
 </script>
 @endsection

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\WbsInvestigations\Tables;
+namespace App\Filament\Resources\RekapData\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -12,25 +12,61 @@ use App\Models\Tmwbls;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\DatePicker;
-use Illuminate\Database\Eloquent\Builder; 
-use Illuminate\Support\Facades\DB;
-use App\Services\BeritaAcaraService;
+use Illuminate\Database\Eloquent\Builder;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\WblsExport;
 use Filament\Actions\Action;
+use Barryvdh\DomPDF\Facade\Pdf;
 
-class WbsInvestigationsTable
+class RekapDataTable
 {
     public static function configure(Table $table): Table
     {
         return $table
-            ->query(fn () => Tmwbls::query()->where('f_wbls_agree', '1')
-                                            ->where('c_wbls_stat', '4'))
+            ->headerActions([
+                Action::make('exportExcel')
+                    ->label('Export Excel')
+                    ->color('success')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->action(function ($livewire) {
+                        $query = $livewire->getFilteredTableQuery();
+
+                        return Excel::download(
+                            new WblsExport($query),
+                            'laporan-wbls.xlsx'
+                        );
+                    }),
+
+                    Action::make('exportPdf')
+                    ->label('Export PDF')
+                    ->color('danger')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->action(function ($livewire) {
+
+                        $data = $livewire
+                            ->getFilteredTableQuery()
+                            ->get();
+
+                        $pdf = Pdf::loadView('pdf.wbls', [
+                            'data' => $data,
+                        ]);
+
+                        return response()->streamDownload(
+                            fn () => print($pdf->output()),
+                            'laporan-wbls.pdf'
+                        );
+                    }),
+            ])
+
+            ->query(fn () => Tmwbls::query()->where('f_wbls_agree', '1')->whereIn('c_wbls_stat', ['3', '5', '6']))
             ->columns([
                 TextColumn::make('i_wbls')
                     ->label('Nomor WBS')
                     ->searchable(),
 
                 TextColumn::make('kategori.n_wbls_categ')
-                    ->label('Kategori'),
+                    ->label('Kategori')
+                    ->searchable(),
 
                 TextColumn::make('d_wbls')
                     ->label('Tanggal Lapor')
@@ -43,7 +79,7 @@ class WbsInvestigationsTable
                 SelectFilter::make('c_wbls_stat')
                 ->label('Status')
                 ->options([
-                    4 => 'Laporan Ditolak', 
+                    3 => 'Laporan Ditolak',
                     5 => 'Selesai dan Terlapor Bersalah',
                     6 => 'Selesai dan Terlapor Tidak Terbukti Bersalah',
                 ]),
@@ -68,19 +104,7 @@ class WbsInvestigationsTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
-
-                Action::make('generateBA')
-                    ->label('Generate BA')
-                    ->color('success')
-                    ->action(function (Tmwbls $record) {
-                        BeritaAcaraService::generateAndUpdate($record);
-
-                        return redirect()->route('ba.pdf', $record->resume);
-                    })
-                    ->openUrlInNewTab()
-                ])
-
+            ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

@@ -46,12 +46,41 @@ class TrQuestionInfolist
                         IconEntry::make('f_active')
                             ->label('Aktif')
                             ->boolean(),
-                    ])
+                        
+                        TextEntry::make('i_entry')
+                            ->label('Dibuat Oleh')
+                            ->formatStateUsing(fn ($state) => match ($state) {
+                                '0' => 'Admin',
+                                '1' => 'Verifikator',
+                                '2' => 'Investigator',
+                                default => '-',
+                            }),
+
+                        TextEntry::make('d_entry')
+                            ->label('Tanggal Dibuat')
+                            ->dateTime('d M Y H:i'),
+
+                        TextEntry::make('i_update')
+                            ->label('Diubah Oleh')
+                            ->formatStateUsing(fn ($state) => match ($state) {
+                                '0' => 'Admin',
+                                '1' => 'Verifikator',
+                                '2' => 'Investigator',
+                                default => '-',
+                            })
+                            ->placeholder('Belum Diubah'),
+
+                        TextEntry::make('d_update')
+                            ->label('Tanggal Diubah')
+                            ->dateTime('d M Y H:i')
+                            ->placeholder('Belum Diubah'),
+                            ])
                     ->columns(2),
 
                 Section::make('Pilihan Jawaban')
                     ->schema([
                         RepeatableEntry::make('choices')
+                            ->label('Pilihan')
                             ->schema([
                                 TextEntry::make('i_choice_sort')
                                     ->label('Urutan'),

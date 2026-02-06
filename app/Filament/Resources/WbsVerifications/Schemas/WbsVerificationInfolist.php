@@ -11,31 +11,35 @@ use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Grid;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 
 
 class WbsVerificationInfolist
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->components([
-            Section::make()
-                ->schema([
-                    Grid::make(1)->schema([
+    return $schema->components([
+        Tabs::make('Tabs')
+            ->contained(false)
+            ->columnSpanFull()
+            ->tabs([
 
-                        Grid::make(2)->schema([
-                            TextEntry::make('i_wbls')
-                                ->label('Nomor WBS'),
+                Tab::make('Detail Laporan')
+                    ->icon('heroicon-o-information-circle')
+                    ->schema([
+                        TextEntry::make('i_wbls')
+                            ->label('Nomor WBS'),
 
-                            TextEntry::make('kategori.n_wbls_categ')
-                                ->label('Kategori'),
+                        TextEntry::make('kategori.n_wbls_categ')
+                            ->label('Kategori'),
 
-                            TextEntry::make('d_wbls')
-                                ->label('Tanggal Lapor')
-                                ->dateTime('d/m/Y H:i'),
+                        TextEntry::make('d_wbls')
+                            ->label('Tanggal Lapor')
+                            ->dateTime('d/m/Y H:i'),
 
-                            TextEntry::make('d_wbls_incident')
-                                ->label('Perkiraan Waktu Kejadian'),
-                        ]),
+                        TextEntry::make('d_wbls_incident')
+                            ->label('Perkiraan Waktu Kejadian'),
 
                         TextEntry::make('e_wbls')
                             ->label('Uraian Kejadian'),
@@ -44,50 +48,53 @@ class WbsVerificationInfolist
                             ->label('Keterangan Status')
                             ->html(),
                     ]),
-                ]),
 
-            Group::make()
-                ->schema([
-                    Grid::make(2)->schema([
-                        RepeatableEntry::make('answers')
-                            ->label('Jawaban Pertanyaan')
-                            ->state(fn (Tmwbls $record) =>
-                                TmAnswer::where('i_wbls', $record->i_wbls)->get()
-                            )
-                            ->schema([
-                                TextEntry::make('pertanyaan.n_question')
-                                    ->label('Pertanyaan'),
+                Tab::make('Jawaban Pertanyaan & Lampiran')
+                    ->icon('heroicon-o-archive-box')
+                    ->schema([
+                        Grid::make(2)->schema([
 
-                                TextEntry::make('e_answer')
-                                    ->label('Jawaban'),
-                            ]),
+                            RepeatableEntry::make('answers')
+                                ->label('Jawaban Pertanyaan')
+                                ->state(fn (Tmwbls $record) =>
+                                    TmAnswer::where('i_wbls', $record->i_wbls)->get()
+                                )
+                                ->schema([
+                                    TextEntry::make('pertanyaan.n_question')
+                                        ->label('Pertanyaan'),
 
-                        RepeatableEntry::make('files')
-                            ->label('Lampiran')
-                            ->state(fn (Tmwbls $record) =>
-                                TmwblsFile::where('i_wbls', $record->i_wbls)->get()
-                            )
-                            ->schema([
-                                TextEntry::make('n_wbls_file')
-                                    ->label('Nama File'),
+                                    TextEntry::make('e_answer')
+                                        ->label('Jawaban'),
+                                ]),
 
-                                TextEntry::make('category.n_wbls_filecateg')
-                                    ->label('Kategori File'),
+                            RepeatableEntry::make('files')
+                                ->label('Lampiran')
+                                ->state(fn (Tmwbls $record) =>
+                                    TmwblsFile::where('i_wbls', $record->i_wbls)->get()
+                                )
+                                ->schema([
+                                    TextEntry::make('n_wbls_file')
+                                        ->label('Nama File'),
 
-                                TextEntry::make('d_wbls_file')
-                                    ->label('Tanggal Upload')
-                                    ->dateTime('d/m/Y H:i'),
+                                    TextEntry::make('category.n_wbls_filecateg')
+                                        ->label('Kategori File'),
 
-                                TextEntry::make('download')
-                                    ->label('Aksi')
-                                    ->state('Download')
-                                    ->url(fn ($record) => $record->download_url)
-                                    ->openUrlInNewTab()
-                                    ->icon('heroicon-o-arrow-down-tray')
-                                    ->color('primary'),
-                            ]),
+                                    TextEntry::make('d_wbls_file')
+                                        ->label('Tanggal Upload')
+                                        ->dateTime('d/m/Y H:i'),
+
+                                    TextEntry::make('download')
+                                        ->label('Aksi')
+                                        ->state('Download')
+                                        ->url(fn ($record) => $record->download_url)
+                                        ->openUrlInNewTab()
+                                        ->icon('heroicon-o-arrow-down-tray')
+                                        ->color('primary'),
+                                ]),
+                        ]),
                     ]),
-                ]),
+
+            ]),
         ]);
     }
 }

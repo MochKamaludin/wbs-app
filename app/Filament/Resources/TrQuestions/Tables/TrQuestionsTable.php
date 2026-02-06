@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TrQuestions\Tables;
 
+use App\Models\ReferensiKategori;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
@@ -10,19 +11,24 @@ use Filament\Actions\DeleteAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 
 class TrQuestionsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('i_question_sort', 'asc')
+            ->reorderable('i_question_sort')
             ->columns([
-                TextColumn::make('kategori.n_wbls_categ')
-                    ->label('Kategori'),
-                    
                 TextColumn::make('i_question_sort')
                     ->label('Urutan Pertanyaan')
                     ->sortable(),
+
+                TextColumn::make('kategori.n_wbls_categ')
+                    ->label('Kategori')
+                    ->searchable(),
 
                 TextColumn::make('n_question')
                     ->label('Pertanyaan')
@@ -50,29 +56,19 @@ class TrQuestionsTable
                 IconColumn::make('f_active')
                     ->label('Status Aktif')
                     ->boolean(),
-
-                TextColumn::make('i_entry')
-                    ->label('Dibuat Oleh')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('d_entry')
-                    ->label('Tanggal Dibuat')
-                    ->dateTime('d M Y H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('d_update')
-                    ->label('Diubah Oleh')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('d_update')
-                    ->label('Tanggal Diubah')
-                    ->dateTime('d M Y H:i')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            
+            ->filters([
+                SelectFilter::make('c_wbls_categ')
+                    ->label('Kategori Pelanggaran')
+                    ->options(
+                        ReferensiKategori::pluck('n_wbls_categ', 'c_wbls_categ')->toArray()
+                    )
+                    ->searchable()
+                    ->placeholder('Semua Kategori')
+                    ->default(1),
+            ], layout: FiltersLayout::AboveContent)
+
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),

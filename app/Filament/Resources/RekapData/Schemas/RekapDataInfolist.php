@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\WbsInvestigations\Schemas;
+namespace App\Filament\Resources\RekapData\Schemas;
 
 use Filament\Schemas\Schema;
-use App\Models\TmAnswer;
-use App\Models\Tmwbls;
-use App\Models\TmwblsFile;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Grid;;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
+use App\Models\Tmwbls;
+use App\Models\TmAnswer;;
+use App\Models\TmwblsFile;
 
-class WbsInvestigationInfolist
+class RekapDataInfolist
 {
     public static function configure(Schema $schema): Schema
     {

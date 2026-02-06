@@ -17,16 +17,21 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
+use UnitEnum;
 
 class WbsVerificationResource extends Resource
 {
     protected static ?string $model = Tmwbls::class;
 
-    protected static ?string $navigationLabel = 'Laporan Pelanggaran';
-    protected static ?string $pluralModelLabel = 'Laporan Pelanggaran';
-    protected static ?string $modelLabel = 'Laporan Pelanggaran';
+    protected static ?string $navigationLabel = 'Verifikasi Laporan';
+    protected static ?string $pluralModelLabel = 'Verifikasi Laporan';
+    protected static ?string $modelLabel = 'Verifikasi Laporan';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Laporan';
+
+    protected static ?int $navigationSort = 2;
 
     public static function canAccess(): bool
     {

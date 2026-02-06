@@ -5,54 +5,65 @@ namespace App\Filament\Resources\TrQuestions\Pages;
 use App\Filament\Resources\TrQuestions\TrQuestionResource;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Facades\Filament;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\TrQuestion;
 
 class CreateTrQuestion extends CreateRecord
 {
     protected static string $resource = TrQuestionResource::class;
-
-    protected array $choices = [];
 
     public function getTitle(): string
     {
         return 'Tambah Pertanyaan';
     }
 
-    protected function getRedirectUrl(): string
+    protected function handleRecordCreation(array $data): Model
     {
-        return static::$resource::getUrl('index');
-    }
+        DB::transaction(function () use ($data) {
 
-    protected function mutateFormDataBeforeCreate(array $data): array
-    {
-        $userId = (int) Filament::auth()->user()->i_wbls_adm_id;
+            $userId   = Filament::auth()->user()->i_wbls_adm;
+            $kategori = $data['c_wbls_categ'];
 
-        $this->choices = $data['choices'] ?? [];
-        unset($data['choices']);
+            foreach ($data['questions'] as $question) {
 
-        $data['i_entry'] = $userId;
-        $data['d_entry'] = now();
-
-        return $data;
-    }
-
-    protected function afterCreate(): void
-    {
-        if (empty($this->choices)) return;
-
-        $userId = (int) Filament::auth()->user()->i_wbls_adm_id;
-
-        DB::transaction(function () use ($userId) {
-            foreach ($this->choices as $choice) {
-                DB::table('trquestionchoice')->insert([
-                    'i_id_question' => $this->record->i_id_question,
-                    'i_choice_sort' => (int) $choice['i_choice_sort'],
-                    'n_choice'      => $choice['n_choice'],
-                    'f_active'      => $choice['f_active'] ? 1 : 0,
-                    'i_entry'       => $userId,
-                    'd_entry'       => now(),
+                $q = TrQuestion::create([
+                    'c_wbls_categ'    => $kategori,
+                    'i_question_sort' => $question['i_question_sort'],
+                    'n_question'      => $question['n_question'],
+                    'c_question'      => $question['c_question'],
+                    'f_required'      => $question['f_required'],
+                    'f_active'        => $question['f_active'],
+                    'i_entry'         => $userId,
+                    'd_entry'         => now(),
                 ]);
+                
+                if (!empty($question['choices'])) {
+                    foreach ($question['choices'] as $choice) {
+                        DB::table('trquestionchoice')->insert([
+                            'i_id_question' => $q->i_id_question,
+                            'i_choice_sort' => $choice['i_choice_sort'],
+                            'n_choice'      => $choice['n_choice'],
+                            'f_active'      => $choice['f_active'] ? 1 : 0,
+                            'i_entry'       => $userId,
+                            'd_entry'       => now(),
+                        ]);
+                    }
+                }
             }
         });
+
+        return new TrQuestion();
     }
+
+    protected function getCreatedNotificationTitle(): ?string
+    {
+        return 'Semua pertanyaan berhasil disimpan';
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return static::getResource()::getUrl('index');
+    }
+
 }

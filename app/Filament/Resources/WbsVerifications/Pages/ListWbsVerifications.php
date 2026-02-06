@@ -22,7 +22,6 @@ class ListWbsVerifications extends ListRecords
     public function getTabs(): array
     {
         return [
-        //    'new' => Tab::make()->query(fn ($query) => $query->where('status', 'new')),
             'baru' => Tab::make()->query(fn ($query) => $query->whereNull('f_wbls_agree')),
             'disetujui' => Tab::make()->query(fn ($query) => $query->where('f_wbls_agree', '1')),
         ];

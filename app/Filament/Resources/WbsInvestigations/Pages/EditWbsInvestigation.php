@@ -22,14 +22,6 @@ class EditWbsInvestigation extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        $data['n_wbls_stat'] = ReferensiStatus::where(
-            'c_wbls_stat',
-            $data['c_wbls_stat']
-        )->value('n_wbls_stat');
-
-        $data['d_wbls_statupd'] = now();
-
         return $data;
     }
-
 }

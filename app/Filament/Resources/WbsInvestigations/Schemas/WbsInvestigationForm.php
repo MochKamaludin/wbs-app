@@ -13,6 +13,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 
 class WbsInvestigationForm
 {
@@ -43,6 +44,7 @@ class WbsInvestigationForm
 
                         TextEntry::make('e_wbls_stat')
                             ->label('Keterangan Status')
+                            ->placeholder('-')
                             ->html(),
                     ]),
                 ]),
@@ -96,9 +98,13 @@ class WbsInvestigationForm
                         ->label('Status Laporan')
                         ->required()
                         ->options(
-                            ReferensiStatus::whereIn('c_wbls_stat', ['5', '6'])
+                            ReferensiStatus::whereIn('c_wbls_stat', ['3', '5', '6'])
                                 ->pluck('n_wbls_stat', 'c_wbls_stat')
                         ),
+                    Textarea::make('e_wbls_stat')
+                        ->label('Keterangan Status')
+                        ->nullable()
+                        ->dehydrated(true)
                 ]),
         ]);
     }

@@ -19,6 +19,7 @@ class Tmwbls extends Model
         'i_wbls',
         'i_wbls_seq',
         'c_wbls_categ',
+        'n_wbls_categother',
         'e_wbls',
         'd_wbls_incident',
         'c_wbls_stat',
@@ -53,6 +54,11 @@ class Tmwbls extends Model
             ReferensiStatus::class,
             'c_wbls_stat',
         );
+    }
+
+    public function resume()
+    {
+        return $this->hasOne(TmwblsResume::class, 'i_wbls', 'i_wbls');
     }
 
     public function user()
