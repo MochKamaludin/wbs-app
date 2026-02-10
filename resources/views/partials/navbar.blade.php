@@ -23,6 +23,7 @@
             <li><a href="{{ url('/') }}#tentang_wbs" class="nav-link hover:text-blue-600">TENTANG WBS</a></li>
             <li><a href="{{ url('/') }}#cara_pengaduan" class="nav-link hover:text-blue-600">CARA PENGADUAN</a></li>
             <li><a href="#" id="btnNavbarPengaduan" class="nav-link hover:text-blue-600">TULIS PENGADUAN</a></li>
+            <li><a href="{{ route('cek-status.index') }}" class="nav-link hover:text-blue-600">CEK STATUS</a></li>
             <li><a href="{{ url('/') }}#dasar_wbs" class="nav-link hover:text-blue-600">DASAR WBS</a></li>
             <li><a href="{{ url('/') }}#dashboard" class="nav-link hover:text-blue-600">DASHBOARD</a></li>
             <li><a href="{{ url('/') }}#faq" class="nav-link hover:text-blue-600">FAQ</a></li>
@@ -47,6 +48,7 @@
         <button onclick="openModal()" class="block py-2 text-left w-full nav-link">
             TULIS PENGADUAN
         </button>
+        <a href="{{ route('cek-status.index') }}" class="block py-2 nav-link">CEK STATUS</a>
         <a href="{{ url('/') }}#dasar_wbs" class="block py-2 nav-link">DASAR WBS</a>
         <a href="{{ url('/') }}#dashboard" class="block py-2 nav-link">DASHBOARD</a>
         <a href="{{ url('/') }}#faq" class="block py-2 nav-link">FAQ</a>

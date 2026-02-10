@@ -65,14 +65,24 @@ class TrQuestionsTable
                         ReferensiKategori::pluck('n_wbls_categ', 'c_wbls_categ')->toArray()
                     )
                     ->searchable()
-                    ->placeholder('Semua Kategori')
-                    ->default(1),
+                    ->default(1)
+                    ->query(function ($query, $state) {
+                        if ($state) {
+                            $query->where('c_wbls_categ', $state);
+                        }
+                    }),
+
             ], layout: FiltersLayout::AboveContent)
 
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
-                DeleteAction::make(),
+                DeleteAction::make()
+                ->label('Hapus')
+                ->modalHeading('Hapus Pertanyaan')
+                ->modalDescription('Data yang dihapus tidak dapat dikembalikan.')
+                ->modalSubmitActionLabel('Ya, Hapus')
+                ->modalCancelActionLabel('Batal'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

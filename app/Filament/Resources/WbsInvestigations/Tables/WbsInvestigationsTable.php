@@ -43,7 +43,8 @@ class WbsInvestigationsTable
                 SelectFilter::make('c_wbls_stat')
                 ->label('Status')
                 ->options([
-                    4 => 'Laporan Ditolak', 
+                    3 => 'Laporan Ditolak', 
+                    4 => 'Dalam Pemeriksaan',
                     5 => 'Selesai dan Terlapor Bersalah',
                     6 => 'Selesai dan Terlapor Tidak Terbukti Bersalah',
                 ]),

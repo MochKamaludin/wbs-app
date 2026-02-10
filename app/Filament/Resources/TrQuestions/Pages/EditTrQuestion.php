@@ -3,10 +3,14 @@
 namespace App\Filament\Resources\TrQuestions\Pages;
 
 use App\Filament\Resources\TrQuestions\TrQuestionResource;
+use App\Filament\Resources\TrQuestions\Schemas\TrQuestionEditForm;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Actions\DeleteAction;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Filament\Facades\Filament;
+use App\Models\TrQuestion;
 
 class EditTrQuestion extends EditRecord
 {
@@ -15,13 +19,42 @@ class EditTrQuestion extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+            ->label('Hapus')
+            ->modalHeading('Hapus Pertanyaan')
+            ->modalDescription('Data yang dihapus tidak dapat dikembalikan.')
+            ->modalSubmitActionLabel('Ya, Hapus')
+            ->modalCancelActionLabel('Batal'),
         ];
     }
 
     public function getTitle(): string
     {
         return 'Edit Pertanyaan';
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return TrQuestionEditForm::configure($schema);
+    }
+
+    protected function beforeValidate(): void
+    {
+        $data = $this->form->getState();
+        $sort = $data['i_question_sort'] ?? null;
+
+        if (!$sort || !$this->record) return;
+
+        $exists = TrQuestion::where('c_wbls_categ', $this->record->c_wbls_categ)
+            ->where('i_question_sort', (int) $sort)
+            ->where('i_id_question', '!=', $this->record->i_id_question)
+            ->exists();
+
+        if ($exists) {
+            throw ValidationException::withMessages([
+                'i_question_sort' => "Urutan $sort sudah dipakai di kategori ini.",
+            ]);
+        }
     }
 
     protected function getRedirectUrl(): string
@@ -51,7 +84,7 @@ class EditTrQuestion extends EditRecord
     {
         unset($data['choices']);
 
-        $data['i_update'] = (int) Filament::auth()->user()->i_wbls_adm;
+        $data['i_update'] = Filament::auth()->user()->i_wbls_adm;
         $data['d_update'] = now();
 
         return $data;
@@ -59,7 +92,7 @@ class EditTrQuestion extends EditRecord
     protected function afterSave(): void
     {
         $choices    = $this->form->getState()['choices'] ?? [];
-        $userId     = (int) Filament::auth()->user()->i_wbls_adm;
+        $userId   = Filament::auth()->user()->i_wbls_adm;
         $questionId = $this->record->i_id_question;
 
         DB::transaction(function () use ($choices, $userId, $questionId) {

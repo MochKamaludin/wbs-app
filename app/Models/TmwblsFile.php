@@ -31,6 +31,15 @@ class TmwblsFile extends Model
         );
     }
 
+    public function pertanyaan()
+    {
+        return $this->belongsTo(
+            TrQuestion::class,
+            'i_id_question',      
+            'i_id_question'      
+        );
+    }
+
     
     public function getDownloadUrlAttribute()
     {

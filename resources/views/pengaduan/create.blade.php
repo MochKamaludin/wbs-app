@@ -1,6 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
+
+@if(session('resi'))
+<div class="mb-6 rounded-2xl border border-blue-200 bg-blue-50 p-6 text-center">
+
+    <p class="text-lg font-semibold text-blue-800 mb-4">
+        Pengaduan berhasil dikirim
+    </p>
+
+    <div class="flex items-center justify-center gap-2 max-w-full">
+        <div
+            id="resiText"
+            class="font-mono text-blue-900 text-lg break-all
+                   bg-white rounded-xl px-4 py-3 border flex-1 max-w-md">
+            {{ session('resi') }}
+        </div>
+
+        <button
+            type="button"
+            onclick="copyResi()"
+            class="shrink-0 rounded-xl border border-blue-300
+                   bg-blue-600 text-white px-4 py-3
+                   hover:bg-blue-700 transition text-sm font-semibold">
+            Copy
+        </button>
+    </div>
+
+    <p id="copyNotif" class="hidden mt-3 text-sm text-green-600 font-medium">
+        Nomor resi berhasil disalin ✔
+    </p>
+
+    <p class="text-sm text-slate-600 mt-2">
+        Simpan nomor resi ini untuk mengecek status pengaduan.
+    </p>
+</div>
+
+<script>
+function copyResi() {
+    const text = document.getElementById('resiText').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        const notif = document.getElementById('copyNotif');
+        notif.classList.remove('hidden');
+
+        setTimeout(() => {
+            notif.classList.add('hidden');
+        }, 2000);
+    });
+}
+</script>
+@endif
+
 <div class="min-h-screen bg-gray-100 py-10">
     <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
 
@@ -130,10 +180,15 @@
 
                     {{-- FILE UPLOAD --}}
                     @elseif($q->c_question == 7)
-                        <div class="space-y-4">
+                    <div class="space-y-4"
+                        id="file-wrapper-{{ $q->i_id_question }}">
+
+                        {{-- FILE ROW --}}
+                        <div class="file-row flex gap-3 items-start">
                             <select
-                                name="file_categ[{{ $q->i_id_question }}]"
-                                class="w-full border rounded-lg px-3 py-2">
+                                name="files[{{ $q->i_id_question }}][0][categ]"
+                                class="w-1/3 border rounded-lg px-3 py-2"
+                                required>
                                 <option value="">-- Kategori File --</option>
                                 @foreach($fileCateg as $f)
                                     <option value="{{ $f->c_wbls_filecateg }}">
@@ -143,10 +198,25 @@
                             </select>
 
                             <input type="file"
-                                name="files[{{ $q->i_id_question }}]"
-                                class="block w-full border rounded-lg px-3 py-2 cursor-pointer">
+                                name="files[{{ $q->i_id_question }}][0][file]"
+                                class="w-2/3 border rounded-lg px-3 py-2"
+                                required>
                         </div>
+
+                        {{-- ADD BUTTON --}}
+                        <button type="button"
+                            onclick="addFile({{ $q->i_id_question }})"
+                            class="text-blue-600 text-sm hover:underline">
+                            + Tambah File
+                        </button>
+
+                        <small class="text-red-500 block">
+                            Bukti minimal satu
+                        </small>
+                    </div>
                     @endif
+
+
                 </div>
             @endforeach
 
@@ -165,30 +235,83 @@
 document.addEventListener('DOMContentLoaded', function () {
     const kategori = document.getElementById('kategori');
     const wrapper = document.getElementById('kategori-lainnya-wrapper');
-    const input = wrapper.querySelector('input');
+    const inputOther = wrapper.querySelector('input');
 
     function handleKategoriChange() {
         const selectedValue = kategori.value;
 
         document.querySelectorAll('.question').forEach(q => {
-            q.classList.add('hidden');
+            const inputs = q.querySelectorAll('input, select, textarea');
+
             if (q.dataset.kategori === selectedValue) {
                 q.classList.remove('hidden');
+
+                inputs.forEach(el => {
+                    if (el.dataset.required === 'true') {
+                        el.required = true;
+                    }
+                });
+            } else {
+                q.classList.add('hidden');
+
+                inputs.forEach(el => {
+                    el.required = false;
+                });
             }
         });
 
         if (selectedValue === '8') {
             wrapper.classList.remove('hidden');
-            input.required = true;
+            inputOther.required = true;
         } else {
             wrapper.classList.add('hidden');
-            input.required = false;
-            input.value = '';
+            inputOther.required = false;
+            inputOther.value = '';
         }
     }
 
     kategori.addEventListener('change', handleKategoriChange);
     handleKategoriChange();
 });
+
+
+let fileIndex = {};
+
+function addFile(questionId) {
+    if (!fileIndex[questionId]) {
+        fileIndex[questionId] = 1;
+    } else {
+        fileIndex[questionId]++;
+    }
+
+    const wrapper = document.getElementById(`file-wrapper-${questionId}`);
+
+    const div = document.createElement('div');
+    div.className = 'file-row flex gap-3 items-start mt-2';
+
+    div.innerHTML = `
+        <select
+            name="files[${questionId}][${fileIndex[questionId]}][categ]"
+            class="w-1/3 border rounded-lg px-3 py-2"
+            data-required>
+            <option value="">-- Kategori File --</option>
+            @foreach($fileCateg as $f)
+                <option value="{{ $f->c_wbls_filecateg }}">
+                    {{ $f->n_wbls_filecateg }}
+                </option>
+            @endforeach
+        </select>
+
+        <input type="file"
+            name="files[${questionId}][${fileIndex[questionId]}][file]"
+            class="w-2/3 border rounded-lg px-3 py-2"
+            data-required>
+    `;
+
+    wrapper.insertBefore(div, wrapper.lastElementChild.previousElementSibling);
+}
+
+window.isHalamanPengaduan = true;
 </script>
+
 @endsection

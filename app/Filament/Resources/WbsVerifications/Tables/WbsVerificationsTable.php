@@ -92,7 +92,7 @@ class WbsVerificationsTable
         $record->update([
             'f_wbls_agree'   => '1',
             'c_wbls_stat'    => $cStat,
-            'e_wbls_stat'    => self::getStatusName($cStat),
+            'e_wbls_stat'    => null,
             'i_wbls_adm'     => $user->i_wbls_adm,
             'd_wbls_check'   => now(),
             'd_wbls_statupd' => now(),

@@ -27,6 +27,15 @@ class TmAnswer extends Model
         );
     }
 
+    public function choice()
+    {
+        return $this->belongsTo(
+            TrQuestionChoice::class,
+            'i_id_questionchoice',
+            'i_id_questionchoice'
+        );
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $user = Auth::user();

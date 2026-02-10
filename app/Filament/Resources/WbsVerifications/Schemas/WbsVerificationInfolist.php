@@ -46,6 +46,7 @@ class WbsVerificationInfolist
 
                         TextEntry::make('e_wbls_stat')
                             ->label('Keterangan Status')
+                            ->placeholder('-')
                             ->html(),
                     ]),
 
@@ -73,6 +74,9 @@ class WbsVerificationInfolist
                                     TmwblsFile::where('i_wbls', $record->i_wbls)->get()
                                 )
                                 ->schema([
+                                    TextEntry::make('pertanyaan.n_question')
+                                        ->label('Pertanyaan'),
+                                        
                                     TextEntry::make('n_wbls_file')
                                         ->label('Nama File'),
 

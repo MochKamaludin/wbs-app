@@ -3,10 +3,13 @@
 namespace App\Filament\Resources\TrQuestions\Pages;
 
 use App\Filament\Resources\TrQuestions\TrQuestionResource;
+use App\Filament\Resources\TrQuestions\Schemas\TrQuestionCreateForm;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Facades\Filament;
+use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use App\Models\TrQuestion;
 
 class CreateTrQuestion extends CreateRecord
@@ -16,6 +19,36 @@ class CreateTrQuestion extends CreateRecord
     public function getTitle(): string
     {
         return 'Tambah Pertanyaan';
+    }
+
+    public function form(Schema $schema): Schema
+    {
+        return TrQuestionCreateForm::configure($schema);
+    }
+
+    protected function beforeValidate(): void
+    {
+        $data = $this->form->getState();
+        $kategori = $data['c_wbls_categ'] ?? null;
+        $questions = $data['questions'] ?? [];
+
+        if (!$kategori) return;
+
+        foreach ($questions as $index => $question) {
+            $sort = $question['i_question_sort'] ?? null;
+            
+            if (!$sort) continue;
+
+            $exists = TrQuestion::where('c_wbls_categ', $kategori)
+                ->where('i_question_sort', (int) $sort)
+                ->exists();
+
+            if ($exists) {
+                throw ValidationException::withMessages([
+                    "data.questions.$index.i_question_sort" => "Urutan $sort sudah dipakai di kategori ini.",
+                ]);
+            }
+        }
     }
 
     protected function handleRecordCreation(array $data): Model

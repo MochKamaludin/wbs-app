@@ -56,9 +56,28 @@ class TrQuestion extends Model
         return $this->hasMany(TmAnswer::class, 'i_id_question');
     }
 
+    public function files()
+    {
+        return $this->hasMany(
+            TmwblsFile::class,
+            'i_id_question',
+            'i_id_question'
+        );
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
+    }
+
+    public function entry_user()
+    {
+        return $this->belongsTo(User::class, 'i_entry', 'i_wbls_adm');
+    }
+
+    public function update_user()
+    {
+        return $this->belongsTo(User::class, 'i_update', 'i_wbls_adm');
     }
 
     public function isAdmin()

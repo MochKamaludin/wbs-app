@@ -27,10 +27,12 @@
                 Tentang WBS
             </a>
 
-            <a href="#tulis"
-               class="px-5 py-2 bg-white hover:bg-blue-600 rounded-lg text-sm text-blue-600 hover:text-white font-semibold">
-                Tulis Pengaduan
+            <a href="javascript:void(0)"
+                onclick="openModal()"
+                class="px-5 py-2 bg-white hover:bg-blue-600 rounded-lg text-sm text-blue-600 hover:text-white font-semibold">
+                    Tulis Pengaduan
             </a>
+
         </div>
     </div>
 </section>

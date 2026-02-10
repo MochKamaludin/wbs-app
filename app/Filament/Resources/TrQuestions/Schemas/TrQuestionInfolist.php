@@ -47,27 +47,15 @@ class TrQuestionInfolist
                             ->label('Aktif')
                             ->boolean(),
                         
-                        TextEntry::make('i_entry')
-                            ->label('Dibuat Oleh')
-                            ->formatStateUsing(fn ($state) => match ($state) {
-                                '0' => 'Admin',
-                                '1' => 'Verifikator',
-                                '2' => 'Investigator',
-                                default => '-',
-                            }),
+                        TextEntry::make('entry_user.n_wbls_adm')
+                            ->label('Dibuat Oleh'),
 
                         TextEntry::make('d_entry')
                             ->label('Tanggal Dibuat')
                             ->dateTime('d M Y H:i'),
 
-                        TextEntry::make('i_update')
+                        TextEntry::make('update_user.n_wbls_adm')
                             ->label('Diubah Oleh')
-                            ->formatStateUsing(fn ($state) => match ($state) {
-                                '0' => 'Admin',
-                                '1' => 'Verifikator',
-                                '2' => 'Investigator',
-                                default => '-',
-                            })
                             ->placeholder('Belum Diubah'),
 
                         TextEntry::make('d_update')
