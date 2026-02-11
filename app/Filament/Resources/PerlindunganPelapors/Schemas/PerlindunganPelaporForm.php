@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\PerlindunganPelapors\Schemas;
 
+use App\Models\PerlindunganPelapor;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -18,6 +19,23 @@ class PerlindunganPelaporForm
                 TextInput::make('n_wbls_protect')
                     ->label('Judul')
                     ->required(),
+                
+                TextInput::make('c_wbls_protectord')
+                    ->label('Urutan')
+                    ->numeric()
+                    ->required()
+                    ->default(function () {
+                        $last = PerlindunganPelapor::max('c_wbls_protectord');
+                        return $last ? $last + 1 : 1;
+                    })
+                    ->unique(
+                        table: PerlindunganPelapor::class,
+                        column: 'i_wbls_protect',
+                        ignoreRecord: true
+                    )
+                    ->validationMessages([
+                        'unique' => 'No urut sudah digunakan',
+                    ]),
 
                 RichEditor::make('e_wbls_protect')
                     ->label('Deskripsi')
@@ -26,12 +44,6 @@ class PerlindunganPelaporForm
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('faq')
                     ->fileAttachmentsVisibility('public'),
-
-                TextInput::make('c_wbls_protectord')
-                    ->label('Urutan')
-                    ->numeric()
-                    ->maxLength(1)
-                    ->required(),
 
                 Toggle::make('f_wbls_protectstat')
                     ->label('Publish')

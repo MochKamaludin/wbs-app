@@ -28,7 +28,7 @@ class PerlindunganPelaporsTable
                     ->color(fn ($state) => $state == '1' ? 'success' : 'warning'),
 
                 TextColumn::make('d_wbls_protect')
-                    ->label('Tanggal')
+                    ->label('Tanggal Dibuat')
                     ->dateTime('d-m-Y H:i'),
             ])
             ->filters([

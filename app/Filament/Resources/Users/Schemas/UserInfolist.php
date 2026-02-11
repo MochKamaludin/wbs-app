@@ -53,7 +53,7 @@ class UserInfolist
                                             ->label('Dibuat Oleh'),
 
                                         TextEntry::make('d_entry')
-                                            ->label('Tanggal Entry')
+                                            ->label('Tanggal Dibuat')
                                             ->dateTime('d M Y H:i'),
                                     ]),
                                 ]),

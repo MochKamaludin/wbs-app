@@ -15,7 +15,15 @@ class CaraMelaporsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('c_wbls_procord', 'asc')
+            ->reorderable('i_wbls_proc')
             ->columns([
+                TextColumn::make('c_wbls_procord')
+                    ->label('Urutan Tampil')
+                    ->sortable(query: function ($query, $direction) {
+                        $query->orderByRaw("CAST(c_wbls_procord AS UNSIGNED) $direction");
+                    }),
+                    
                 TextColumn::make('n_wbls_proc')
                     ->label('Judul Cara Melapor')
                     ->searchable()
@@ -37,11 +45,6 @@ class CaraMelaporsTable
                     ->color(fn ($state) =>
                         $state === '1' ? 'success' : 'warning'
                     ),
-
-                TextColumn::make('d_wbls_proc')
-                    ->label('Tanggal')
-                    ->dateTime('d-m-Y H:i')
-                    ->sortable(),
             ])
             ->filters([
                 //

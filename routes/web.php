@@ -5,6 +5,7 @@ use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\CekStatusController;
 use App\Models\TmwblsResume;
 use App\Services\BeritaAcaraService;
+use App\Http\Controllers\WbsDownloadController;
 
 
 // Route::get('/', function () {
@@ -26,15 +27,8 @@ Route::get('/cek-status', [CekStatusController::class, 'index'])
 Route::post('/cek-status', [CekStatusController::class, 'check'])
     ->name('cek-status.check');
 
-Route::get('/storage/wbs/{filename}', function ($filename) {
-    $path = storage_path('app/public/wbs/' . $filename);
-    
-    if (!file_exists($path)) {
-        abort(404);
-    }
-    
-    return response()->download($path);
-})->name('wbs.download');
+Route::get('/wbs/download/{filename}', [WbsDownloadController::class, 'download'])
+    ->name('wbs.download');
 
 Route::get('/ba/pdf/{resume}', function (TmwblsResume $resume) {
     return BeritaAcaraService::generatePdf($resume);

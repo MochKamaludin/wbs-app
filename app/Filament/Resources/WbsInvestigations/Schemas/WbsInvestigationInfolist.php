@@ -12,6 +12,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
+use Illuminate\Support\Facades\URL;
 
 use Filament\Schemas\Components\Actions;
 
@@ -44,9 +45,13 @@ class WbsInvestigationInfolist
 
                             TextEntry::make('e_wbls')
                                 ->label('Uraian Kejadian'),
+                            
+                            TextEntry::make('status.n_wbls_stat')
+                                ->label('Status'),
 
                             TextEntry::make('e_wbls_stat')
                                 ->label('Keterangan Status')
+                                ->placeholder('-')
                                 ->html(),
                         ]),
 
@@ -92,61 +97,83 @@ class WbsInvestigationInfolist
                         ->schema([
 
                             RepeatableEntry::make('files')
-                                ->label('File')
+                                ->label('File Bukti')
                                 ->state(function (Tmwbls $record) {
+
                                     $files = TmwblsFile::where('i_wbls', $record->i_wbls)->get();
-                                    
-                                    return $files->map(function ($file) {
-                                        $question = TrQuestion::find($file->i_id_question);
-                                        $fileCategory = \Illuminate\Support\Facades\DB::table('trwblsfilecateg')
-                                            ->where('c_wbls_filecateg', $file->c_wbls_filecateg)
-                                            ->value('n_wbls_filecateg');
-                                        
-                                        return [
-                                            'pertanyaan' => $question?->n_question ?? 'Pertanyaan tidak ditemukan',
-                                            'nama_file' => $file->n_wbls_file,
-                                            'kategori' => $fileCategory ?? 'Tidak ada kategori',
-                                            'tanggal' => $file->d_wbls_file,
-                                            'url_download' => $file->n_wbls_file,
-                                        ];
-                                    });
+
+                                    if ($files->isEmpty()) {
+                                        return [];
+                                    }
+
+                                    return $files->groupBy('i_id_question')
+                                        ->map(function ($group) {
+
+                                            $firstFile = $group->first();
+
+                                            $question = TrQuestion::find($firstFile->i_id_question);
+
+                                            $fileCategory = \Illuminate\Support\Facades\DB::table('trwblsfilecateg')
+                                                ->where('c_wbls_filecateg', $firstFile->c_wbls_filecateg)
+                                                ->value('n_wbls_filecateg');
+
+                                            return [
+                                                'pertanyaan' => $question?->n_question ?? 'Pertanyaan tidak ditemukan',
+                                                'kategori'   => $fileCategory ?? 'Tidak ada kategori',
+                                                'files'      => $group->map(function ($file, $index) {
+                                                    return [
+                                                        'label' => 'Bukti ' . ($index + 1),
+                                                        'filename' => $file->n_wbls_file,
+                                                    ];
+                                                })->values()->toArray(),
+                                            ];
+                                        })
+                                        ->values()
+                                        ->toArray();
                                 })
                                 ->schema([
+
                                     TextEntry::make('pertanyaan')
                                         ->label('Pertanyaan')
                                         ->columnSpanFull(),
 
                                     TextEntry::make('kategori')
-                                        ->label('Kategori')
-                                        ->columnSpan(1),
+                                        ->label('Kategori'),
 
-                                    Actions::make([
-                                        Action::make('download')
-                                            ->label('Download')
-                                            ->icon('heroicon-o-arrow-down-tray')
-                                            ->color('primary')
-                                            ->link()
-                                            ->url(function ($record) {
-                                                $filename = data_get($record, 'url_download');
-                                                if (!$filename) {
-                                                    return null;
-                                                }
-                                                return route('wbs.download', ['filename' => $filename]);
-                                            }),
-                                    ])
-                                    ->columnSpanFull(),
+                                    RepeatableEntry::make('files')
+                                        ->label('Daftar Bukti')
+                                        ->schema([
+
+                                            TextEntry::make('label')
+                                                ->label('')
+                                                ->columnSpan(1),
+
+                                            TextEntry::make('filename')
+                                                ->label('File')
+                                                ->formatStateUsing(fn () => 'Download')
+                                                ->url(fn ($state) => route('wbs.download', [
+                                                    'filename' => $state,
+                                                ]))
+                                                ->openUrlInNewTab()
+                                                ->color('primary')
+                                                ->icon('')
+                                                ->extraAttributes([
+                                                    'class' => 'inline-flex items-center px-3 py-1.5 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700 transition',
+                                                ]),
+                                        ])
+                                        ->columnSpanFull(),
                                 ])
-                                ->visible(function (Tmwbls $record) {
-                                    return TmwblsFile::where('i_wbls', $record->i_wbls)->exists();
-                                }),
+                                ->visible(fn (Tmwbls $record) =>
+                                    TmwblsFile::where('i_wbls', $record->i_wbls)->exists()
+                                ),
 
                             TextEntry::make('kosong')
                                 ->label('')
-                                ->state('Tidak ada file')
+                                ->state('Tidak ada file bukti')
                                 ->columnSpanFull()
-                                ->visible(function (Tmwbls $record) {
-                                    return !TmwblsFile::where('i_wbls', $record->i_wbls)->exists();
-                                }),
+                                ->visible(fn (Tmwbls $record) =>
+                                    !TmwblsFile::where('i_wbls', $record->i_wbls)->exists()
+                                ),
                         ]),
                 ]),
         ]);

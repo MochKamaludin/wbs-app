@@ -19,8 +19,7 @@ class ReferensiKategorisTable
                 TextColumn::make('n_wbls_categ')
                     ->label('Kategori')
                     ->searchable()
-                    ->sortable()
-                    ->weight('bold'),
+                    ->sortable(),
 
                 TextColumn::make('e_wbls_categ')
                     ->label('Keterangan')

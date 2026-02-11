@@ -45,15 +45,6 @@ class UsersTable
                         '2' => 'success',
                         default => 'gray',
                     }),
-
-
-                TextColumn::make('i_entry')
-                    ->label('Dibuat Oleh'),
-
-                TextColumn::make('d_entry')
-                    ->label('Tanggal Entry')
-                    ->dateTime('d M Y H:i')
-                    ->sortable(),
             ])
             ->recordActions([
                 ViewAction::make(),

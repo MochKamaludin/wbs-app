@@ -26,7 +26,7 @@ class DefinisiWbsInfolist
                                         TextEntry::make('user.n_wbls_adm')
                                             ->label('Dibuat Oleh'),
                                         TextEntry::make('d_wbls_about')
-                                            ->label('Tanggal')
+                                            ->label('Tanggal Dibuat')
                                             ->dateTime(),
                                     ]),
                                 ]),

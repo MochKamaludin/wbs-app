@@ -15,14 +15,18 @@ class SyaratMelaporsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('c_wbls_reqord', 'asc')
+            ->reorderable('i_wbls_req')
             ->columns([
-            TextColumn::make('n_wbls_req')
-                ->label('Judul')
-                ->searchable()
-                ->sortable(),
-
             TextColumn::make('c_wbls_reqord')
-                ->label('Urutan')
+                ->label('Urutan Tampil')
+                ->sortable(query: function ($query, $direction) {
+                        $query->orderByRaw("CAST(c_wbls_reqord AS UNSIGNED) $direction");
+                    }),
+
+            TextColumn::make('n_wbls_req')
+                ->label('Judul')    
+                ->searchable()
                 ->sortable(),
 
             TextColumn::make('f_wbls_reqstat')
@@ -40,7 +44,7 @@ class SyaratMelaporsTable
                 ->placeholder('-'),
 
             TextColumn::make('d_entry')
-                ->label('Tanggal')
+                ->label('Tanggal Dibuat')
                 ->dateTime('d-m-Y H:i')
                 ->sortable(),  
         ])

@@ -24,7 +24,9 @@ class TrQuestionsTable
             ->columns([
                 TextColumn::make('i_question_sort')
                     ->label('Urutan Pertanyaan')
-                    ->sortable(),
+                    ->sortable(query: function ($query, $direction) {
+                        $query->orderByRaw("CAST(i_question_sort AS UNSIGNED) $direction");
+                    }),
 
                 TextColumn::make('kategori.n_wbls_categ')
                     ->label('Kategori')

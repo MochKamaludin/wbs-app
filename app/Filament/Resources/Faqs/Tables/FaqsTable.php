@@ -15,7 +15,15 @@ class FaqsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('i_wbls_faqseq', 'asc')
+            ->reorderable('i_wbls_faq')
             ->columns([
+                TextColumn::make('i_wbls_faqseq')
+                    ->label('Urutan Tampil')
+                    ->sortable(query: function ($query, $direction) {
+                        $query->orderByRaw("CAST(i_wbls_faqseq AS UNSIGNED) $direction");
+                    }),
+
                 TextColumn::make('e_wbls_faqquest')
                     ->label('Pertanyaan')
                     ->searchable()
@@ -37,11 +45,6 @@ class FaqsTable
                     ->color(fn ($state) =>
                         $state === '1' ? 'success' : 'warning'
                     ),
-
-                TextColumn::make('d_wbls_faq')
-                    ->label('Tanggal')
-                    ->dateTime('d-m-Y H:i')
-                    ->sortable(),
             ])
             ->filters([
                 //

@@ -44,7 +44,7 @@
 
         <a href="{{ url('/') }}#home" class="block py-2 nav-link">HOME</a>
         <a href="{{ url('/') }}#tentang_wbs" class="block py-2 nav-link">TENTANG WBS</a>
-        <a href="{{ url('/') }}#cara_pengaduan" class="block py-2 nav-link">CARA PENGADUAN</a>
+        <a href="{{ url('/') 1}}#cara_pengaduan" class="block py-2 nav-link">CARA PENGADUAN</a>
         <button onclick="openModal()" class="block py-2 text-left w-full nav-link">
             TULIS PENGADUAN
         </button>

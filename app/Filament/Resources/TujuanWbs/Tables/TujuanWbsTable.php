@@ -15,14 +15,18 @@ class TujuanWbsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('c_wbls_purposeord', 'asc')
+            ->reorderable('i_wbls_purpose')
             ->columns([
+                TextColumn::make('c_wbls_purposeord')
+                    ->label('Urutan')
+                    ->sortable(query: function ($query, $direction) {
+                        $query->orderByRaw("CAST(c_wbls_purposeord AS UNSIGNED) $direction");
+                    }),
+
                 TextColumn::make('n_wbls_purpose')
                     ->label('Judul')
                     ->searchable()
-                    ->sortable(),
-
-                TextColumn::make('c_wbls_purposeord')
-                    ->label('Urutan')
                     ->sortable(),
 
                 TextColumn::make('f_wbls_purposestat')

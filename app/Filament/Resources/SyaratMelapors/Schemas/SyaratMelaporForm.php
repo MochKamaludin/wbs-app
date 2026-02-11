@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SyaratMelapors\Schemas;
 
+use App\Models\SyaratMelapor;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -14,10 +15,27 @@ class SyaratMelaporForm
     {
         return $schema
             ->components([
-                TextInput::make('n_wbls_req')
-            ->label('Judul')
-            ->required()
-            ->maxLength(100),
+            TextInput::make('n_wbls_req')
+                ->label('Judul')
+                ->required()
+                ->maxLength(100),
+            
+            TextInput::make('c_wbls_reqord')
+                ->label('Urutan Tampil')
+                ->numeric()
+                ->required()
+                ->default(function () {
+                    $last = SyaratMelapor::max('c_wbls_reqord');
+                    return $last ? $last + 1 : 1;
+                })
+                ->unique(
+                    table: SyaratMelapor::class,
+                    column: 'i_wbls_req',
+                    ignoreRecord: true
+                )
+                ->validationMessages([
+                    'unique' => "No urut sudah digunakan"
+                ]),
 
             RichEditor::make('e_wbls_req')
                 ->label('Deskripsi')
@@ -26,12 +44,6 @@ class SyaratMelaporForm
                 ->fileAttachmentsDisk('public')
                 ->fileAttachmentsDirectory('faq')
                 ->fileAttachmentsVisibility('public'),
-
-            TextInput::make('c_wbls_reqord')
-                ->label('Urutan')
-                ->numeric()
-                ->maxLength(1)
-                ->required(),
 
             Toggle::make('f_wbls_reqstat')
                 ->label('Publish')

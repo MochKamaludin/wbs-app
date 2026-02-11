@@ -25,7 +25,7 @@ class DasarWbsTable
 
 
                 TextColumn::make('d_wbls_about')
-                    ->label('Tanggal')
+                    ->label('Tanggal Dibuat')
                     ->dateTime('d M Y H:i'),
             ])
             ->filters([
