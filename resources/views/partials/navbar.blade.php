@@ -10,14 +10,12 @@
 <nav class="w-full bg-white shadow sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-        <!-- LOGO -->
         <div class="flex items-center space-x-3">
             <a href="{{ url('/') }}">
-                <img src="{{ asset('images/Logo-ptdi.png') }}" class="h-10" alt="Logo">
+                <img src="{{ asset('images/logo/logo-baru.png') }}" class="h-14" alt="Logo">
             </a>
         </div>
 
-        <!-- DESKTOP MENU -->
         <ul class="hidden lg:flex space-x-6 font-bold text-[15px] text-black">
             <li><a href="{{ url('/') }}#home" class="nav-link hover:text-blue-600">HOME</a></li>
             <li><a href="{{ url('/') }}#tentang_wbs" class="nav-link hover:text-blue-600">TENTANG WBS</a></li>
@@ -38,13 +36,12 @@
         </button>
     </div>
 
-    <!-- MOBILE MENU -->
     <div id="mobile-menu"
         class="hidden lg:hidden bg-white px-6 pb-4 shadow text-base font-semibold">
 
         <a href="{{ url('/') }}#home" class="block py-2 nav-link">HOME</a>
         <a href="{{ url('/') }}#tentang_wbs" class="block py-2 nav-link">TENTANG WBS</a>
-        <a href="{{ url('/') 1}}#cara_pengaduan" class="block py-2 nav-link">CARA PENGADUAN</a>
+        <a href="{{ url('/') }}#cara_pengaduan" class="block py-2 nav-link">CARA PENGADUAN</a>
         <button onclick="openModal()" class="block py-2 text-left w-full nav-link">
             TULIS PENGADUAN
         </button>

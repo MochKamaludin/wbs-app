@@ -32,25 +32,24 @@ class WbsVerificationInfolist
                         TextEntry::make('i_wbls')
                             ->label('Nomor WBS'),
 
-                        TextEntry::make('kategori.n_wbls_categ')
-                            ->label('Kategori'),
-
-                        TextEntry::make('d_wbls')
-                            ->label('Tanggal Lapor')
-                            ->dateTime('d/m/Y H:i'),
-
                         TextEntry::make('d_wbls_incident')
                             ->label('Perkiraan Waktu Kejadian'),
 
+                        TextEntry::make('kategori.n_wbls_categ')
+                            ->label('Perihal'),
+
+                        TextEntry::make('d_wbls')
+                            ->label('Tanggal Pengaduan')
+                            ->dateTime('d M Y H:i'),
+
                         TextEntry::make('e_wbls')
-                            ->label('Uraian Kejadian'),
+                            ->label('Uraian'),
                         
                         TextEntry::make('status.n_wbls_stat')
                             ->label('Status'),
 
                         TextEntry::make('e_wbls_stat')
-                            ->label('Keterangan Status')
-                            ->placeholder('-')
+                            ->label('Keterangan')
                             ->html(),
                     ]),
 

@@ -41,18 +41,9 @@ class RekapDataResource extends Resource
         return $user && ($user->c_wbls_admauth === '1' || $user->c_wbls_admauth === '2');
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->where('f_wbls_agree', '1')
-            ->whereIn('c_wbls_stat', ['3', '5', '6']);
-    }
-
     public static function getNavigationBadge(): ?string
     {
-        return Tmwbls::where('f_wbls_agree', '1')
-            ->whereIn('c_wbls_stat', ['3', '5', '6'])
-            ->count();
+        return Tmwbls::count();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

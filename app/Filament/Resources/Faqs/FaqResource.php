@@ -28,16 +28,6 @@ class FaqResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    public static function getNavigationBadge(): ?string
-    {
-        return Faq::count();
-    }
-
-    public static function getNavigationBadgeColor(): string|array|null
-    {
-        return "warning";
-    }
-
     public static function form(Schema $schema): Schema
     {
         return FaqForm::configure($schema);

@@ -43,13 +43,6 @@ class WbsInvestigationResource extends Resource
         return $user && $user->c_wbls_admauth === '2';
     }
 
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->where('f_wbls_agree', '1')
-            ->where('c_wbls_stat', '4');
-    }
-
     public static function getNavigationBadge(): ?string
     {
         return Tmwbls::where('f_wbls_agree', '1')

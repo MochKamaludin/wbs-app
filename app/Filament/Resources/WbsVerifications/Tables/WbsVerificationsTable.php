@@ -24,27 +24,21 @@ class WbsVerificationsTable
                 TextColumn::make('i_wbls')
                     ->label('Nomor WBS')
                     ->searchable(),
+                
+                TextColumn::make('d_wbls')
+                    ->label('Tanggal Pengaduan')
+                    ->dateTime('d M Y'),
 
                 TextColumn::make('kategori.n_wbls_categ')
-                    ->label('Kategori'),
-
-                TextColumn::make('d_wbls')
-                    ->label('Tanggal Lapor')
-                    ->dateTime('d/m/Y H:i'),
-
-                TextColumn::make('f_wbls_agree')
-                    ->label('Status')
-                    ->badge()
-                    ->color(fn ($state) => match ($state) {
-                        null => 'warning',
-                        '1'  => 'success',
-                        '0'  => 'danger',
-                    })
-                    ->formatStateUsing(fn ($state) => match ($state) {
-                        null => 'Menunggu Verifikasi',
-                        '1'  => 'Disetujui',
-                        '0'  => 'Ditolak',
-                    }),
+                    ->label('Perihal')
+                    ->searchable(),
+                
+                TextColumn::make('status.e_wbls_stat')
+                    ->label('Status Proses')
+                    ->html(),
+                
+                TextColumn::make('e_wbls_stat')
+                    ->label('Keterangan'),
             ])
 
             ->recordActions([

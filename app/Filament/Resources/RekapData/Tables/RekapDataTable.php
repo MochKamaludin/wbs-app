@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use App\Models\Tmwbls;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\DatePicker;
@@ -17,6 +18,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\WblsExport;
 use Filament\Actions\Action;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+
 
 class RekapDataTable
 {
@@ -57,51 +61,116 @@ class RekapDataTable
                         );
                     }),
             ])
-
-            ->query(fn () => Tmwbls::query()->where('f_wbls_agree', '1')->whereIn('c_wbls_stat', ['3', '5', '6']))
             ->columns([
                 TextColumn::make('i_wbls')
                     ->label('Nomor WBS')
                     ->searchable(),
+                
+                TextColumn::make('d_wbls')
+                    ->label('Tanggal Pengaduan')
+                    ->dateTime('d M Y'),
 
                 TextColumn::make('kategori.n_wbls_categ')
-                    ->label('Kategori')
+                    ->label('Perihal')
                     ->searchable(),
+                
+                TextColumn::make('status.e_wbls_stat')
+                    ->label('Status Proses')
+                    ->html(),
+                
+                TextColumn::make('e_wbls_stat')
+                    ->label('Keterangan'),
 
-                TextColumn::make('d_wbls')
-                    ->label('Tanggal Lapor')
-                    ->dateTime('d/m/Y H:i'),
-
-                TextColumn::make('status.n_wbls_stat')
-                    ->label('Status')
             ])
             ->filters([
-                SelectFilter::make('c_wbls_stat')
-                ->label('Status')
+            SelectFilter::make('status_group')
+                ->label('Status Pengaduan')
                 ->options([
-                    3 => 'Laporan Ditolak',
-                    5 => 'Selesai dan Terlapor Bersalah',
-                    6 => 'Selesai dan Terlapor Tidak Terbukti Bersalah',
-                ]),
+                    'all'   => 'Semua',
+                    'open'  => 'Open',
+                    'close' => 'Close',
+                ])
+                ->default('all')
+                ->query(function (Builder $query, array $data) {
 
-                Filter::make('waktu')
-                ->label('Waktu')
+                    $value = $data['value'] ?? null;
+
+                    if ($value === 'open') {
+                        $query->whereIn('c_wbls_stat', [1, 2, 4]);
+                    }
+
+                    if ($value === 'close') {
+                        $query->whereIn('c_wbls_stat', [3, 5, 6]);
+                    }
+
+                    return $query;
+                }),
+
+            Filter::make('i_wbls')
                 ->schema([
-                    DatePicker::make('tanggal_awal')
-                        ->label('Tanggal Awal'),
-                    DatePicker::make('tanggal_akhir')
-                        ->label('Tanggal Akhir'),
+                    TextInput::make('value')
+                        ->label('No WBS')
+                        ->placeholder('Masukkan No WBS')
                 ])
                 ->query(function (Builder $query, array $data) {
-                    return $query
-                        ->when($data['tanggal_awal'], fn ($q) =>
-                            $q->whereDate('d_wbls', '>=', $data['tanggal_awal'])
-                        )
-                        ->when($data['tanggal_akhir'], fn ($q) =>
-                            $q->whereDate('d_wbls', '<=', $data['tanggal_akhir'])
-                        );
+
+                    if (!empty($data['value'])) {
+                        $query->where('i_wbls', 'like', '%' . $data['value'] . '%');
+                    }
+
+                    return $query;
                 }),
-            ])
+
+            Filter::make('waktu')
+                ->schema([
+
+                    Select::make('jenis_waktu')
+                        ->label('Filter Berdasarkan')
+                        ->options([
+                            'periode' => 'Periode',
+                            'tahun'   => 'Tahun',
+                        ])
+                        ->reactive(),
+
+                    DatePicker::make('tanggal_awal')
+                        ->visible(fn ($get) => $get('jenis_waktu') === 'periode'),
+
+                    DatePicker::make('tanggal_akhir')
+                        ->visible(fn ($get) => $get('jenis_waktu') === 'periode'),
+
+                    Select::make('tahun')
+                        ->options(function () {
+                            $year = now()->year;
+                            return collect(range($year, $year - 5))
+                                ->mapWithKeys(fn ($y) => [$y => $y])
+                                ->toArray();
+                        })
+                        ->visible(fn ($get) => $get('jenis_waktu') === 'tahun'),
+                ])
+                ->query(function (Builder $query, array $data) {
+
+                    if (($data['jenis_waktu'] ?? null) === 'periode') {
+
+                        $query->when(
+                            $data['tanggal_awal'] ?? null,
+                            fn ($q, $date) => $q->whereDate('d_wbls', '>=', $date)
+                        );
+
+                        $query->when(
+                            $data['tanggal_akhir'] ?? null,
+                            fn ($q, $date) => $q->whereDate('d_wbls', '<=', $date)
+                        );
+                    }
+
+                    if (($data['jenis_waktu'] ?? null) === 'tahun' && !empty($data['tahun'])) {
+                        $query->whereYear('d_wbls', $data['tahun']);
+                    }
+
+                    return $query;
+                }),
+
+        ], layout: FiltersLayout::AboveContent)
+
             ->recordActions([
                 ViewAction::make(),
             ])

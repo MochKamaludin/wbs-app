@@ -22,22 +22,21 @@ class WbsInvestigationsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->query(fn () => Tmwbls::query()->where('f_wbls_agree', '1')
-                                            ->where('c_wbls_stat', '4'))
             ->columns([
                 TextColumn::make('i_wbls')
                     ->label('Nomor WBS')
                     ->searchable(),
+                
+                TextColumn::make('d_wbls')
+                    ->label('Tanggal Pengaduan')
+                    ->dateTime('d M Y'),
 
                 TextColumn::make('kategori.n_wbls_categ')
-                    ->label('Kategori'),
-
-                TextColumn::make('d_wbls')
-                    ->label('Tanggal Lapor')
-                    ->dateTime('d/m/Y H:i'),
-
-                TextColumn::make('status.n_wbls_stat')
-                    ->label('Status')
+                    ->label('Perihal')
+                    ->searchable(),
+                
+                TextColumn::make('e_wbls_stat')
+                    ->label('Keterangan'),
             ])
             ->filters([
                 SelectFilter::make('c_wbls_stat')
@@ -69,18 +68,20 @@ class WbsInvestigationsTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
+                EditAction::make()
+                    ->visible(fn (Tmwbls $record) => ! in_array($record->c_wbls_stat, [3, 5, 6])),
 
                 Action::make('generateBA')
                     ->label('Generate BA')
                     ->color('success')
+                    ->visible(fn (Tmwbls $record) => in_array($record->c_wbls_stat, [3, 5, 6]))
                     ->action(function (Tmwbls $record) {
                         BeritaAcaraService::generateAndUpdate($record);
 
                         return redirect()->route('ba.pdf', $record->resume);
                     })
-                    ->openUrlInNewTab()
-                ])
+                    ->openUrlInNewTab(),
+            ])
 
             ->toolbarActions([
                 BulkActionGroup::make([

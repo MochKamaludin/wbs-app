@@ -33,8 +33,8 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Indigo,
             ])
-            ->brandLogo(asset('images/Logo-ptdi.png'))
-            ->brandLogoHeight('2rem')
+            ->brandLogo(asset('images/logo/logo-baru.png'))
+            ->brandLogoHeight('3rem')
             ->font('Poppins')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
