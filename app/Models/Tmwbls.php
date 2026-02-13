@@ -61,6 +61,11 @@ class Tmwbls extends Model
         return $this->hasOne(TmwblsResume::class, 'i_wbls', 'i_wbls');
     }
 
+    public function verifikasi()
+    {
+        return $this->hasOne(TmwblsVrf::class, 'i_wbls', 'i_wbls');
+    }
+
     public function user()
     {
         return $this->belongsTo(

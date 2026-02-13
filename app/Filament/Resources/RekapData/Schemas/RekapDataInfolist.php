@@ -17,7 +17,7 @@ class RekapDataInfolist
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->components([
+    return $schema->components([
         Tabs::make('Tabs')
             ->contained(false)
             ->columnSpanFull()
@@ -68,13 +68,53 @@ class RekapDataInfolist
                                         ->keyBy('i_id_question');
 
                                     return $questions->map(function ($question) use ($answers) {
-                                        $answer = $answers->get($question->i_id_question);
-                                        
-                                        return [
-                                            'pertanyaan' => $question->n_question,
-                                            'jawaban' => $answer?->choice?->n_choice ?? $answer?->e_answer ?? '-',
-                                        ];
-                                    });
+
+                                    $answer = $answers->get($question->i_id_question);
+
+                                    $jawaban = '-';
+
+                                    if ($answer) {
+
+                                        $choiceText = null;
+                                        $textAnswer = null;
+
+                                        if ($answer->i_id_questionchoice) {
+
+                                            $choice = \App\Models\TrQuestionChoice::find($answer->i_id_questionchoice);
+                                            $choiceText = $choice?->n_choice;
+                                        }
+
+                                        if ($answer->e_answer && is_string($answer->e_answer)) {
+
+                                            $decoded = json_decode($answer->e_answer, true);
+
+                                            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+
+                                                if (!empty($decoded['choice'])) {
+                                                    $choice = \App\Models\TrQuestionChoice::find($decoded['choice']);
+                                                    $choiceText = $choice?->n_choice;
+                                                }
+
+                                                $textAnswer = $decoded['text'] ?? null;
+
+                                            } else {
+                                                $textAnswer = $answer->e_answer;
+                                            }
+                                        }
+                                        if ($choiceText && $textAnswer) {
+                                            $jawaban = $choiceText . "\n" . $textAnswer;
+                                        } elseif ($choiceText) {
+                                            $jawaban = $choiceText;
+                                        } elseif ($textAnswer) {
+                                            $jawaban = $textAnswer;
+                                        }
+                                    }
+
+                                    return [
+                                        'pertanyaan' => $question->n_question,
+                                        'jawaban'    => $jawaban,
+                                    ];
+                                });
                                 })
                                 ->schema([
                                     TextEntry::make('pertanyaan')
@@ -83,7 +123,8 @@ class RekapDataInfolist
 
                                     TextEntry::make('jawaban')
                                         ->label('Jawaban')
-                                        ->columnSpanFull(),
+                                        ->columnSpanFull()
+                                        ->extraAttributes(['style' => 'white-space: pre-line;'])
                                 ]),
                         ]),
 

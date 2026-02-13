@@ -78,7 +78,7 @@ class WbsVerificationResource extends Resource
             'index' => ListWbsVerifications::route('/'),
             // 'create' => CreateWbsVerification::route('/create'),
             // 'view' => ViewWbsVerification::route('/{record}'),
-            'edit' => EditWbsVerification::route('/{record}/edit'),
+            // 'edit' => EditWbsVerification::route('/{record}/edit'),
         ];
     }
 }

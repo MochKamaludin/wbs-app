@@ -164,8 +164,7 @@ function copyResi() {
                                 </label>
                             @endforeach
                         </div>
-
-                    {{-- DROPDOWN --}}
+                    
                     @elseif($q->c_question == 5)
                         <select name="answers[{{ $q->i_id_question }}]"
                             class="w-full border rounded-lg px-4 py-2">
@@ -177,6 +176,30 @@ function copyResi() {
                                 </option>
                             @endforeach
                         </select>
+                    
+                    {{-- RADIO + TEXTAREA --}}
+                    @elseif($q->c_question == 4)
+                        <div class="space-y-3">
+
+                            {{-- Radio --}}
+                            @foreach($q->choices as $c)
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio"
+                                        name="answers[{{ $q->i_id_question }}][choice]"
+                                        value="{{ $c->i_id_questionchoice }}"
+                                        {{ old('answers.' . $q->i_id_question . '.choice') == $c->i_id_questionchoice ? 'checked' : '' }}
+                                        class="text-blue-600">
+                                    <span>{{ $c->n_choice }}</span>
+                                </label>
+                            @endforeach
+
+                            {{-- Textarea --}}
+                            <textarea
+                                name="answers[{{ $q->i_id_question }}][text]"
+                                placeholder="Keterangan tambahan..."
+                                class="w-full border rounded-lg px-4 py-2">{{ old('answers.' . $q->i_id_question . '.text') }}</textarea>
+
+                        </div>
 
                     {{-- FILE UPLOAD --}}
                     @elseif($q->c_question == 7)

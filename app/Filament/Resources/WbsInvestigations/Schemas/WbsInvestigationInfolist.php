@@ -20,42 +20,40 @@ class WbsInvestigationInfolist
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->components([
+    return $schema->components([
+        Tabs::make('Tabs')
+            ->contained(false)
+            ->columnSpanFull()
+            ->tabs([
 
-            Tabs::make('Tabs')
-                ->contained(false)
-                ->columnSpanFull()
-                ->tabs([
-                    Tab::make('Detail Laporan')
-                        ->icon('heroicon-o-information-circle')
-                        ->schema([
+                Tab::make('Detail Laporan')
+                    ->icon('heroicon-o-information-circle')
+                    ->schema([
+                        TextEntry::make('i_wbls')
+                            ->label('Nomor WBS'),
 
-                            TextEntry::make('i_wbls')
-                                ->label('Nomor WBS'),
+                        TextEntry::make('d_wbls_incident')
+                            ->label('Perkiraan Waktu Kejadian'),
 
-                            TextEntry::make('kategori.n_wbls_categ')
-                                ->label('Kategori'),
+                        TextEntry::make('kategori.n_wbls_categ')
+                            ->label('Perihal'),
 
-                            TextEntry::make('d_wbls')
-                                ->label('Tanggal Lapor')
-                                ->dateTime('d/m/Y H:i'),
+                        TextEntry::make('d_wbls')
+                            ->label('Tanggal Pengaduan')
+                            ->dateTime('d M Y H:i'),
 
-                            TextEntry::make('d_wbls_incident')
-                                ->label('Perkiraan Waktu Kejadian'),
+                        TextEntry::make('e_wbls')
+                            ->label('Uraian'),
+                        
+                        TextEntry::make('status.n_wbls_stat')
+                            ->label('Status'),
 
-                            TextEntry::make('e_wbls')
-                                ->label('Uraian Kejadian'),
-                            
-                            TextEntry::make('status.n_wbls_stat')
-                                ->label('Status'),
+                        TextEntry::make('e_wbls_stat')
+                            ->label('Keterangan')
+                            ->html(),
+                    ]),
 
-                            TextEntry::make('e_wbls_stat')
-                                ->label('Keterangan Status')
-                                ->placeholder('-')
-                                ->html(),
-                        ]),
-
-                    Tab::make('Jawaban Pertanyaan')
+                Tab::make('Jawaban Pertanyaan')
                         ->icon('heroicon-o-archive-box')
                         ->schema([
 
@@ -73,13 +71,53 @@ class WbsInvestigationInfolist
                                         ->keyBy('i_id_question');
 
                                     return $questions->map(function ($question) use ($answers) {
-                                        $answer = $answers->get($question->i_id_question);
-                                        
-                                        return [
-                                            'pertanyaan' => $question->n_question,
-                                            'jawaban' => $answer?->choice?->n_choice ?? $answer?->e_answer ?? '-',
-                                        ];
-                                    });
+
+                                    $answer = $answers->get($question->i_id_question);
+
+                                    $jawaban = '-';
+
+                                    if ($answer) {
+
+                                        $choiceText = null;
+                                        $textAnswer = null;
+
+                                        if ($answer->i_id_questionchoice) {
+
+                                            $choice = \App\Models\TrQuestionChoice::find($answer->i_id_questionchoice);
+                                            $choiceText = $choice?->n_choice;
+                                        }
+
+                                        if ($answer->e_answer && is_string($answer->e_answer)) {
+
+                                            $decoded = json_decode($answer->e_answer, true);
+
+                                            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+
+                                                if (!empty($decoded['choice'])) {
+                                                    $choice = \App\Models\TrQuestionChoice::find($decoded['choice']);
+                                                    $choiceText = $choice?->n_choice;
+                                                }
+
+                                                $textAnswer = $decoded['text'] ?? null;
+
+                                            } else {
+                                                $textAnswer = $answer->e_answer;
+                                            }
+                                        }
+                                        if ($choiceText && $textAnswer) {
+                                            $jawaban = $choiceText . "\n" . $textAnswer;
+                                        } elseif ($choiceText) {
+                                            $jawaban = $choiceText;
+                                        } elseif ($textAnswer) {
+                                            $jawaban = $textAnswer;
+                                        }
+                                    }
+
+                                    return [
+                                        'pertanyaan' => $question->n_question,
+                                        'jawaban'    => $jawaban,
+                                    ];
+                                });
                                 })
                                 ->schema([
                                     TextEntry::make('pertanyaan')
@@ -88,7 +126,8 @@ class WbsInvestigationInfolist
 
                                     TextEntry::make('jawaban')
                                         ->label('Jawaban')
-                                        ->columnSpanFull(),
+                                        ->columnSpanFull()
+                                        ->extraAttributes(['style' => 'white-space: pre-line;'])
                                 ]),
                         ]),
 

@@ -42,6 +42,8 @@ class BeritaAcaraService
 
     public static function generatePdf(TmwblsResume $resume)
     {
+        $resume->load('wbls');
+
         $tgl = Carbon::parse($resume->d_wbls_bainvest);
 
         $filename = str_replace('/', '-', $resume->i_wbls_bainvest);
@@ -54,4 +56,5 @@ class BeritaAcaraService
             'tahun'   => $tgl->format('Y'),
         ])->stream('BA-' . $filename . '.pdf');
     }
+
 }

@@ -6,6 +6,7 @@ use App\Models\Tmwbls;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,17 +34,13 @@ class WbsVerificationsTable
                     ->label('Perihal')
                     ->searchable(),
                 
-                TextColumn::make('status.e_wbls_stat')
-                    ->label('Status Proses')
-                    ->html(),
-                
                 TextColumn::make('e_wbls_stat')
                     ->label('Keterangan'),
             ])
 
             ->recordActions([
                 ViewAction::make(),
-        
+                EditAction::make(),
 
                 Action::make('approve')
                     ->label('Setujui')
