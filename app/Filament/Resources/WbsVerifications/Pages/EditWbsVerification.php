@@ -4,6 +4,7 @@ namespace App\Filament\Resources\WbsVerifications\Pages;
 
 use App\Filament\Resources\WbsVerifications\WbsVerificationResource;
 use App\Models\TmwblsVrf;
+use App\Models\Verification;
 use App\Services\BaVerifikasiService;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
@@ -29,24 +30,48 @@ class EditWbsVerification extends EditRecord
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
-{
-    if (empty($this->record->i_wbls_bavrf)) {
+    {
+        $verificationData = $data['verification'] ?? [];
 
-        $seq = (TmwblsVrf::max('i_wbls_bavrfseq') ?? 0) + 1;
+        unset($data['verification']);
 
-        $kode = 'BAV/' .
-            str_pad($seq, 4, '0', STR_PAD_LEFT) .
-            '/PTD/' .
-            now()->format('m/Y');
+        $this->record->update($data);
 
-        $data['i_wbls_bavrfseq'] = $seq;
-        $data['i_wbls_bavrf'] = $kode;
-        $data['i_wbls_adm'] = Auth::user()->i_wbls_adm;
-        $data['d_wbls_vrf'] = now();
+        $this->record->verification()->updateOrCreate(
+            ['i_wbls' => $this->record->i_wbls],
+            array_merge($verificationData, [
+                'i_wbls_adm' => Auth::user()->i_wbls_adm,
+                'd_wbls_vrf' => now(),
+            ])
+        );
+
+        return [];
     }
 
-    return $data;
-}
+
+    protected function afterSave(): void
+    {
+        $data = $this->form->getState();
+
+        $verification = $this->record->verification;
+
+        if (!$verification) {
+            $verification = $this->record->verification()->create([
+                'i_wbls' => $this->record->i_wbls,
+            ]);
+        }
+
+        $verification->update([
+            'f_wbls_usrname'  => $data['f_wbls_usrname'] ?? null,
+            'f_wbls_file'     => $data['f_wbls_file'] ?? null,
+            'e_wbls_stat'     => $data['e_wbls_stat'] ?? null,
+
+            'i_wbls_bavrf'    => $data['i_wbls_bavrf'] ?? null,
+            'i_wbls_bavrfseq' => $data['i_wbls_bavrfseq'] ?? null,
+            'i_wbls_adm'      => Auth::user()->i_wbls_adm,
+            'd_wbls_vrf'      => now(),
+        ]);
+    }
 
 
 

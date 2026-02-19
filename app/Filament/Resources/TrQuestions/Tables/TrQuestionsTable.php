@@ -13,20 +13,27 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class TrQuestionsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function (Builder $query) {
+                    $category = request()->get('tableFilters')['c_wbls_categ']['value'] ?? null;
+
+                    if ($category) {
+                        $query->where('c_wbls_categ', $category);
+                    }
+                })
+
             ->defaultSort('i_question_sort', 'asc')
             ->reorderable('i_question_sort')
             ->columns([
                 TextColumn::make('i_question_sort')
                     ->label('Urutan Pertanyaan')
-                    ->sortable(query: function ($query, $direction) {
-                        $query->orderByRaw("CAST(i_question_sort AS UNSIGNED) $direction");
-                    }),
+                    ->sortable(),
 
                 TextColumn::make('kategori.n_wbls_categ')
                     ->label('Kategori')

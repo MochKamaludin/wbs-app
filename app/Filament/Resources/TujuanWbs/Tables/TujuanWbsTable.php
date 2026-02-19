@@ -16,7 +16,7 @@ class TujuanWbsTable
     {
         return $table
             ->defaultSort('c_wbls_purposeord', 'asc')
-            ->reorderable('i_wbls_purpose')
+            ->reorderable('c_wbls_purposeord')
             ->columns([
                 TextColumn::make('c_wbls_purposeord')
                     ->label('Urutan')

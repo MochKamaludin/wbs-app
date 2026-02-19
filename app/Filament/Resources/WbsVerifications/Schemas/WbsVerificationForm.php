@@ -43,32 +43,30 @@ class WbsVerificationForm
                     ->columns(2),
 
                 Section::make('Hasil Verifikasi')
-                    ->schema([
+                ->schema([
+                    Radio::make('verification.f_wbls_usrname')
+                        ->label('Identitas Pelapor')
+                        ->options([
+                            '1' => 'Ada',
+                            '0' => 'Tidak Ada / Anonim',
+                        ])
+                        ->required()
+                        ->inline(),
 
-                        Radio::make('f_wbls_usrname')
-                            ->label('Identitas Pelapor')
-                            ->options([
-                                '1' => 'Ada',
-                                '0' => 'Tidak Ada / Anonim',
-                            ])
-                            ->required()
-                            ->inline(),
+                    Radio::make('verification.f_wbls_file')
+                        ->label('Bukti Dokumen')
+                        ->options([
+                            '1' => 'Lengkap',
+                            '2' => 'Tidak Lengkap',
+                            '3' => 'Tidak Ada',
+                        ])
+                        ->required()
+                        ->inline(),
 
-                        Radio::make('f_wbls_file')
-                            ->label('Bukti Dokumen')
-                            ->options([
-                                '1' => 'Lengkap',
-                                '2' => 'Tidak Lengkap',
-                                '3' => 'Tidak Ada',
-                            ])
-                            ->required()
-                            ->inline(),
-                        
-                        TextArea::make('e_wbls_stat')
-                            ->label('Keterangan')
-                            ->nullable()
-                            ->dehydrated(true)
-                    ])
+                    Textarea::make('verification.e_wbls_stat')
+                        ->label('Keterangan')
+                        ->nullable(),
+                ])
                     ->columns(1),
             ]);
     }

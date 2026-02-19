@@ -49,16 +49,6 @@ class WbsVerificationsTable
                     ->visible(fn ($record) => is_null($record->f_wbls_agree))
                     ->requiresConfirmation()
                     ->action(fn (Tmwbls $record) => self::approve($record)),
-
-                // Action::make('reject')
-                //     ->label('Tolak')
-                //     ->icon('heroicon-o-x-circle')
-                //     ->color('danger')
-                //     ->visible(fn ($record) => is_null($record->f_wbls_agree))
-                //     ->requiresConfirmation()
-                //     ->action(fn (Tmwbls $record, array $data) =>
-                //         self::reject($record, $data)
-                //     ),
             ])
 
             ->toolbarActions([
@@ -89,16 +79,4 @@ class WbsVerificationsTable
             'd_wbls_statupd' => now(),
         ]);
     }
-
-    // protected static function reject(Tmwbls $record, array $data): void
-    // {
-    //     $cStat = '3';
-
-    //     $record->update([
-    //         'f_wbls_agree'   => '0',
-    //         'c_wbls_stat'    => $cStat,
-    //         'e_wbls_stat'    => self::getStatusName($cStat),
-    //         'd_wbls_statupd' => now(),
-    //     ]);
-    // }
 }

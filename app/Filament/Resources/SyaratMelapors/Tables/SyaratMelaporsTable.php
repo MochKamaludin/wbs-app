@@ -16,7 +16,7 @@ class SyaratMelaporsTable
     {
         return $table
             ->defaultSort('c_wbls_reqord', 'asc')
-            ->reorderable('i_wbls_req')
+            ->reorderable('c_wbls_reqord')
             ->columns([
             TextColumn::make('c_wbls_reqord')
                 ->label('Urutan Tampil')

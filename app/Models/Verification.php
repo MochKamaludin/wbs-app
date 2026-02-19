@@ -3,13 +3,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TmwblsVrf extends Model
+class Verification extends Model
 {
     protected $table = 'tmwblsvrf';
 
     protected $primaryKey = 'i_wbls';
     public $incrementing = false;
-    protected $keyType = 'string';
     public $timestamps = false;
 
     protected $fillable = [
@@ -26,5 +25,15 @@ class TmwblsVrf extends Model
     public function wbs()
     {
         return $this->belongsTo(Tmwbls::class, 'i_wbls', 'i_wbls');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(TmAnswer::class, 'i_wbls', 'i_wbls');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(TmwblsFile::class, 'i_wbls', 'i_wbls');
     }
 }
