@@ -33,4 +33,4 @@ Route::get('/ba/verifikasi/pdf/{verification}', function (Verification $verifica
     
 Route::get('/ba/pdf/{resume}', function (Investigation $resume) {
     return BaInvestigasiService::generatePdf($resume);
-})->name('ba.laporan.pdf');
+})->name('ba.investigasi.pdf');

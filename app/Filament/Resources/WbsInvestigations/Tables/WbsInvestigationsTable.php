@@ -72,7 +72,7 @@ class WbsInvestigationsTable
                     ->visible(fn (Tmwbls $record) => ! in_array($record->c_wbls_stat, [3, 5, 6])),
 
                 Action::make('generateBA')
-                    ->label('Generate BA')
+                    ->label('Generate BA Investigasi')
                     ->color('success')
                     ->visible(fn (Tmwbls $record) => in_array($record->c_wbls_stat, [3, 5, 6]))
                     ->url(function (Tmwbls $record) {
@@ -81,7 +81,7 @@ class WbsInvestigationsTable
                             'i_wbls' => $record->i_wbls
                         ]);
 
-                        return route('ba.laporan.pdf', $resume->id);
+                        return route('ba.investigasi.pdf', $resume->id);
                     })
                     ->openUrlInNewTab(),
             ])

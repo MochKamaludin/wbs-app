@@ -90,13 +90,13 @@
         Pada hari <b>{{ $hari }}</b>
         tanggal <b>{{ $tanggal }} {{ $bulan }} {{ $tahun }}</b>
         telah dilakukan verifikasi atas pelaporan pelanggaran yang diterima,
-        Nomor Pelaporan <b>{{ $data->wbs->i_wbls }}</b>
-        tertanggal <b>{{ \Carbon\Carbon::parse($data->wbs->d_wbls)->translatedFormat('d F Y') }}</b>
+        Nomor Pelaporan <b>{{ $data->wbls->i_wbls }}</b>
+        tertanggal <b>{{ \Carbon\Carbon::parse($data->wbls->d_wbls)->translatedFormat('d F Y') }}</b>
         mengenai:
     </p>
 
     <div class="box">
-        {{ $data->wbs->e_wbls ?? '-' }}
+        {{ $data->wbls->e_wbls ?? '-' }}
     </div>
 
     <br>
@@ -164,7 +164,7 @@
                 Pengelola WBS,<br>
                 Sub-unit Verifikasi
                 <br><br><br><br>
-                <b>{{ $data->wbs->user->n_wbls_adm }}</b>
+                <b>{{ $data->wbls->user->n_wbls_adm }}</b>
             </td>
         </tr>
     </table>

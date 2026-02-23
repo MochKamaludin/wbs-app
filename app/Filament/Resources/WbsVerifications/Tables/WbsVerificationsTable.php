@@ -4,6 +4,9 @@ namespace App\Filament\Resources\WbsVerifications\Tables;
 
 use App\Models\Tmwbls;
 use App\Models\Verification;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvestigatorNotification;
+use App\Models\User;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
@@ -11,7 +14,6 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
-use Filament\Forms\Components\Textarea;
 use Filament\Facades\Filament;
 use App\Filament\Resources\WbsVerifications\WbsVerificationResource;
 use Filament\Actions\ViewAction;
@@ -119,5 +121,21 @@ class WbsVerificationsTable
             'd_wbls_check'   => now(),
             'd_wbls_statupd' => now(),
         ]);
+
+        // $investigators = User::where('c_wbls_admauth', '2')->get();
+        // foreach ($investigators as $investigator) {
+        //     if (filter_var($investigator->email, FILTER_VALIDATE_EMAIL)) {
+        //         Mail::to($investigator->email)->send(
+        //             new InvestigatorNotification($record->i_wbls, $record->e_wbls)
+        //         );
+        //     }
+        // }
+
+        $investigators = User::where('c_wbls_admauth', '2')->get();
+        foreach ($investigators as $investigator) {
+            Mail::to($investigator->email ?? $investigator->i_wbls_adm)->send(
+                new InvestigatorNotification($record->i_wbls, $record->e_wbls)
+            );
+        }
     }
 }
