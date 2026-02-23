@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\WbsVerifications\Tables;
 
 use App\Models\Tmwbls;
+use App\Models\Verification;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
@@ -14,7 +15,9 @@ use Filament\Forms\Components\Textarea;
 use Filament\Facades\Filament;
 use App\Filament\Resources\WbsVerifications\WbsVerificationResource;
 use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class WbsVerificationsTable
 {
@@ -40,7 +43,8 @@ class WbsVerificationsTable
 
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Ubah'),
 
                 Action::make('approve')
                     ->label('Setujui')
@@ -48,7 +52,51 @@ class WbsVerificationsTable
                     ->color('success')
                     ->visible(fn ($record) => is_null($record->f_wbls_agree))
                     ->requiresConfirmation()
-                    ->action(fn (Tmwbls $record) => self::approve($record)),
+                    ->action(function (Tmwbls $record) {
+
+                        $exists = \App\Models\Verification::where('i_wbls', $record->i_wbls)
+                            ->whereNotNull('f_wbls_usrname')
+                            ->whereNotNull('f_wbls_file')
+                            ->exists();
+
+                        if (
+                            ! $exists ||
+                            trim((string) $record->e_wbls_stat) === ''
+                        ) {
+                            Notification::make()
+                                ->title('Isi data verifikasi terlebih dahulu sebelum menyetujui.')
+                                ->danger()
+                                ->send();
+
+                            return;
+                        }
+
+                        self::approve($record);
+
+                        Notification::make()
+                            ->title('Data berhasil disetujui.')
+                            ->success()
+                            ->send();
+                    }),
+
+                Action::make('generateBA')
+                    ->label('Generate BA Verifikasi')
+                    ->icon('heroicon-o-document-text')
+                    ->color('success')
+                    ->visible(fn (Tmwbls $record) => $record->f_wbls_agree === '1')
+                    ->url(function (Tmwbls $record) {
+
+                        $verification = Verification::firstOrCreate(
+                            ['i_wbls' => $record->i_wbls],
+                            [
+                                'i_wbls_adm' => Auth::user()->i_wbls_adm,
+                                'd_wbls_vrf' => now(),
+                            ]
+                        );
+
+                        return route('ba.verifikasi.pdf', $verification->id);
+                    })
+                    ->openUrlInNewTab(),
             ])
 
             ->toolbarActions([
@@ -56,13 +104,6 @@ class WbsVerificationsTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    protected static function getStatusName(string $c_wbls_stat): ?string
-    {
-        return DB::table('trwblsstat')
-            ->where('c_wbls_stat', $c_wbls_stat)
-            ->value('e_wbls_stat');
     }
 
     protected static function approve(Tmwbls $record): void

@@ -56,9 +56,9 @@ class Tmwbls extends Model
         );
     }
 
-    public function resume()
+    public function investigation()
     {
-        return $this->hasOne(TmwblsResume::class, 'i_wbls', 'i_wbls');
+        return $this->hasOne(Investigation::class, 'i_wbls', 'i_wbls');
     }
 
     public function verification()

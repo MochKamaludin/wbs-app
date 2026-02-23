@@ -49,20 +49,22 @@ class WbsInvestigationForm
                     ]),
                 ]),
 
-            Group::make()
-                ->schema([
-                    Select::make('c_wbls_stat')
-                        ->label('Status Laporan')
-                        ->required()
-                        ->options(
-                            ReferensiStatus::whereIn('c_wbls_stat', ['3', '5', '6'])
-                                ->pluck('n_wbls_stat', 'c_wbls_stat')
-                        ),
-                    Textarea::make('e_wbls_stat')
-                        ->label('Keterangan Status')
-                        ->nullable()
-                        ->dehydrated(true)
-                ]),
+                    Group::make()
+                        ->relationship('investigation')
+                        ->schema([
+                        Textarea::make('e_wbls_resume')
+                                ->label('Keterangan Resume')
+                                ->nullable()
+                                ->dehydrated(true)
+                    ]),
+            
+                        Select::make('c_wbls_stat')
+                            ->label('Status Laporan')
+                            ->required()
+                            ->options(
+                                ReferensiStatus::whereIn('c_wbls_stat', ['3', '5', '6'])
+                                    ->pluck('n_wbls_stat', 'c_wbls_stat')
+                            ),
         ]);
     }
 }

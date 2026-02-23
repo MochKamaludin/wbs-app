@@ -7,7 +7,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Group;
+use Filament\Schemas\Components\Group;
 
 class WbsVerificationForm
 {
@@ -44,30 +44,34 @@ class WbsVerificationForm
 
                 Section::make('Hasil Verifikasi')
                 ->schema([
-                    Radio::make('verification.f_wbls_usrname')
-                        ->label('Identitas Pelapor')
-                        ->options([
-                            '1' => 'Ada',
-                            '0' => 'Tidak Ada / Anonim',
-                        ])
-                        ->required()
-                        ->inline(),
+                    Group::make()
+                        ->relationship('verification')
+                        ->schema([
+                            Radio::make('f_wbls_usrname')
+                                ->label('Identitas Pelapor')
+                                ->options([
+                                    '1' => 'Ada',
+                                    '0' => 'Tidak Ada / Anonim',
+                                ])
+                                ->required()
+                                ->inline(),
 
-                    Radio::make('verification.f_wbls_file')
-                        ->label('Bukti Dokumen')
-                        ->options([
-                            '1' => 'Lengkap',
-                            '2' => 'Tidak Lengkap',
-                            '3' => 'Tidak Ada',
-                        ])
-                        ->required()
-                        ->inline(),
+                            Radio::make('f_wbls_file')           
+                                ->label('Bukti Dokumen')
+                                ->options([
+                                    '1' => 'Lengkap',
+                                    '2' => 'Tidak Lengkap',
+                                    '3' => 'Tidak Ada',
+                                ])
+                                ->required()
+                                ->inline(),
+                        ]),
 
-                    Textarea::make('verification.e_wbls_stat')
-                        ->label('Keterangan')
-                        ->nullable(),
+                        Textarea::make('e_wbls_stat')
+                                ->label('Keterangan')
+                                ->nullable(),
                 ])
-                    ->columns(1),
+                ->columns(1),
             ]);
     }
 }

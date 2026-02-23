@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tmwblsvrf', function (Blueprint $table) {
+            $table->id();
             $table->char('i_wbls', 20);
             $table->string('i_wbls_adm', 20)->nullable();
             $table->dateTime('d_wbls_vrf')->nullable();
@@ -20,9 +21,6 @@ return new class extends Migration
             $table->integer('i_wbls_bavrfseq')->nullable();
             $table->string('i_wbls_bavrf', 21)->nullable();
 
-            $table->timestamps();
-
-            $table->primary(['i_wbls']);
             $table->foreign('i_wbls')
                 ->references('i_wbls')
                 ->on('tmwbls')

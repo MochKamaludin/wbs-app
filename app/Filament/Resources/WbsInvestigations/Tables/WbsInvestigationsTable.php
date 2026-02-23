@@ -75,10 +75,13 @@ class WbsInvestigationsTable
                     ->label('Generate BA')
                     ->color('success')
                     ->visible(fn (Tmwbls $record) => in_array($record->c_wbls_stat, [3, 5, 6]))
-                    ->action(function (Tmwbls $record) {
-                        BeritaAcaraService::generateAndUpdate($record);
+                    ->url(function (Tmwbls $record) {
 
-                        return redirect()->route('ba.pdf', $record->resume);
+                        $resume = \App\Models\Investigation::firstOrCreate([
+                            'i_wbls' => $record->i_wbls
+                        ]);
+
+                        return route('ba.laporan.pdf', $resume->id);
                     })
                     ->openUrlInNewTab(),
             ])
