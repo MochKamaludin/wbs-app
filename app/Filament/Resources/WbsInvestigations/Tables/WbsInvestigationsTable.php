@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\WbsInvestigations\Tables;
 
+use App\Models\Pengaduan;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use App\Models\Tmwbls;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\DatePicker;
@@ -69,16 +69,19 @@ class WbsInvestigationsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()
-                    ->visible(fn (Tmwbls $record) => ! in_array($record->c_wbls_stat, [3, 5, 6])),
+                    ->visible(fn (Pengaduan $record) => ! in_array($record->c_wbls_stat, [3, 5, 6])),
 
                 Action::make('generateBA')
-                    ->label('Generate BA')
+                    ->label('Generate BA Investigasi')
                     ->color('success')
-                    ->visible(fn (Tmwbls $record) => in_array($record->c_wbls_stat, [3, 5, 6]))
-                    ->action(function (Tmwbls $record) {
-                        BeritaAcaraService::generateAndUpdate($record);
+                    ->visible(fn (Pengaduan $record) => in_array($record->c_wbls_stat, [3, 5, 6]))
+                    ->url(function (Pengaduan $record) {
 
-                        return redirect()->route('ba.pdf', $record->resume);
+                        $resume = \App\Models\Investigation::firstOrCreate([
+                            'i_wbls' => $record->i_wbls
+                        ]);
+
+                        return route('ba.investigasi.pdf', $resume->i_wbls_resume);
                     })
                     ->openUrlInNewTab(),
             ])

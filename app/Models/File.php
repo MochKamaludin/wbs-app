@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class TmwblsFile extends Model
+class File extends Model
 {
     protected $table = 'tmwblsfile';
     public $timestamps = false;
@@ -25,7 +25,7 @@ class TmwblsFile extends Model
     public function wbls()
     {
         return $this->belongsTo(
-            Tmwbls::class,
+            Pengaduan::class,
             'i_wbls',
             'i_wbls'
         );
@@ -34,7 +34,7 @@ class TmwblsFile extends Model
     public function pertanyaan()
     {
         return $this->belongsTo(
-            TrQuestion::class,
+            Pertanyaan::class,
             'i_id_question',      
             'i_id_question'      
         );
@@ -49,7 +49,7 @@ class TmwblsFile extends Model
     public function category()
     {
         return $this->belongsTo(
-            TrWblsFileCateg::class,
+            FileKategori::class,
             'c_wbls_filecateg',
             'c_wbls_filecateg'
         );

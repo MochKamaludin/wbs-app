@@ -9,19 +9,19 @@ use App\Filament\Resources\WbsVerifications\Pages\ViewWbsVerification;
 use App\Filament\Resources\WbsVerifications\Schemas\WbsVerificationForm;
 use App\Filament\Resources\WbsVerifications\Schemas\WbsVerificationInfolist;
 use App\Filament\Resources\WbsVerifications\Tables\WbsVerificationsTable;
-use App\Models\Tmwbls;
-use App\Models\WbsVerification;
+use App\Models\Pengaduan;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use UnitEnum;
 
 class WbsVerificationResource extends Resource
 {
-    protected static ?string $model = Tmwbls::class;
+    protected static ?string $model = Pengaduan::class;
 
     protected static ?string $navigationLabel = 'Verifikasi Laporan';
     protected static ?string $pluralModelLabel = 'Verifikasi Laporan';
@@ -41,7 +41,7 @@ class WbsVerificationResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Tmwbls::whereNull('f_wbls_agree')
+        return Pengaduan::whereNull('f_wbls_agree')
             ->count();
     }
 
@@ -70,6 +70,12 @@ class WbsVerificationResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->with('verification');
     }
 
     public static function getPages(): array

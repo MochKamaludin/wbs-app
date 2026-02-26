@@ -7,7 +7,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Group;
+use Filament\Schemas\Components\Group;
 
 class WbsVerificationForm
 {
@@ -43,33 +43,35 @@ class WbsVerificationForm
                     ->columns(2),
 
                 Section::make('Hasil Verifikasi')
-                    ->schema([
+                ->schema([
+                    Group::make()
+                        ->relationship('verification')
+                        ->schema([
+                            Radio::make('f_wbls_usrname')
+                                ->label('Identitas Pelapor')
+                                ->options([
+                                    '1' => 'Ada',
+                                    '0' => 'Tidak Ada / Anonim',
+                                ])
+                                ->required()
+                                ->inline(),
 
-                        Radio::make('f_wbls_usrname')
-                            ->label('Identitas Pelapor')
-                            ->options([
-                                '1' => 'Ada',
-                                '0' => 'Tidak Ada / Anonim',
-                            ])
-                            ->required()
-                            ->inline(),
+                            Radio::make('f_wbls_file')           
+                                ->label('Bukti Dokumen')
+                                ->options([
+                                    '1' => 'Lengkap',
+                                    '2' => 'Tidak Lengkap',
+                                    '3' => 'Tidak Ada',
+                                ])
+                                ->required()
+                                ->inline(),
+                        ]),
 
-                        Radio::make('f_wbls_file')
-                            ->label('Bukti Dokumen')
-                            ->options([
-                                '1' => 'Lengkap',
-                                '2' => 'Tidak Lengkap',
-                                '3' => 'Tidak Ada',
-                            ])
-                            ->required()
-                            ->inline(),
-                        
-                        TextArea::make('e_wbls_stat')
-                            ->label('Keterangan')
-                            ->nullable()
-                            ->dehydrated(true)
-                    ])
-                    ->columns(1),
+                        Textarea::make('e_wbls_stat')
+                                ->label('Keterangan')
+                                ->nullable(),
+                ])
+                ->columns(1),
             ]);
     }
 }

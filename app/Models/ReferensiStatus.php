@@ -12,7 +12,7 @@ class ReferensiStatus extends Model
     use LogsActivity;
     protected $table = 'trwblsstat';
     protected $primaryKey = 'c_wbls_stat';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
     public $timestamps = false;
 

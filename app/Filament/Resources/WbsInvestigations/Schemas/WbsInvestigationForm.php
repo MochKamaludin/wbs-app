@@ -3,15 +3,11 @@
 namespace App\Filament\Resources\WbsInvestigations\Schemas;
 
 use App\Models\ReferensiStatus;
-use App\Models\TmAnswer;
-use App\Models\Tmwbls;
-use App\Models\TmwblsFile;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Grid;
 use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 
@@ -49,20 +45,22 @@ class WbsInvestigationForm
                     ]),
                 ]),
 
-            Group::make()
-                ->schema([
-                    Select::make('c_wbls_stat')
-                        ->label('Status Laporan')
-                        ->required()
-                        ->options(
-                            ReferensiStatus::whereIn('c_wbls_stat', ['3', '5', '6'])
-                                ->pluck('n_wbls_stat', 'c_wbls_stat')
-                        ),
-                    Textarea::make('e_wbls_stat')
-                        ->label('Keterangan Status')
-                        ->nullable()
-                        ->dehydrated(true)
-                ]),
+                    Group::make()
+                        ->relationship('investigation')
+                        ->schema([
+                        Textarea::make('e_wbls_resume')
+                                ->label('Keterangan Resume')
+                                ->nullable()
+                                ->dehydrated(true)
+                    ]),
+            
+                        Select::make('c_wbls_stat')
+                            ->label('Status Laporan')
+                            ->required()
+                            ->options(
+                                ReferensiStatus::whereIn('c_wbls_stat', ['3', '5', '6'])
+                                    ->pluck('n_wbls_stat', 'c_wbls_stat')
+                            ),
         ]);
     }
 }

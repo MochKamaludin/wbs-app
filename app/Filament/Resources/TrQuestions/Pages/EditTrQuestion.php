@@ -4,13 +4,13 @@ namespace App\Filament\Resources\TrQuestions\Pages;
 
 use App\Filament\Resources\TrQuestions\TrQuestionResource;
 use App\Filament\Resources\TrQuestions\Schemas\TrQuestionEditForm;
+use App\Models\Pertanyaan;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Actions\DeleteAction;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Filament\Facades\Filament;
-use App\Models\TrQuestion;
 
 class EditTrQuestion extends EditRecord
 {
@@ -45,7 +45,7 @@ class EditTrQuestion extends EditRecord
 
         if (!$sort || !$this->record) return;
 
-        $exists = TrQuestion::where('c_wbls_categ', $this->record->c_wbls_categ)
+        $exists = Pertanyaan::where('c_wbls_categ', $this->record->c_wbls_categ)
             ->where('i_question_sort', (int) $sort)
             ->where('i_id_question', '!=', $this->record->i_id_question)
             ->exists();

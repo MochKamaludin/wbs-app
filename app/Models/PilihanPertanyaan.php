@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
-use App\Models\TrQuestion;
 
-class TrQuestionChoice extends Model
+class PilihanPertanyaan extends Model
 {
     use LogsActivity;
     protected $table = 'trquestionchoice';
@@ -50,7 +49,7 @@ class TrQuestionChoice extends Model
 
     public function question()
     {
-        return $this->belongsTo(TrQuestion::class, 'i_id_question');
+        return $this->belongsTo(Pertanyaan::class, 'i_id_question');
     }
 
     public function user()

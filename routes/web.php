@@ -3,14 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\CekStatusController;
-use App\Models\TmwblsResume;
-use App\Services\BeritaAcaraService;
 use App\Http\Controllers\WbsDownloadController;
-
-
-// Route::get('/', function () {
-//     return view('landing.index');
-// });
+use App\Models\Investigation;
+use App\Services\BaInvestigasiService;
+use App\Models\Verification;
+use App\Services\BaVerifikasiService;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
@@ -30,7 +27,10 @@ Route::post('/cek-status', [CekStatusController::class, 'check'])
 Route::get('/wbs/download/{filename}', [WbsDownloadController::class, 'download'])
     ->name('wbs.download');
 
-Route::get('/ba/pdf/{resume}', function (TmwblsResume $resume) {
-    return BeritaAcaraService::generatePdf($resume);
-})->name('ba.pdf');
-
+Route::get('/ba/verifikasi/pdf/{verification}', function (Verification $verification) {
+    return BaVerifikasiService::generatePdf($verification);
+})->name('ba.verifikasi.pdf');
+    
+Route::get('/ba/pdf/{resume}', function (Investigation $resume) {
+    return BaInvestigasiService::generatePdf($resume);
+})->name('ba.investigasi.pdf');

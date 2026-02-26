@@ -20,9 +20,7 @@ class CaraMelaporsTable
             ->columns([
                 TextColumn::make('c_wbls_procord')
                     ->label('Urutan Tampil')
-                    ->sortable(query: function ($query, $direction) {
-                        $query->orderByRaw("CAST(c_wbls_procord AS UNSIGNED) $direction");
-                    }),
+                    ->sortable(),
                     
                 TextColumn::make('n_wbls_proc')
                     ->label('Judul Cara Melapor')

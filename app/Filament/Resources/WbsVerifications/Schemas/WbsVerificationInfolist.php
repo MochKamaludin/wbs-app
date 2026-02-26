@@ -2,18 +2,17 @@
 
 namespace App\Filament\Resources\WbsVerifications\Schemas;
 
-use App\Models\TmAnswer;
-use App\Models\Tmwbls;
-use App\Models\TmwblsFile;
+use App\Models\File;
+use App\Models\Jawaban;
+use App\Models\Pengaduan;
+use App\Models\Pertanyaan;
+use App\Models\PilihanPertanyaan;
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Group;
-use Filament\Schemas\Components\Grid;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use App\Models\TrQuestion;
+use Illuminate\Support\Facades\DB;
 
 
 class WbsVerificationInfolist
@@ -59,14 +58,14 @@ class WbsVerificationInfolist
 
                             RepeatableEntry::make('jawaban')
                                 ->label('Jawaban Pertanyaan')
-                                ->state(function (Tmwbls $record) {
-                                    $questions = TrQuestion::where('c_wbls_categ', $record->c_wbls_categ)
+                                ->state(function (Pengaduan $record) {
+                                    $questions = Pertanyaan::where('c_wbls_categ', $record->c_wbls_categ)
                                         ->where('f_active', 1)
                                         ->where('c_question', '!=', 7) 
                                         ->orderBy('i_question_sort')
                                         ->get();
 
-                                    $answers = TmAnswer::where('i_wbls', $record->i_wbls)
+                                    $answers = Jawaban::where('i_wbls', $record->i_wbls)
                                         ->get()
                                         ->keyBy('i_id_question');
 
@@ -83,7 +82,7 @@ class WbsVerificationInfolist
 
                                         if ($answer->i_id_questionchoice) {
 
-                                            $choice = \App\Models\TrQuestionChoice::find($answer->i_id_questionchoice);
+                                            $choice = PilihanPertanyaan::find($answer->i_id_questionchoice);
                                             $choiceText = $choice?->n_choice;
                                         }
 
@@ -94,7 +93,7 @@ class WbsVerificationInfolist
                                             if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
 
                                                 if (!empty($decoded['choice'])) {
-                                                    $choice = \App\Models\TrQuestionChoice::find($decoded['choice']);
+                                                    $choice = PilihanPertanyaan::find($decoded['choice']);
                                                     $choiceText = $choice?->n_choice;
                                                 }
 
@@ -137,9 +136,9 @@ class WbsVerificationInfolist
 
                             RepeatableEntry::make('files')
                                 ->label('File Bukti')
-                                ->state(function (Tmwbls $record) {
+                                ->state(function (Pengaduan $record) {
 
-                                    $files = TmwblsFile::where('i_wbls', $record->i_wbls)->get();
+                                    $files = File::where('i_wbls', $record->i_wbls)->get();
 
                                     if ($files->isEmpty()) {
                                         return [];
@@ -150,9 +149,9 @@ class WbsVerificationInfolist
 
                                             $firstFile = $group->first();
 
-                                            $question = TrQuestion::find($firstFile->i_id_question);
+                                            $question = Pertanyaan::find($firstFile->i_id_question);
 
-                                            $fileCategory = \Illuminate\Support\Facades\DB::table('trwblsfilecateg')
+                                            $fileCategory = DB::table('trwblsfilecateg')
                                                 ->where('c_wbls_filecateg', $firstFile->c_wbls_filecateg)
                                                 ->value('n_wbls_filecateg');
 
@@ -202,16 +201,16 @@ class WbsVerificationInfolist
                                         ])
                                         ->columnSpanFull(),
                                 ])
-                                ->visible(fn (Tmwbls $record) =>
-                                    TmwblsFile::where('i_wbls', $record->i_wbls)->exists()
+                                ->visible(fn (Pengaduan $record) =>
+                                    File::where('i_wbls', $record->i_wbls)->exists()
                                 ),
 
                             TextEntry::make('kosong')
                                 ->label('')
                                 ->state('Tidak ada file bukti')
                                 ->columnSpanFull()
-                                ->visible(fn (Tmwbls $record) =>
-                                    !TmwblsFile::where('i_wbls', $record->i_wbls)->exists()
+                                ->visible(fn (Pengaduan $record) =>
+                                    !File::where('i_wbls', $record->i_wbls)->exists()
                                 ),
                         ]),
                 ]),

@@ -3,31 +3,24 @@
 namespace App\Filament\Resources\WbsVerifications\Pages;
 
 use App\Filament\Resources\WbsVerifications\WbsVerificationResource;
+use App\Models\Verification;
+use App\Models\Tmwbls;
 use App\Models\TmwblsVrf;
 use App\Services\BaVerifikasiService;
 use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
+use Filament\Facades\Filament;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 
-class EditWbsVerification extends EditRecord
-{
+class EditWbsVerification extends EditRecord    {
     protected static string $resource = WbsVerificationResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-
-            Action::make('generate_ba')
-                ->label('Generate BA Verifikasi')
-                ->color('success')
-                ->action(function () {
-                    return BaVerifikasiService::generate($this->record);
-                }),
+            //
         ];
     }
-
     protected function mutateFormDataBeforeSave(array $data): array
     {
         $verificationData = [
@@ -64,3 +57,4 @@ class EditWbsVerification extends EditRecord
         return $data;
     }
 }
+

@@ -7,36 +7,38 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
 
-class Tmwbls extends Model
+class Pertanyaan extends Model
 {
-    protected $table = 'tmwbls';
-    protected $primaryKey = 'i_wbls';
-    public $incrementing = false;
+    use LogsActivity;
+    protected $table = 'trquestion';
+    protected $primaryKey = 'i_id_question';
     public $timestamps = false;
-    protected $keyType = 'string';
 
     protected $fillable = [
-        'i_wbls',
-        'i_wbls_seq',
+        'i_question_seq',
         'c_wbls_categ',
-        'n_wbls_categother',
-        'e_wbls',
-        'd_wbls_incident',
-        'c_wbls_stat',
-        'd_wbls',
+        'c_question',
+        'i_question_sort',
+        'n_question',
+        'f_required',
+        'f_active',
+        'i_entry',
         'd_entry',
-        'f_wbls_agree',
-        'i_wbls_adm',
-        'd_wbls_check',
-        'e_wbls_stat',
+        'i_update',
+        'd_update', 
     ];
 
-    public function files()
+    protected $casts = [
+        'd_entry'  => 'datetime',
+        'd_update' => 'datetime', 
+    ];
+
+    public function choices()
     {
         return $this->hasMany(
-            TmwblsFile::class,
-            'i_wbls',
-            'i_wbls'
+            PilihanPertanyaan::class,
+            'i_id_question',
+            'i_id_question'
         );
     }
 
@@ -45,33 +47,37 @@ class Tmwbls extends Model
         return $this->belongsTo(
             ReferensiKategori::class,
             'c_wbls_categ',
+            'c_wbls_categ'
         );
     }
 
-    public function status()
+    public function answers()
     {
-        return $this->belongsTo(
-            ReferensiStatus::class,
-            'c_wbls_stat',
+        return $this->hasMany(Jawaban::class, 'i_id_question');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(
+            File::class,
+            'i_id_question',
+            'i_id_question'
         );
-    }
-
-    public function resume()
-    {
-        return $this->hasOne(TmwblsResume::class, 'i_wbls', 'i_wbls');
-    }
-
-    public function verifikasi()
-    {
-        return $this->hasOne(TmwblsVrf::class, 'i_wbls', 'i_wbls');
     }
 
     public function user()
     {
-        return $this->belongsTo(
-            User::class,
-            'i_wbls_adm',
-        );
+        return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
+    }
+
+    public function entry_user()
+    {
+        return $this->belongsTo(User::class, 'i_entry', 'i_wbls_adm');
+    }
+
+    public function update_user()
+    {
+        return $this->belongsTo(User::class, 'i_update', 'i_wbls_adm');
     }
 
     public function isAdmin()

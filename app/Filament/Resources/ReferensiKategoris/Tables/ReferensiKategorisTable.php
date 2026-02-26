@@ -32,7 +32,7 @@ class ReferensiKategorisTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                // ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
             ])

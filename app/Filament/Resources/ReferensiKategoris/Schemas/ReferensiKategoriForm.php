@@ -12,12 +12,6 @@ class ReferensiKategoriForm
     {
         return $schema
             ->components([
-                TextInput::make('c_wbls_categ')
-                    ->label('Kode')
-                    ->required()
-                    ->numeric()
-                    ->unique(ignoreRecord: true),
-
                 TextInput::make('n_wbls_categ')
                     ->label('Nama Kategori')
                     ->required()

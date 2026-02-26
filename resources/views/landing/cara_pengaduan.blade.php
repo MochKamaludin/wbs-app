@@ -1,10 +1,9 @@
 <section
     id="cara_pengaduan"
-    class="py-28 bg-linear-to-b from-white via-blue-50 to-white reveal"
+    class="py-25 bg-linear-to-b from-white via-blue-50 to-white reveal"
 >
     <div class="max-w-5xl mx-auto text-center px-6">
 
-        {{-- Judul --}}
         <h4 class="text-3xl font-bold text-gray-900 mb-3">
             Cara Pengaduan
         </h4>
@@ -12,7 +11,6 @@
             class="w-24 h-1 bg-linear-to-r from-blue-500 to-indigo-600 mx-auto rounded-full mb-12"
         ></div>
 
-        {{-- TAB STEP --}}
         <div class="flex justify-center">
             <div
                 class="
@@ -57,7 +55,6 @@
             </div>
         </div>
 
-        {{-- KONTEN STEP --}}
         <div
             id="step-content"
             class="
@@ -84,7 +81,6 @@
     </div>
 </section>
 
-{{-- SCRIPT --}}
 <script>
     const stepContents = {
         @foreach($steps as $step)
@@ -98,17 +94,14 @@
     document.querySelectorAll(".step-btn").forEach(btn => {
         btn.addEventListener("click", function () {
 
-            // Reset semua tab
             document.querySelectorAll(".step-btn").forEach(b => {
                 b.classList.remove("text-blue-600", "border-blue-600");
                 b.classList.add("text-gray-500", "border-transparent");
             });
 
-            // Aktifkan tab yang diklik
             this.classList.remove("text-gray-500", "border-transparent");
             this.classList.add("text-blue-600", "border-blue-600");
 
-            // Update konten
             const step = this.dataset.step;
             const box = document.getElementById("step-content");
 

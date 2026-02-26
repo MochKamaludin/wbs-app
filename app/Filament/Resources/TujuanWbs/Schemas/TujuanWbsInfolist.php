@@ -17,45 +17,35 @@ class TujuanWbsInfolist
             ->components([
                 Section::make()
                     ->schema([
-                        Flex::make([
-                            Grid::make(2)
-                                ->schema([
-                                    Group::make([
-                                        TextEntry::make('n_wbls_purpose')
-                                            ->label('Judul')
-                                            ->weight('bold'),
+                        TextEntry::make('n_wbls_purpose')
+                            ->label('Judul'),
 
-                                        TextEntry::make('c_wbls_purposeord')
-                                            ->label('Urutan Tampilan')
-                                            ->placeholder('-'),
-
-                                        TextEntry::make('f_wbls_purposestat')
-                                            ->label('Status')
-                                            ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
-                                            ->badge()
-                                            ->state(fn ($record) => $record->f_wbls_purposestat === '1' ? '1' : '0')
-                                            ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
-                                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
-
-                                        TextEntry::make('user.n_wbls_adm')
-                                            ->label('Dibuat Oleh')
-                                            ->placeholder('-'),
-
-                                        TextEntry::make('d_wbls_purpose')
-                                            ->label('Tanggal')
-                                            ->dateTime('d-m-Y H:i'),
-                                    ]),
-                                ]),
-                        ])->from('lg'),
-                    ]),
-                    Section::make('Deskripsi')
-                    ->schema([
                         TextEntry::make('e_wbls_purpose')
+                            ->label('Deskripsi')
                             ->html()
-                            ->hiddenLabel()
                             ->alignJustify(),
+
+                        TextEntry::make('c_wbls_purposeord')
+                            ->label('Urutan Tampilan')
+                            ->placeholder('-'),
+
+                        TextEntry::make('f_wbls_purposestat')
+                            ->label('Status')
+                            ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
+                            ->badge()
+                            ->state(fn ($record) => $record->f_wbls_purposestat === '1' ? '1' : '0')
+                            ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
+                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
+
+                        TextEntry::make('user.n_wbls_adm')
+                            ->label('Dibuat Oleh')
+                            ->placeholder('-'),
+
+                        TextEntry::make('d_wbls_purpose')
+                            ->label('Tanggal')
+                            ->dateTime('d-m-Y H:i'),
                     ])
-                    ->collapsible(),
+                    ->columnSpanFull(),
             ]);
     }
 }

@@ -3,42 +3,39 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
 
-class TrQuestion extends Model
+class Pengaduan extends Model
 {
-    use LogsActivity;
-    protected $table = 'trquestion';
-    protected $primaryKey = 'i_id_question';
+    protected $table = 'tmwbls';
+    protected $primaryKey = 'i_wbls';
+    public $incrementing = false;
     public $timestamps = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
-        'i_question_seq',
+        'i_wbls',
+        'i_wbls_seq',
         'c_wbls_categ',
-        'c_question',
-        'i_question_sort',
-        'n_question',
-        'f_required',
-        'f_active',
-        'i_entry',
+        'n_wbls_categother',
+        'e_wbls',
+        'd_wbls_incident',
+        'c_wbls_stat',
+        'd_wbls',
         'd_entry',
-        'i_update',
-        'd_update', 
+        'f_wbls_agree',
+        'i_wbls_adm',
+        'd_wbls_check',
+        'e_wbls_stat',
     ];
 
-    protected $casts = [
-        'd_entry'  => 'datetime',
-        'd_update' => 'datetime', 
-    ];
-
-    public function choices()
+    public function files()
     {
         return $this->hasMany(
-            TrQuestionChoice::class,
-            'i_id_question',
-            'i_id_question'
+            File::class,
+            'i_wbls',
+            'i_wbls'
         );
     }
 
@@ -47,37 +44,33 @@ class TrQuestion extends Model
         return $this->belongsTo(
             ReferensiKategori::class,
             'c_wbls_categ',
-            'c_wbls_categ'
         );
     }
 
-    public function answers()
+    public function status()
     {
-        return $this->hasMany(TmAnswer::class, 'i_id_question');
+        return $this->belongsTo(
+            ReferensiStatus::class,
+            'c_wbls_stat',
+        );
     }
 
-    public function files()
+    public function investigation()
     {
-        return $this->hasMany(
-            TmwblsFile::class,
-            'i_id_question',
-            'i_id_question'
-        );
+        return $this->hasOne(Investigation::class, 'i_wbls', 'i_wbls');
+    }
+
+    public function verification()
+    {
+        return $this->hasOne(Verification::class, 'i_wbls', 'i_wbls');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
-    }
-
-    public function entry_user()
-    {
-        return $this->belongsTo(User::class, 'i_entry', 'i_wbls_adm');
-    }
-
-    public function update_user()
-    {
-        return $this->belongsTo(User::class, 'i_update', 'i_wbls_adm');
+        return $this->belongsTo(
+            User::class,
+            'i_wbls_adm',
+        );
     }
 
     public function isAdmin()

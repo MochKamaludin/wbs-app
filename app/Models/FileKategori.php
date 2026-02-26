@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TrWblsFileCateg extends Model
+class FileKategori extends Model
 {
     protected $table = 'trwblsfilecateg';
     public $timestamps = false;
@@ -21,7 +21,7 @@ class TrWblsFileCateg extends Model
     public function files()
     {
         return $this->hasMany(
-            TmwblsFile::class,
+            File::class,
             'c_wbls_filecateg',
             'c_wbls_filecateg'
         );

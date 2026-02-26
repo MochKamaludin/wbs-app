@@ -9,20 +9,18 @@ use App\Filament\Resources\RekapData\Pages\ViewRekapData;
 use App\Filament\Resources\RekapData\Schemas\RekapDataForm;
 use App\Filament\Resources\RekapData\Schemas\RekapDataInfolist;
 use App\Filament\Resources\RekapData\Tables\RekapDataTable;
-use App\Models\RekapData;
-use App\Models\Tmwbls;
+use App\Models\Pengaduan;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use UnitEnum;
 
 class RekapDataResource extends Resource
 {
-    protected static ?string $model = Tmwbls::class;
+    protected static ?string $model = Pengaduan::class;
 
     protected static ?string $navigationLabel = 'Rekap Data';
     protected static ?string $pluralModelLabel = 'Rekap Data';
@@ -43,7 +41,7 @@ class RekapDataResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Tmwbls::count();
+        return Pengaduan::count();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

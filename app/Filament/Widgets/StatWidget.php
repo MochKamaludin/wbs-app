@@ -2,28 +2,23 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\CaraMelapor;
-use App\Models\ReferensiKategori;
+use App\Models\Pengaduan;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use \App\Models\User;
-use Filament\Support\Enums\IconPosition;
-use Filament\Support\Icons\Heroicon;
-use App\Models\Tmwbls;
 
 class StatWidget extends StatsOverviewWidget
 {
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Laporan', Tmwbls::count())
+            Stat::make('Total Laporan', Pengaduan::count())
                 ->description('Semua laporan')
                 ->icon('heroicon-o-clipboard-document')
                 ->color('gray'),
 
             Stat::make(
                 'Laporan Terverifikasi',
-                Tmwbls::where('f_wbls_agree', 1)->count()
+                Pengaduan::where('f_wbls_agree', 1)->count()
             )
                 ->description('Sudah diverifikasi')
                 ->icon('heroicon-o-check-badge')
@@ -31,7 +26,7 @@ class StatWidget extends StatsOverviewWidget
 
             Stat::make(
                 'Laporan Selesai',
-                Tmwbls::where('c_wbls_stat', 5)->count()
+                Pengaduan::where('c_wbls_stat', 5)->count()
             )
                 ->description('Proses selesai')
                 ->icon('heroicon-o-check-circle')

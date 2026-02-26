@@ -1,20 +1,29 @@
 <?php
+
 namespace App\Services;
 
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\Tmwbls;
+use App\Models\Verification;
+use Carbon\Carbon;
 
 class BaVerifikasiService
 {
-    public static function generate(Tmwbls $wbs)
+    public static function generatePdf(Verification $verification)
     {
-        $verifikasi = $wbs->verifikasi;
+        $verification->load('wbs');
 
-        $pdf = Pdf::loadView('pdf.ba-verifikasi', [
-            'wbs' => $wbs,
-            'verifikasi' => $verifikasi,
-        ]);
+        $tgl = $verification->d_wbls_vrf
+            ? Carbon::parse($verification->d_wbls_vrf)
+            : now();
 
-        return $pdf->stream('BA-Verifikasi.pdf');
+        $filename = str_replace('/', '-', $verification->i_wbls_bavrf);
+
+        return Pdf::loadView('pdf.ba-verifikasi', [
+            'data'    => $verification,
+            'hari'    => $tgl->translatedFormat('l'),
+            'tanggal' => $tgl->format('d'),
+            'bulan'   => $tgl->translatedFormat('F'),
+            'tahun'   => $tgl->format('Y'),
+        ])->stream('BA-VERIFIKASI-' . $filename . '.pdf');
     }
 }

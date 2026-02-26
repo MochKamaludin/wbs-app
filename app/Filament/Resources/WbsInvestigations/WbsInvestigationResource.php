@@ -9,23 +9,18 @@ use App\Filament\Resources\WbsInvestigations\Pages\ViewWbsInvestigation;
 use App\Filament\Resources\WbsInvestigations\Schemas\WbsInvestigationForm;
 use App\Filament\Resources\WbsInvestigations\Schemas\WbsInvestigationInfolist;
 use App\Filament\Resources\WbsInvestigations\Tables\WbsInvestigationsTable;
-use App\Filament\Widgets\StatWidget;
-use App\Models\Tmwbls;
-use App\Models\WbsInvestigation;
+use App\Models\Pengaduan;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use UnitEnum;
-use Illuminate\Support\Facades\DB;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class WbsInvestigationResource extends Resource
 {
-    protected static ?string $model = Tmwbls::class;
+    protected static ?string $model = Pengaduan::class;
 
     protected static ?string $navigationLabel = 'Investigasi Laporan';
     protected static ?string $pluralModelLabel = 'Investigasi Laporan';
@@ -45,7 +40,7 @@ class WbsInvestigationResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Tmwbls::where('f_wbls_agree', '1')
+        return Pengaduan::where('f_wbls_agree', '1')
             ->where('c_wbls_stat', '4')
             ->count();
     }

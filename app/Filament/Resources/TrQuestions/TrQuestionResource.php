@@ -9,19 +9,18 @@ use App\Filament\Resources\TrQuestions\Pages\ViewTrQuestion;
 use App\Filament\Resources\TrQuestions\Schemas\TrQuestionForm;
 use App\Filament\Resources\TrQuestions\Infolists\TrQuestionInfolist;
 use App\Filament\Resources\TrQuestions\Tables\TrQuestionsTable;
-use App\Models\TrQuestion;
+use App\Models\Pertanyaan;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\DB;
 
 class TrQuestionResource extends Resource
 {
-    protected static ?string $model = TrQuestion::class;
+    protected static ?string $model = Pertanyaan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQuestionMarkCircle;
     
     protected static ?string $navigationLabel = 'Pertanyaan';
 
@@ -31,7 +30,7 @@ class TrQuestionResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return TrQuestion::count();
+        return Pertanyaan::count();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

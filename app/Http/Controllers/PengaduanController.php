@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\AesHelper;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifikatorNotification;
+use App\Models\User;
 
 class PengaduanController extends Controller
 {
@@ -95,10 +97,12 @@ class PengaduanController extends Controller
             return back()->withErrors($errors)->withInput();
         }
         $resi = null;
+        $i_wbls = null;
 
         DB::transaction(function () use (
             $request,
             &$resi,
+            &$i_wbls,
             $filesInput,
             $filesUpload
         ) {
@@ -205,6 +209,13 @@ class PengaduanController extends Controller
                 }
             }
         });
+
+        $verifikators = User::where('c_wbls_admauth', '1')->get();
+        foreach ($verifikators as $verifikator) {
+            Mail::to($verifikator->email ?? $verifikator->i_wbls_adm)->send(
+                new VerifikatorNotification($i_wbls, $request->uraian)
+            );
+        }
 
         return back()->with([
             'resi' => $resi,

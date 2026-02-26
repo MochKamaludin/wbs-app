@@ -4,13 +4,13 @@ namespace App\Filament\Resources\TrQuestions\Pages;
 
 use App\Filament\Resources\TrQuestions\TrQuestionResource;
 use App\Filament\Resources\TrQuestions\Schemas\TrQuestionCreateForm;
+use App\Models\Pertanyaan;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Facades\Filament;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use App\Models\TrQuestion;
 
 class CreateTrQuestion extends CreateRecord
 {
@@ -39,7 +39,7 @@ class CreateTrQuestion extends CreateRecord
             
             if (!$sort) continue;
 
-            $exists = TrQuestion::where('c_wbls_categ', $kategori)
+            $exists = Pertanyaan::where('c_wbls_categ', $kategori)
                 ->where('i_question_sort', (int) $sort)
                 ->exists();
 
@@ -60,7 +60,7 @@ class CreateTrQuestion extends CreateRecord
 
             foreach ($data['questions'] as $question) {
 
-                $q = TrQuestion::create([
+                $q = Pertanyaan::create([
                     'c_wbls_categ'    => $kategori,
                     'i_question_sort' => $question['i_question_sort'],
                     'n_question'      => $question['n_question'],
@@ -86,7 +86,7 @@ class CreateTrQuestion extends CreateRecord
             }
         });
 
-        return new TrQuestion();
+        return new Pertanyaan();
     }
 
     protected function getCreatedNotificationTitle(): ?string

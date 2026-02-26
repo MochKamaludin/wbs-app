@@ -12,12 +12,6 @@ class ReferensiStatusForm
     {
         return $schema
             ->components([
-                TextInput::make('c_wbls_stat')
-                ->label('Kode Status')
-                ->required()
-                ->maxLength(1)
-                ->disabledOn('edit'),
-
             TextInput::make('n_wbls_stat')
                 ->label('Nama Status')
                 ->required()

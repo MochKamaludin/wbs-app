@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-
+    <title>BA Investigasi</title>
+    
     <style>
         @page {
             margin: 20px;
@@ -46,7 +47,6 @@
 <tr>
 <td valign="top" style="padding:20px; position:relative;">
 
-    <!-- ================= HEADER ================= -->
     <table width="100%" class="header-table">
         <tr>
             <td width="15%" align="center">
@@ -89,7 +89,7 @@
 
     <p class="content">
         Berdasarkan hasil investigasi, maka atas pelaporan pelanggaran tersebut
-        <b>Terbukti/Tidak terbukti*</b>.
+        <b>Terbukti/Tidak terbukti*</b>.{{ $data->i_wbls_bainvestseq}}
     </p>
 
     <br><br><br>
@@ -111,7 +111,7 @@
     </div>
 
     <div style="position:absolute; bottom:15px; right:20px; font-size:10px;">
-        ba-wbs-01
+        ba-wbs-{{ $data->i_wbls_bainvestseq }}
     </div>
 
 </td>
@@ -119,4 +119,4 @@
 </table>
 
 </body>
-</html>
+</html> 

@@ -12,7 +12,7 @@ class ReferensiKategori extends Model
     use LogsActivity;
     protected $table = 'trwblscateg';
     protected $primaryKey = 'c_wbls_categ';
-    public $incrementing = false;
+    public $incrementing = true;
     protected $keyType = 'string';
     public $timestamps = false;
 
