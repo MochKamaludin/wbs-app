@@ -109,9 +109,9 @@
         mengenai:
     </p>
 
-    <div class="box">
-        {{ $data->wbls->e_wbls ?? '-' }}
-    </div>
+    <p>
+        {{ $data->wbs->e_wbls ?? '-' }}
+    </p>
 
     <br>
 

@@ -8,11 +8,13 @@ class AesHelper
 
     private static function key(): string
     {
-        return hash('sha256', config('app.key'), true);
+        return hash('sha256', env('WBS_AES_KEY'), true);
     }
 
-    public static function encrypt(string $plainText): string
+    public static function encrypt(?string $plainText): ?string
     {
+        if (!$plainText) return null;
+
         $iv = random_bytes(12);
         $key = self::key();
 
@@ -30,9 +32,18 @@ class AesHelper
         ), '+/', '-_'), '=');
     }
 
-    public static function decrypt(string $token): string
+    public static function decrypt(?string $token): ?string
     {
-        $data = base64_decode(strtr($token, '-_', '+/'));
+        if (!$token) return null;
+
+        $replaced = strtr($token, '-_', '+/');
+        $padding = strlen($replaced) % 4;
+
+        if ($padding > 0) {
+            $replaced .= str_repeat('=', 4 - $padding);
+        }
+
+        $data = base64_decode($replaced);
 
         $iv   = substr($data, 0, 12);
         $tag  = substr($data, 12, 16);

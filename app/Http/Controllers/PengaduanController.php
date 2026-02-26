@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use App\Helpers\AesHelper;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifikatorNotification;
+use App\Models\File;
+use App\Models\Jawaban;
 use App\Models\User;
 
 class PengaduanController extends Controller
@@ -116,7 +118,7 @@ class PengaduanController extends Controller
                 str_pad($seq, 4, '0', STR_PAD_LEFT) .
                 '/PTD/' . now()->format('m/Y');
 
-            DB::table('tmwbls')->insert([
+            \App\Models\Pengaduan::create([
                 'i_wbls'            => $i_wbls,
                 'i_wbls_seq'        => $seq,
                 'c_wbls_categ'      => $request->c_wbls_categ,
@@ -168,7 +170,7 @@ class PengaduanController extends Controller
                         break;
                 }
 
-                DB::table('tmanswer')->insert([
+                Jawaban::create([
                     'i_wbls'              => $i_wbls,
                     'i_id_question'       => $questionId,
                     'i_id_questionchoice' => $choiceId,
@@ -198,7 +200,7 @@ class PengaduanController extends Controller
 
                     $file->storeAs('wbs', $filename, 'public');
 
-                    DB::table('tmwblsfile')->insert([
+                    File::create([
                         'i_wbls'           => $i_wbls,
                         'i_id_question'    => $questionId,
                         'n_wbls_file'      => $filename,

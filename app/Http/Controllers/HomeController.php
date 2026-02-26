@@ -49,11 +49,16 @@ class HomeController extends Controller
         $steps = CaraMelapor::where('f_wbls_procstat', '1')
             ->orderByRaw('CAST(c_wbls_procord AS UNSIGNED)')
             ->get();
+            
+        if (request('clear')) {
+            return redirect(url('/#dashboard'));
+        }
 
         $start = request('start');
         $end   = request('end');
 
-        $query = DB::table('tmwbls');
+
+        $query = \App\Models\Pengaduan::query();
 
         if ($start) {
             $query->whereDate('d_wbls', '>=', $start . '-01');

@@ -31,9 +31,7 @@
         <form method="GET" action="{{ url('/#dashboard') }}"
               class="flex flex-wrap items-center gap-3 mt-3">
 
-            <button type="button"
-                onclick="window.location='{{ url('/#dashboard') }}'"
-                class="px-4 py-1 bg-gray-200 rounded">
+            <button type="submit" name="clear" value="1" class="px-4 py-1 bg-gray-200 rounded">
                 Clear
             </button>
 

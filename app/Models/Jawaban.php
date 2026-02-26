@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\AesHelper;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
@@ -10,20 +11,54 @@ use Illuminate\Support\Facades\Auth;
 class Jawaban extends Model
 {
     use LogsActivity;
+
     protected $table = 'tmanswer';
     protected $primaryKey = 'i_id_answer';
     public $timestamps = false;
 
-    protected $fillable = [
-        'i_id_yyy','i_id_question','i_id_questionchoice',
-        'e_answer','i_entry'
+    protected $encrypted = [
+        'e_answer',
+        'i_entry',
     ];
+
+    protected $fillable = [
+        'i_wbls',
+        'i_id_question',
+        'i_id_questionchoice',
+        'e_answer',
+        'i_entry',
+        'd_entry',
+    ];
+
+    public function setAttribute($key, $value)
+    {
+        if (in_array($key, $this->encrypted) && !is_null($value)) {
+            $value = AesHelper::encrypt($value);
+        }
+
+        return parent::setAttribute($key, $value);
+    }
+
+    public function getAttribute($key)
+    {
+        $value = parent::getAttribute($key);
+
+        if (in_array($key, $this->encrypted) && !is_null($value)) {
+            try {
+                return AesHelper::decrypt($value);
+            } catch (\Exception $e) {
+                return $value;
+            }
+        }
+
+        return $value;
+    }
 
     public function pertanyaan()
     {
         return $this->belongsTo(
             Pertanyaan::class,
-            'i_id_question',
+            'i_id_question'
         );
     }
 
@@ -40,7 +75,7 @@ class Jawaban extends Model
     {
         $user = Auth::user();
         $logName = 'default';
-        
+
         if ($user) {
             $logName = match($user->c_wbls_admauth) {
                 '0' => 'admin_activity',

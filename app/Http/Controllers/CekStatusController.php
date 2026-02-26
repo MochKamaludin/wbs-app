@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengaduan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\AesHelper;
@@ -23,9 +24,8 @@ class CekStatusController extends Controller
             $plain = AesHelper::decrypt($request->resi);
             [$i_wbls, $incidentDate] = explode('|', $plain);
 
-            $wbls = DB::table('tmwbls')
-                ->where('i_wbls', $i_wbls)
-                ->first();
+
+            $wbls = Pengaduan::where('i_wbls', $i_wbls)->first();
 
             if (!$wbls) {
                 return back()->withErrors([

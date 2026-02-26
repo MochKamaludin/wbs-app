@@ -76,7 +76,7 @@ function copyResi() {
             {{-- URAIAN --}}
             <div class="mb-5">
                 <label class="font-semibold block mb-1">
-                    Uraian Singkat <span class="text-red-600">*</span>
+                    Uraian Kejadian <span class="text-red-600">*</span>
                 </label>
                 <textarea name="uraian" rows="3"
                     class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300">{{ old('uraian') }}</textarea>
