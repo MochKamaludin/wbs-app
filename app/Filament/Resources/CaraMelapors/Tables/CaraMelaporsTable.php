@@ -16,7 +16,7 @@ class CaraMelaporsTable
     {
         return $table
             ->defaultSort('c_wbls_procord', 'asc')
-            ->reorderable('i_wbls_proc')
+            ->reorderable('c_wbls_procord')
             ->columns([
                 TextColumn::make('c_wbls_procord')
                     ->label('Urutan Tampil')

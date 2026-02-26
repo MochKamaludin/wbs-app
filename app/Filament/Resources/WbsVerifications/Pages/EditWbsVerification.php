@@ -29,25 +29,38 @@ class EditWbsVerification extends EditRecord
     }
 
     protected function mutateFormDataBeforeSave(array $data): array
-{
-    if (empty($this->record->i_wbls_bavrf)) {
+    {
+        $verificationData = [
+            'f_wbls_usrname' => $data['f_wbls_usrname'] ?? null,
+            'f_wbls_file' => $data['f_wbls_file'] ?? null,
+        ];
 
-        $seq = (TmwblsVrf::max('i_wbls_bavrfseq') ?? 0) + 1;
+        $verification = TmwblsVrf::where('i_wbls', $this->record->i_wbls)->first();
 
-        $kode = 'BAV/' .
-            str_pad($seq, 4, '0', STR_PAD_LEFT) .
-            '/PTD/' .
-            now()->format('m/Y');
+        if (! $verification) {
+            $seq = (TmwblsVrf::max('i_wbls_bavrfseq') ?? 0) + 1;
 
-        $data['i_wbls_bavrfseq'] = $seq;
-        $data['i_wbls_bavrf'] = $kode;
-        $data['i_wbls_adm'] = Auth::user()->i_wbls_adm;
-        $data['d_wbls_vrf'] = now();
+            $kode = 'BAV/' .
+                str_pad($seq, 4, '0', STR_PAD_LEFT) .
+                '/PTD/' .
+                now()->format('m/Y');
+
+            $verificationData = array_merge($verificationData, [
+                'i_wbls' => $this->record->i_wbls,
+                'i_wbls_bavrfseq' => $seq,
+                'i_wbls_bavrf' => $kode,
+                'i_wbls_adm' => Auth::user()->i_wbls_adm,
+                'd_wbls_vrf' => now(),
+            ]);
+        }
+
+        TmwblsVrf::updateOrCreate(
+            ['i_wbls' => $this->record->i_wbls],
+            $verificationData,
+        );
+
+        unset($data['f_wbls_usrname'], $data['f_wbls_file']);
+
+        return $data;
     }
-
-    return $data;
-}
-
-
-
 }

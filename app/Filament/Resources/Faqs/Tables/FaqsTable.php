@@ -16,7 +16,7 @@ class FaqsTable
     {
         return $table
             ->defaultSort('i_wbls_faqseq', 'asc')
-            ->reorderable('i_wbls_faq')
+            ->reorderable('i_wbls_faqseq')
             ->columns([
                 TextColumn::make('i_wbls_faqseq')
                     ->label('Urutan Tampil')
