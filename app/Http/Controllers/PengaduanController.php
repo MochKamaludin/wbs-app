@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\AesHelper;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifikatorNotification;
 use App\Models\User;

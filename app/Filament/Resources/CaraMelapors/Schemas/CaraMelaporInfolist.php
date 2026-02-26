@@ -17,41 +17,35 @@ class CaraMelaporInfolist
             ->components([
                 Section::make()
                     ->schema([
-                        Flex::make([
-                            Grid::make(2)
-                                ->schema([
-                                    Group::make([
-                                        TextEntry::make('n_wbls_proc')
-                                            ->label('Judul Cara Melapor')
-                                            ->columnSpanFull(),
-                                        TextEntry::make('c_wbls_procord')
-                                            ->label('Urutan')
-                                            ->placeholder('-'),
-                                        TextEntry::make('user.n_wbls_adm')
-                                            ->label('Dibuat Oleh')
-                                            ->placeholder('-'),
-                                        TextEntry::make('f_wbls_procstat')
-                                            ->label('Status')
-                                            ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
-                                            ->badge()
-                                            ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
-                                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
-
-                                        TextEntry::make('d_wbls_proc')
-                                            ->label('Tanggal Dibuat')
-                                            ->dateTime('d M Y H:i'),
-                                    ]),
-                                ]),
-                        ])->from('lg'),
-                    ]),
-                Section::make('Deskripsi')
-                    ->schema([
+                        TextEntry::make('n_wbls_proc')
+                            ->label('Judul')
+                            ->columnSpanFull(),
+                        
                         TextEntry::make('e_wbls_proc')
+                            ->label('Deskripsi')
                             ->alignJustify()
-                            ->html()
-                            ->hiddenLabel(),
+                            ->html(),
+
+                        TextEntry::make('c_wbls_procord')
+                            ->label('Urutan')
+                            ->placeholder('-'),
+
+                        TextEntry::make('user.n_wbls_adm')
+                            ->label('Dibuat Oleh')
+                            ->placeholder('-'),
+
+                        TextEntry::make('f_wbls_procstat')
+                            ->label('Status')
+                            ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
+                            ->badge()
+                            ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
+                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
+
+                        TextEntry::make('d_wbls_proc')
+                            ->label('Tanggal Dibuat')
+                            ->dateTime('d M Y H:i'),
                     ])
-                    ->collapsible(),
+                    ->columnSpanFull(),
             ]);
     }
 }

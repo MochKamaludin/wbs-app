@@ -8,7 +8,7 @@ class Verification extends Model
 {
     protected $table = 'tmwblsvrf';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'i_wbls_vrf';
     public $incrementing = true;
     public $timestamps = true;
 
@@ -29,17 +29,17 @@ class Verification extends Model
 
     public function wbs()
     {
-        return $this->belongsTo(Tmwbls::class, 'i_wbls', 'i_wbls');
+        return $this->belongsTo(Pengaduan::class, 'i_wbls', 'i_wbls');
     }
 
     public function answers()
     {
-        return $this->hasMany(TmAnswer::class, 'i_wbls', 'i_wbls');
+        return $this->hasMany(Jawaban::class, 'i_wbls', 'i_wbls');
     }
 
     public function files()
     {
-        return $this->hasMany(TmwblsFile::class, 'i_wbls', 'i_wbls');
+        return $this->hasMany(File::class, 'i_wbls', 'i_wbls');
     }
 
     public static function booted()

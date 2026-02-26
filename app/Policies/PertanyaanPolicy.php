@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\TrQuestionChoice;
+use App\Models\Pertanyaan;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class TrQuestionChoicePolicy
+class PertanyaanPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class TrQuestionChoicePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, TrQuestionChoice $trQuestionChoice): bool
+    public function view(User $user, Pertanyaan $pertanyaan): bool
     {
         return $user->isAdmin();
     }
@@ -35,7 +35,7 @@ class TrQuestionChoicePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, TrQuestionChoice $trQuestionChoice): bool
+    public function update(User $user, Pertanyaan $pertanyaan): bool
     {
         return $user->isAdmin();
     }
@@ -67,7 +67,7 @@ class TrQuestionChoicePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, TrQuestionChoice $trQuestionChoice): bool
+    public function delete(User $user, Pertanyaan $pertanyaan): bool
     {
         return $user->isAdmin();
     }
@@ -75,7 +75,7 @@ class TrQuestionChoicePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, TrQuestionChoice $trQuestionChoice): bool
+    public function restore(User $user, Pertanyaan $pertanyaan): bool
     {
         return $user->isAdmin();
     }
@@ -83,7 +83,7 @@ class TrQuestionChoicePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, TrQuestionChoice $trQuestionChoice): bool
+    public function forceDelete(User $user, Pertanyaan $pertanyaan): bool
     {
         return $user->isAdmin();
     }

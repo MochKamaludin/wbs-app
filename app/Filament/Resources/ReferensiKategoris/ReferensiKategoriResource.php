@@ -45,10 +45,10 @@ class ReferensiKategoriResource extends Resource
         return ReferensiKategoriForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return ReferensiKategoriInfolist::configure($schema);
-    }
+    // public static function infolist(Schema $schema): Schema
+    // {
+    //     return ReferensiKategoriInfolist::configure($schema);
+    // }
 
     public static function table(Table $table): Table
     {
@@ -67,7 +67,7 @@ class ReferensiKategoriResource extends Resource
         return [
             'index' => ListReferensiKategoris::route('/'),
             'create' => CreateReferensiKategori::route('/create'),
-            'view' => ViewReferensiKategori::route('/{record}'),
+            // 'view' => ViewReferensiKategori::route('/{record}'),
             'edit' => EditReferensiKategori::route('/{record}/edit'),
         ];
     }

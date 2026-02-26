@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 use function Symfony\Component\Clock\now;
 
 class Investigation extends Model
 {
     protected $table = 'tmwblsresume';
+
+    protected $primaryKey = 'i_wbls_resume';
 
     public $timestamps = true;
 
@@ -31,7 +31,7 @@ class Investigation extends Model
     public function wbls()
     {
         return $this->belongsTo(
-            Tmwbls::class,
+            Pengaduan::class,
             'i_wbls',
             'i_wbls'
         );

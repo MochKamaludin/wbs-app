@@ -17,41 +17,62 @@ class FaqInfolist
             ->components([ 
                 Section::make()
                     ->schema([
-                        Flex::make([
-                            Grid::make(2)
-                                ->schema([
-                                    Group::make([
-                                        TextEntry::make('e_wbls_faqquest')
-                                            ->label('Pertanyaan')
-                                            ->columnSpanFull(),
-                                        TextEntry::make('i_wbls_faqseq')
-                                            ->label('Urutan')
-                                            ->placeholder('-'),
-                                        TextEntry::make('user.n_wbls_adm')
-                                            ->label('Dibuat Oleh')
-                                            ->placeholder('-'),
-                                        TextEntry::make('f_wbls_faqstat')
-                                            ->label('Status')
-                                            ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
-                                            ->badge()
-                                            ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
-                                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
-
-                                        TextEntry::make('d_wbls_faq')
-                                            ->label('Tanggal Dibuat')
-                                            ->dateTime('d M Y H:i'),
-                                    ]),
-                                ]),
-                        ])->from('lg'),
-                    ]),
-                Section::make('Jawaban')
-                    ->schema([
+                        TextEntry::make('e_wbls_faqquest')
+                            ->label('Pertanyaan')
+                            ->columnSpanFull(),
                         TextEntry::make('e_wbls_faqans')
+                            ->label('Jawaban')
                             ->alignJustify()
-                            ->html()
-                            ->hiddenLabel(),
-                    ])
-                    ->collapsible(),
+                            ->html(),
+                        TextEntry::make('i_wbls_faqseq')
+                            ->label('Urutan')
+                            ->placeholder('-'),
+                        TextEntry::make('user.n_wbls_adm')
+                            ->label('Dibuat Oleh')
+                            ->placeholder('-'),
+                        TextEntry::make('f_wbls_faqstat')
+                            ->label('Status')
+                            ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
+                            ->badge()
+                            ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
+                            ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
+                    ])->columnSpanFull(),
+                //     ->schema([
+                //         Flex::make([
+                //             Grid::make(2)
+                //                 ->schema([
+                //                     Group::make([
+                //                         TextEntry::make('e_wbls_faqquest')
+                //                             ->label('Pertanyaan')
+                //                             ->columnSpanFull(),
+                //                         TextEntry::make('i_wbls_faqseq')
+                //                             ->label('Urutan')
+                //                             ->placeholder('-'),
+                //                         TextEntry::make('user.n_wbls_adm')
+                //                             ->label('Dibuat Oleh')
+                //                             ->placeholder('-'),
+                //                         TextEntry::make('f_wbls_faqstat')
+                //                             ->label('Status')
+                //                             ->icon(fn ($state) => $state === '1' ? 'heroicon-o-check-circle' : 'heroicon-o-document-text')
+                //                             ->badge()
+                //                             ->color(fn ($state) => $state === '1' ? 'success' : 'warning')
+                //                             ->formatStateUsing(fn ($state) => $state === '1' ? 'Published' : 'Draft'),
+
+                //                         TextEntry::make('d_wbls_faq')
+                //                             ->label('Tanggal Dibuat')
+                //                             ->dateTime('d M Y H:i'),
+                //                     ]),
+                //                 ]),
+                //         ])->from('lg'),
+                //     ]),
+                // Section::make('Jawaban')
+                //     ->schema([
+                //         TextEntry::make('e_wbls_faqans')
+                //             ->alignJustify()
+                //             ->html()
+                //             ->hiddenLabel(),
+                //     ])
+                //     ->collapsible(),
             ]);
     }
 }

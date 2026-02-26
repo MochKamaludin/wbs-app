@@ -2,12 +2,11 @@
 
 namespace App\Filament\Resources\WbsVerifications\Tables;
 
-use App\Models\Tmwbls;
 use App\Models\Verification;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InvestigatorNotification;
+use App\Models\Pengaduan;
 use App\Models\User;
-use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
@@ -15,7 +14,6 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Facades\Filament;
-use App\Filament\Resources\WbsVerifications\WbsVerificationResource;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +52,7 @@ class WbsVerificationsTable
                     ->color('success')
                     ->visible(fn ($record) => is_null($record->f_wbls_agree))
                     ->requiresConfirmation()
-                    ->action(function (Tmwbls $record) {
+                    ->action(function (Pengaduan $record) {
 
                         $exists = \App\Models\Verification::where('i_wbls', $record->i_wbls)
                             ->whereNotNull('f_wbls_usrname')
@@ -85,8 +83,8 @@ class WbsVerificationsTable
                     ->label('Generate BA Verifikasi')
                     ->icon('heroicon-o-document-text')
                     ->color('success')
-                    ->visible(fn (Tmwbls $record) => $record->f_wbls_agree === '1')
-                    ->url(function (Tmwbls $record) {
+                    ->visible(fn (Pengaduan $record) => $record->f_wbls_agree === '1')
+                    ->url(function (Pengaduan $record) {
 
                         $verification = Verification::firstOrCreate(
                             ['i_wbls' => $record->i_wbls],
@@ -96,7 +94,7 @@ class WbsVerificationsTable
                             ]
                         );
 
-                        return route('ba.verifikasi.pdf', $verification->id);
+                        return route('ba.verifikasi.pdf', $verification->i_wbls_vrf);
                     })
                     ->openUrlInNewTab(),
             ])
@@ -108,7 +106,7 @@ class WbsVerificationsTable
             ]);
     }
 
-    protected static function approve(Tmwbls $record): void
+    protected static function approve(Pengaduan $record): void
     {
         $user = Filament::auth()->user();
         $cStat = '4';
@@ -121,15 +119,6 @@ class WbsVerificationsTable
             'd_wbls_check'   => now(),
             'd_wbls_statupd' => now(),
         ]);
-
-        // $investigators = User::where('c_wbls_admauth', '2')->get();
-        // foreach ($investigators as $investigator) {
-        //     if (filter_var($investigator->email, FILTER_VALIDATE_EMAIL)) {
-        //         Mail::to($investigator->email)->send(
-        //             new InvestigatorNotification($record->i_wbls, $record->e_wbls)
-        //         );
-        //     }
-        // }
 
         $investigators = User::where('c_wbls_admauth', '2')->get();
         foreach ($investigators as $investigator) {

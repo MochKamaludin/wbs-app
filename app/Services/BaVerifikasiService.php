@@ -10,7 +10,7 @@ class BaVerifikasiService
 {
     public static function generatePdf(Verification $verification)
     {
-        $verification->load('wbls');
+        $verification->load('wbs');
 
         $tgl = $verification->d_wbls_vrf
             ? Carbon::parse($verification->d_wbls_vrf)

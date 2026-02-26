@@ -17,29 +17,18 @@ class DefinisiWbsInfolist
         ->components([ 
                 Section::make()
                     ->schema([
-                        Flex::make([
-                            Grid::make(2)
-                                ->schema([
-                                    Group::make([
-                                        TextEntry::make('n_wbls_about')
-                                            ->label('Judul'),
-                                        TextEntry::make('user.n_wbls_adm')
-                                            ->label('Dibuat Oleh'),
-                                        TextEntry::make('d_wbls_about')
-                                            ->label('Tanggal Dibuat')
-                                            ->dateTime(),
-                                    ]),
-                                ]),
-                        ])->from('lg'),
-                    ]),
-            Section::make('Deskripsi')
-              ->schema([
-                  TextEntry::make('e_wbls_about')
-                      ->html()
-                      ->alignJustify()
-                      ->hiddenLabel(),
-              ])
-              ->collapsible(),
+                        TextEntry::make('n_wbls_about')
+                            ->label('Judul'),
+                        TextEntry::make('e_wbls_about')
+                            ->label('Deskripsi')
+                            ->alignJustify()
+                            ->html(),
+                        TextEntry::make('user.n_wbls_adm')
+                            ->label('Dibuat Oleh'),
+                        TextEntry::make('d_wbls_about')
+                            ->label('Tanggal Dibuat')
+                            ->dateTime()
+                    ])->columnSpanFull(),
               ]);
     }
 }

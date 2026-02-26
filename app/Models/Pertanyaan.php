@@ -6,56 +6,78 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
-use App\Models\TrQuestion;
 
-class TrQuestionChoice extends Model
+class Pertanyaan extends Model
 {
     use LogsActivity;
-    protected $table = 'trquestionchoice';
-
-    protected $primaryKey = 'i_id_questionchoice'; 
-
+    protected $table = 'trquestion';
+    protected $primaryKey = 'i_id_question';
     public $timestamps = false;
 
     protected $fillable = [
-        'i_id_question',
-        'n_choice',
-        'i_choice_sort',
+        'i_question_seq',
+        'c_wbls_categ',
+        'c_question',
+        'i_question_sort',
+        'n_question',
+        'f_required',
         'f_active',
         'i_entry',
         'd_entry',
         'i_update',
-        'd_update',
+        'd_update', 
     ];
 
     protected $casts = [
         'd_entry'  => 'datetime',
-        'd_update' => 'datetime',
+        'd_update' => 'datetime', 
     ];
 
-    protected static function booted()
+    public function choices()
     {
-        static::creating(function ($model) {
-            $user = Auth::user();
-            $model->i_entry = $user?->i_wbls_adm_id ?? 0;
-            $model->d_entry = now();
-        });
-
-        static::updating(function ($model) {
-            $user = Auth::user();
-            $model->i_update = $user?->i_wbls_adm_id ?? 0;
-            $model->d_update = now();
-        });
+        return $this->hasMany(
+            PilihanPertanyaan::class,
+            'i_id_question',
+            'i_id_question'
+        );
     }
 
-    public function question()
+    public function kategori()
     {
-        return $this->belongsTo(TrQuestion::class, 'i_id_question');
+        return $this->belongsTo(
+            ReferensiKategori::class,
+            'c_wbls_categ',
+            'c_wbls_categ'
+        );
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Jawaban::class, 'i_id_question');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(
+            File::class,
+            'i_id_question',
+            'i_id_question'
+        );
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
+    }
+
+    public function entry_user()
+    {
+        return $this->belongsTo(User::class, 'i_entry', 'i_wbls_adm');
+    }
+
+    public function update_user()
+    {
+        return $this->belongsTo(User::class, 'i_update', 'i_wbls_adm');
     }
 
     public function isAdmin()

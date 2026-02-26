@@ -31,7 +31,7 @@ class ReferensiStatusesTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
+                // ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make(),
             ])

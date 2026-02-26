@@ -7,7 +7,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
 
-class TmAnswer extends Model
+class Jawaban extends Model
 {
     use LogsActivity;
     protected $table = 'tmanswer';
@@ -22,7 +22,7 @@ class TmAnswer extends Model
     public function pertanyaan()
     {
         return $this->belongsTo(
-            TrQuestion::class,
+            Pertanyaan::class,
             'i_id_question',
         );
     }
@@ -30,7 +30,7 @@ class TmAnswer extends Model
     public function choice()
     {
         return $this->belongsTo(
-            TrQuestionChoice::class,
+            PilihanPertanyaan::class,
             'i_id_questionchoice',
             'i_id_questionchoice'
         );

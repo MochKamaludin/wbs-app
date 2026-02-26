@@ -2,14 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\TmwblsResume;
-use App\Models\Tmwbls;
-use App\Helpers\BaHelper;
 use App\Models\Investigation;
-use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class BaInvestigasiService
 {

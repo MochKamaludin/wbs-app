@@ -3,14 +3,28 @@
 <head>
     <meta charset="utf-8">
     <title>BA Verifikasi</title>
+
     <style>
+        @page {
+            margin: 15mm;
+        }
+
         body {
-            font-family: DejaVu Sans, sans-serif;
+            font-family: "Times New Roman", serif;
             font-size: 12px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
         .bordered {
             border: 1px solid black;
+            padding: 20px;
+            position: relative;
         }
 
         .center {
@@ -29,14 +43,9 @@
             font-size: 10px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
         .box {
             border: 1px solid black;
-            padding: 5px;
+            padding: 8px;
         }
 
         .checkbox {
@@ -48,19 +57,27 @@
             line-height: 12px;
             font-size: 10px;
             margin-right: 5px;
+            font-family: DejaVu Sans, sans-serif;
         }
 
-        .footer {
+        .footer-left {
             position: absolute;
-            bottom: 20px;
-            right: 40px;
+            bottom: 15px;
+            left: 20px;
+            font-size: 10px;
+        }
+
+        .footer-right {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
             font-size: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="bordered" style="padding:15px; position:relative;">
+<div class="bordered">
 
     <table border="1">
         <tr>
@@ -69,17 +86,14 @@
             </td>
 
             <td width="50%" class="center bold">
-                <div style="font-size:16px;">BERITA ACARA</div>
+                <div style="font-size:14px;">BERITA ACARA</div>
                 <div>HASIL VERIFIKASI ATAS PELAPORAN</div>
                 <div>PELANGGARAN</div>
             </td>
 
             <td width="30%" style="font-size:11px;">
-                <div><b>No. BA:</b> {{ $data->i_wbls_bavrf }}</div>
-                <div style="margin-top:10px;">
-                    <b>TANGGAL:</b>
-                    {{ \Carbon\Carbon::parse($data->d_wbls_vrf)->format('Y-m-d') }}
-                </div>
+                NO. BA : {{ $data->i_wbls_bavrf }}
+                TANGGAL : {{ \Carbon\Carbon::parse($data->d_wbls_vrf)->format('d-m-Y') }}
             </td>
         </tr>
     </table>
@@ -90,8 +104,8 @@
         Pada hari <b>{{ $hari }}</b>
         tanggal <b>{{ $tanggal }} {{ $bulan }} {{ $tahun }}</b>
         telah dilakukan verifikasi atas pelaporan pelanggaran yang diterima,
-        Nomor Pelaporan <b>{{ $data->wbls->i_wbls }}</b>
-        tertanggal <b>{{ \Carbon\Carbon::parse($data->wbls->d_wbls)->translatedFormat('d F Y') }}</b>
+        Nomor Pelaporan <b>{{ $data->wbs->i_wbls }}</b>
+        tertanggal <b>{{ \Carbon\Carbon::parse($data->wbs->d_wbls)->translatedFormat('d F Y') }}</b>
         mengenai:
     </p>
 
@@ -164,15 +178,16 @@
                 Pengelola WBS,<br>
                 Sub-unit Verifikasi
                 <br><br><br><br>
-                <b>{{ $data->wbls->user->n_wbls_adm }}</b>
+                <b>{{ $data->wbs->user->n_wbls_adm }}</b>
             </td>
         </tr>
     </table>
 
-    <br>
-    <div class="small">*coret yang tidak sesuai</div>
+    <div class="footer-left">
+        <i>*coret yang tidak sesuai</i>
+    </div>
 
-    <div class="footer">
+    <div class="footer-right">
         ba-wbs-01
     </div>
 

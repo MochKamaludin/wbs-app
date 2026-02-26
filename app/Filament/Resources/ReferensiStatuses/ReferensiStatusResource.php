@@ -35,10 +35,10 @@ class ReferensiStatusResource extends Resource
         return ReferensiStatusForm::configure($schema);
     }
 
-    public static function infolist(Schema $schema): Schema
-    {
-        return ReferensiStatusInfolist::configure($schema);
-    }
+    // public static function infolist(Schema $schema): Schema
+    // {
+    //     return ReferensiStatusInfolist::configure($schema);
+    // }
 
     public static function table(Table $table): Table
     {
@@ -57,7 +57,7 @@ class ReferensiStatusResource extends Resource
         return [
             'index' => ListReferensiStatuses::route('/'),
             'create' => CreateReferensiStatus::route('/create'),
-            'view' => ViewReferensiStatus::route('/{record}'),
+            // 'view' => ViewReferensiStatus::route('/{record}'),
             'edit' => EditReferensiStatus::route('/{record}/edit'),
         ];
     }
