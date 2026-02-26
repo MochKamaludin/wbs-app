@@ -6,12 +6,13 @@
 
     <style>
         @page {
+            size: A4;
             margin: 15mm;
         }
 
         body {
             font-family: "Times New Roman", serif;
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.6;
             margin: 0;
         }
@@ -21,9 +22,39 @@
             border-collapse: collapse;
         }
 
+        .header-table {
+            width: calc(100% + 40px);
+            margin: -20px -20px 20px -20px; 
+            border-collapse: collapse;
+        }
+
+        .header-table td {
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            vertical-align: middle;
+        }
+
+        .header-table tr:first-child td {
+            border-top: none;
+        }
+
+        .header-table td:first-child {
+            border-left: none;
+        }
+
+        .header-table td:last-child {
+            border-right: none;
+        }
+
+        .ttd-table td {
+            border: none;
+        }
+
         .bordered {
             border: 1px solid black;
             padding: 20px;
+            box-sizing: border-box;
+            height: 245mm;
             position: relative;
         }
 
@@ -60,18 +91,17 @@
             font-family: DejaVu Sans, sans-serif;
         }
 
-        .footer-left {
+        .note {
             position: absolute;
             bottom: 15px;
             left: 20px;
             font-size: 10px;
         }
 
-        .footer-right {
-            position: absolute;
-            bottom: 15px;
-            right: 20px;
+        .footer {
             font-size: 10px;
+            margin-top: 5px;
+            text-align: right;
         }
     </style>
 </head>
@@ -79,21 +109,24 @@
 
 <div class="bordered">
 
-    <table border="1">
+    <table class="header-table">
         <tr>
-            <td width="20%" class="center">
-                <img src="{{ public_path('images/logo/logo-blue.png') }}" width="60">
+            <td width="20%" class="center" style="padding:5px;">
+                <img src="{{ public_path('images/logo/logo-blue.png') }}" width="80">
             </td>
 
             <td width="50%" class="center bold">
-                <div style="font-size:14px;">BERITA ACARA</div>
-                <div>HASIL VERIFIKASI ATAS PELAPORAN</div>
-                <div>PELANGGARAN</div>
+                <div style="font-size:20px; padding: 3px;">BERITA ACARA</div>
+                <div style="padding:6px;">HASIL VERIFIKASI ATAS PELAPORAN <br>PELANGGARAN</div>
             </td>
 
-            <td width="30%" style="font-size:11px;">
-                NO. BA : {{ $data->i_wbls_bavrf }}
-                TANGGAL : {{ \Carbon\Carbon::parse($data->d_wbls_vrf)->format('d-m-Y') }}
+            <td width="30%" style="padding:0;">
+                <div style="padding:6px 8px; border-bottom:1px solid black;">
+                    NO. BA : {{ $data->i_wbls_bavrf }}
+                </div>
+                <div style="padding:6px 8px;">
+                    TANGGAL : {{ \Carbon\Carbon::parse($data->d_wbls_vrf)->format('d-m-Y') }}
+                </div>
             </td>
         </tr>
     </table>
@@ -101,19 +134,18 @@
     <br>
 
     <p>
-        Pada hari <b>{{ $hari }}</b>
-        tanggal <b>{{ $tanggal }} {{ $bulan }} {{ $tahun }}</b>
+        Pada hari ini, <b>{{ $hari }}</b>
+        Tanggal <b>{{ $tanggal }}</b> Bulan <b>{{ $bulan }}</b> Tahun <b>{{ $tahun }}</b>
         telah dilakukan verifikasi atas pelaporan pelanggaran yang diterima,
         Nomor Pelaporan <b>{{ $data->wbs->i_wbls }}</b>
-        tertanggal <b>{{ \Carbon\Carbon::parse($data->wbs->d_wbls)->translatedFormat('d F Y') }}</b>
+        Tertanggal <b>{{ \Carbon\Carbon::parse($data->wbs->d_wbls)->translatedFormat('d F Y') }}</b>
         mengenai:
     </p>
 
-    <div class="box">
-        {{ $data->wbls->e_wbls ?? '-' }}
-    </div>
-
-    <br>
+    <p>
+        {{-- <b>Uraian Pelanggaran:</b><br> --}}
+        {{ $data->wbs->e_wbls }}
+    </p>
 
     <p><b>Hasil verifikasi atas pelaporan pelanggaran:</b></p>
 
@@ -165,16 +197,16 @@
 
     <p>
         Berdasarkan hasil verifikasi, maka atas pelaporan pelanggaran tersebut
-        telah/tidak* sesuai dengan persyaratan, sehingga dapat/tidak dapat*
+        <b>telah/tidak*</b> sesuai dengan persyaratan, sehingga <b>dapat/tidak dapat*</b>
         ditindaklanjuti dengan proses investigasi.
     </p>
 
-    <br><br>
+    <br><br><br>
 
-    <table>
+    <table class="ttd-table" width="100%">
         <tr>
-            <td width="60%"></td>
-            <td>
+            <td width="75%"></td>
+            <td width="25%" style="text-align:center;">
                 Pengelola WBS,<br>
                 Sub-unit Verifikasi
                 <br><br><br><br>
@@ -183,15 +215,16 @@
         </tr>
     </table>
 
-    <div class="footer-left">
-        <i>*coret yang tidak sesuai</i>
-    </div>
-
-    <div class="footer-right">
-        ba-wbs-01
+    <div class="note">
+        <b><i>*coret yang tidak sesuai</i></b>
     </div>
 
 </div>
+
+<div class="footer">
+    ba-wbs-{{ $data->i_wbls_bavrfseq }}
+</div>
+
 
 </body>
 </html>

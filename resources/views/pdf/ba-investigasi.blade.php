@@ -6,117 +6,177 @@
     
     <style>
         @page {
-            margin: 20px;
+            size: A4;
+            margin: 15mm;
         }
 
         body {
             font-family: "Times New Roman", serif;
-            font-size: 12px;
+            font-size: 14px;
             line-height: 1.6;
             margin: 0;
         }
 
         table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .header-table {
+            width: calc(100% + 40px);
+            margin: -20px -20px 20px -20px; 
             border-collapse: collapse;
         }
 
         .header-table td {
-            border: 1px solid #000;
-            padding: 8px;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            vertical-align: middle;
         }
 
-        .header-title {
-            font-size: 14px;
-            font-weight: bold;
+        .header-table tr:first-child td {
+            border-top: none;
+        }
+
+        .header-table td:first-child {
+            border-left: none;
+        }
+
+        .header-table td:last-child {
+            border-right: none;
+        }
+
+        .ttd-table td {
+            border: none;
+        }
+
+        .bordered {
+            border: 1px solid black;
+            padding: 20px;
+            box-sizing: border-box;
+            height: 250mm;
+            position: relative;
+        }
+
+        .center {
             text-align: center;
         }
 
-        .header-right {
-            font-size: 11px;
+        .right {
+            text-align: right;
         }
 
-        .content {
-            text-align: justify;
+        .bold {
+            font-weight: bold;
+        }
+
+        .small {
+            font-size: 10px;
+        }
+
+        .box {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        .checkbox {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 12px;
+            font-size: 10px;
+            margin-right: 5px;
+            font-family: DejaVu Sans, sans-serif;
+        }
+
+        .note {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            font-size: 10px;
+        }
+
+        .footer {
+            font-size: 10px;
+            margin-top: 5px;
+            text-align: right;
         }
     </style>
 </head>
 <body>
 
-<table width="100%"
-       style="border:1px solid #000; border-collapse:collapse; height:270mm;">
-<tr>
-<td valign="top" style="padding:20px; position:relative;">
+<div class="bordered">
 
-    <table width="100%" class="header-table">
+    <table class="header-table">
         <tr>
-            <td width="15%" align="center">
-                <img src="{{ public_path('images/logo/logo-blue.png') }}" width="70">
+            <td width="20%" class="center" style="padding:5px;">
+                <img src="{{ public_path('images/logo/logo-blue.png') }}" width="80">
             </td>
 
-            <td width="55%" class="header-title">
-                BERITA ACARA <br>
-                HASIL INVESTIGASI ATAS PELAPORAN PELANGGARAN
+            <td width="50%" class="center bold">
+                <div style="font-size:20px; padding: 3px;">BERITA ACARA</div>
+                <div style="padding:6px;">HASIL INVESTIGASI ATAS PELAPORAN PELANGGARAN</div>
             </td>
 
-            <td width="30%" class="header-right">
-                NO. BA : {{ $data->i_wbls_bainvest }}<br><br>
-                TANGGAL : {{ \Carbon\Carbon::parse($data->d_wbls_bainvest)->format('d-m-Y') }}
-            </td>
+             <td width="30%" style="padding:0;">
+                <div style="padding:6px 8px; border-bottom:1px solid black;">
+                     NO. BA : {{ $data->i_wbls_bainvest }}
+                </div>
+                <div style="padding:6px 8px;">
+                     TANGGAL : {{ \Carbon\Carbon::parse($data->d_wbls_bainvest)->format('d-m-Y') }}
+                </div>
+             </td>
         </tr>
     </table>
-
-    <br><br>
-
-    <p class="content">
-        Pada hari ini {{ $hari }}, 
-        Tanggal {{ $tanggal }}, 
-        Bulan {{ $bulan }}, 
-        Tahun {{ $tahun }}, 
-        telah dilakukan investigasi atas pelaporan pelanggaran yang diterima,
-        Nomor Pelaporan {{ $data->i_wbls }} 
-        Tertanggal {{ \Carbon\Carbon::parse($data->wbls->d_wbls)->format('d M Y') }}.
-    </p>
-
-    <p class="content">
-        Mengenai:
-    </p>
-
-    <p class="content">
-        {!! nl2br(e($data->wbls->e_wbls)) !!}
-    </p>
 
     <br>
 
-    <p class="content">
+    <p>
+        Pada hari ini, <b>{{ $hari }}</b> 
+        Tanggal <b>{{ $tanggal }}</b>
+        Bulan <b>{{ $bulan }}</b> 
+        Tahun <b>{{ $tahun }}</b> 
+        telah dilakukan investigasi atas pelaporan pelanggaran yang diterima,
+        Nomor Pelaporan <b>{{ $data->i_wbls }}</b> 
+        Tertanggal <b>{{ \Carbon\Carbon::parse($data->wbls->d_wbls)->format('d M Y') }}</b>
+        mengenai:
+    </p>
+
+    <p>
+        {!! nl2br(e($data->wbls->e_wbls)) !!}
+    </p>
+
+    <p>
         Berdasarkan hasil investigasi, maka atas pelaporan pelanggaran tersebut
-        <b>Terbukti/Tidak terbukti*</b>.{{ $data->i_wbls_bainvestseq}}
+        <b>terbukti/tidak terbukti*</b>.
     </p>
 
     <br><br><br>
-
-    <table width="100%" style="margin-top:60px;">
+    
+    <table class="ttd-table" width="100%">
         <tr>
-            <td width="60%"></td>
-            <td width="40%" align="center">
+            <td width="75%"></td>
+            <td width="25%" style="text-align:center;">
                 Pengelola WBS,<br>
-                Sub-unit Investigasi
+                Sub-unit Ivestigasi
                 <br><br><br><br>
-                (Tim Investigasi)
+                <b>Tim Investigasi</b>
             </td>
         </tr>
     </table>
 
-    <div style="position:absolute; bottom:15px; left:20px; font-size:10px;">
-        <i>*coret yang tidak sesuai</i>
+    <div class="note">
+        <b><i>*coret yang tidak sesuai</i></b>
     </div>
 
-    <div style="position:absolute; bottom:15px; right:20px; font-size:10px;">
-        ba-wbs-{{ $data->i_wbls_bainvestseq }}
-    </div>
+</div>
 
-</td>
-</tr>
-</table>
+<div class="footer">
+    ba-wbs-{{ $data->i_wbls_bainvestseq }}
+</div>
+
 
 </body>
 </html> 
