@@ -30,6 +30,7 @@ class TrQuestionsTable
 
             ->defaultSort('i_question_sort', 'asc')
             ->reorderable('i_question_sort')
+            
             ->columns([
                 TextColumn::make('i_question_sort')
                     ->label('Urutan Pertanyaan')

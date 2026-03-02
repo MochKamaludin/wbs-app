@@ -12,7 +12,7 @@
 
         <div class="flex items-center space-x-3">
             <a href="{{ url('/') }}">
-                <img src="{{ asset('images/logo/logo-baru.png') }}" class="h-14" alt="Logo">
+                <img src="{{ asset('images/logo/logo-baru.png') }}" class="h-12" alt="Logo">
             </a>
         </div>
 

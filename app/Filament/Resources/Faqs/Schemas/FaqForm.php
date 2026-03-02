@@ -26,10 +26,12 @@ class FaqForm
                     ->label('Urutan Tampil')
                     ->numeric()
                     ->required()
-                    ->default(function () {
-                        $last = Faq::max('i_wbls_faqseq');
-                        return $last ? $last + 1 : 1;
-                    })
+                    ->minValue(1)
+                    ->default(fn () => (FAQ::max('i_wbls_faqseq') ?? 0) + 1)
+                    // ->default(function () {
+                    //     $last = Faq::max('i_wbls_faqseq');
+                    //     return $last ? $last + 1 : 1;
+                    // })
                     ->unique(
                         table: Faq::class,
                         column: 'i_wbls_faqseq',
