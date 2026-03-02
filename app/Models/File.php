@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use App\Helpers\AesHelper;
+use App\Casts\EncryptedCast;
 
 class File extends Model
 {
@@ -13,8 +13,9 @@ class File extends Model
     public $incrementing = false;
     protected $primaryKey = null;
 
-    protected $encrypted = [
-        'n_wbls_file',
+
+    protected $casts = [
+        'n_wbls_file' => EncryptedCast::class,
     ];
 
     protected $fillable = [
@@ -25,30 +26,6 @@ class File extends Model
         'c_wbls_filecateg',
         'd_wbls_file',
     ];
-
-    public function setAttribute($key, $value)
-    {
-        if (in_array($key, $this->encrypted) && !is_null($value)) {
-            $value = AesHelper::encrypt($value);
-        }
-
-        return parent::setAttribute($key, $value);
-    }
-
-    public function getAttribute($key)
-    {
-        $value = parent::getAttribute($key);
-
-        if (in_array($key, $this->encrypted) && !is_null($value)) {
-            try {
-                return AesHelper::decrypt($value);
-            } catch (\Exception $e) {
-                return $value;
-            }
-        }
-
-        return $value;
-    }
 
     public function wbls()
     {

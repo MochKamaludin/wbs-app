@@ -36,7 +36,20 @@ class WbsInvestigationsTable
                     ->searchable(),
                 
                 TextColumn::make('e_wbls_stat')
-                    ->label('Keterangan'),
+                    ->label('Keterangan')
+                    ->formatStateUsing(function ($state, $record) {
+
+                        if (in_array($record->c_wbls_stat, [1, 4])) {
+                            return $record->e_wbls_stat ?? '-';
+                        }
+
+                        if (in_array($record->c_wbls_stat, [3, 5, 6])) {
+                            return optional($record->investigation)->e_wbls_resume ?? '-';
+                        }
+
+                        return '-';
+                    })
+                    ->html(),
             ])
             ->filters([
                 SelectFilter::make('c_wbls_stat')

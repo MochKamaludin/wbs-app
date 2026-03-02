@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Helpers\AesHelper;
+use App\Casts\EncryptedCast;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
@@ -18,12 +18,12 @@ class Pengaduan extends Model
     public $timestamps = false;
     protected $keyType = 'string';
 
-    protected $encrypted = [
-        'n_wbls_categother',
-        'e_wbls',
-        'i_wbls_adm',
-        'd_wbls_incident',
-        'e_wbls_stat',
+
+    protected $casts = [
+        'n_wbls_categother' => EncryptedCast::class,
+        'e_wbls'           => EncryptedCast::class,
+        'd_wbls_incident'  => EncryptedCast::class,
+        'e_wbls_stat'      => EncryptedCast::class,
     ];
 
     protected $fillable = [
@@ -42,28 +42,22 @@ class Pengaduan extends Model
         'e_wbls_stat',
     ];
 
-    public function setAttribute($key, $value)
+    public function kategori()
     {
-        if (in_array($key, $this->encrypted) && !is_null($value)) {
-            $value = AesHelper::encrypt($value);
-        }
-
-        return parent::setAttribute($key, $value);
+        return $this->belongsTo(
+            ReferensiKategori::class,
+            'c_wbls_categ',
+            'c_wbls_categ'
+        );
     }
 
-    public function getAttribute($key)
+    public function status()
     {
-        $value = parent::getAttribute($key);
-
-        if (in_array($key, $this->encrypted) && !is_null($value)) {
-            try {
-                return AesHelper::decrypt($value);
-            } catch (\Exception $e) {
-                return $value;
-            }
-        }
-
-        return $value;
+        return $this->belongsTo(
+            ReferensiStatus::class,
+            'c_wbls_stat',
+            'c_wbls_stat'
+        );
     }
 
     public function files()

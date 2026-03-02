@@ -96,8 +96,23 @@
                     <span class="text-slate-500 block mb-1">
                         Keterangan Status
                     </span>
+
                     <div class="bg-slate-50 rounded-xl p-4 text-slate-700 text-sm leading-relaxed">
-                        {!! $wbls->e_wbls_stat ?? '-' !!}
+
+                        @php
+                            $keterangan = null;
+
+                            if (in_array($wbls->c_wbls_stat, [1, 4])) {
+                                $keterangan = $wbls->e_wbls_stat;
+                            }
+
+                            if (in_array($wbls->c_wbls_stat, [3, 5, 6])) {
+                                $keterangan = optional($wbls->investigation)->e_wbls_resume;
+                            }
+                        @endphp
+
+                        {!! $keterangan ?? '-' !!}
+
                     </div>
                 </div>
             </div>

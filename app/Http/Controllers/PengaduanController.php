@@ -139,6 +139,7 @@ class PengaduanController extends Controller
 
             $questions = DB::table('trquestion')
                 ->whereIn('i_id_question', $questionIds)
+                ->where('c_wbls_categ', $request->c_wbls_categ)
                 ->get()
                 ->keyBy('i_id_question');
 

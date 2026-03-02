@@ -49,7 +49,7 @@ class WbsInvestigationForm
                         ->relationship('investigation')
                         ->schema([
                         Textarea::make('e_wbls_resume')
-                                ->label('Keterangan Resume')
+                                ->label('Keterangan')
                                 ->nullable()
                                 ->dehydrated(true)
                     ]),

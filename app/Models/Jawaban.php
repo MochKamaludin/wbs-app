@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Helpers\AesHelper;
+use App\Casts\EncryptedCast;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +16,10 @@ class Jawaban extends Model
     protected $primaryKey = 'i_id_answer';
     public $timestamps = false;
 
-    protected $encrypted = [
-        'e_answer',
-        'i_entry',
+
+    protected $casts = [
+        'e_answer' => EncryptedCast::class,
+        'i_entry'  => EncryptedCast::class,
     ];
 
     protected $fillable = [
@@ -29,30 +30,6 @@ class Jawaban extends Model
         'i_entry',
         'd_entry',
     ];
-
-    public function setAttribute($key, $value)
-    {
-        if (in_array($key, $this->encrypted) && !is_null($value)) {
-            $value = AesHelper::encrypt($value);
-        }
-
-        return parent::setAttribute($key, $value);
-    }
-
-    public function getAttribute($key)
-    {
-        $value = parent::getAttribute($key);
-
-        if (in_array($key, $this->encrypted) && !is_null($value)) {
-            try {
-                return AesHelper::decrypt($value);
-            } catch (\Exception $e) {
-                return $value;
-            }
-        }
-
-        return $value;
-    }
 
     public function pertanyaan()
     {

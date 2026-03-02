@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\WbsVerifications\Tables;
 
-use App\Models\Tmwbls;
-use App\Models\TmwblsVrf;
 use App\Models\Verification;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InvestigatorNotification;
@@ -48,16 +46,16 @@ class WbsVerificationsTable
                 ViewAction::make(),
                 EditAction::make()
                     ->label('Ubah')
-                    ->mutateRecordDataUsing(function (array $data, Tmwbls $record): array {
+                    ->mutateRecordDataUsing(function (array $data, Pengaduan $record): array {
                         $verificationData = [
                             'f_wbls_usrname' => $data['f_wbls_usrname'] ?? null,
                             'f_wbls_file' => $data['f_wbls_file'] ?? null,
                         ];
 
-                        $verification = TmwblsVrf::where('i_wbls', $record->i_wbls)->first();
+                        $verification = Verification::where('i_wbls', $record->i_wbls)->first();
 
                         if (! $verification) {
-                            $seq = (TmwblsVrf::max('i_wbls_bavrfseq') ?? 0) + 1;
+                            $seq = (Verification::max('i_wbls_bavrfseq') ?? 0) + 1;
 
                             $kode = 'BAV/' .
                                 str_pad($seq, 4, '0', STR_PAD_LEFT) .
@@ -73,7 +71,7 @@ class WbsVerificationsTable
                             ]);
                         }
 
-                        TmwblsVrf::updateOrCreate(
+                        Verification::updateOrCreate(
                             ['i_wbls' => $record->i_wbls],
                             $verificationData,
                         );
@@ -151,7 +149,6 @@ class WbsVerificationsTable
         $record->update([
             'f_wbls_agree'   => '1',
             'c_wbls_stat'    => $cStat,
-            'e_wbls_stat'    => null,
             'i_wbls_adm'     => $user->i_wbls_adm,
             'd_wbls_check'   => now(),
             'd_wbls_statupd' => now(),
