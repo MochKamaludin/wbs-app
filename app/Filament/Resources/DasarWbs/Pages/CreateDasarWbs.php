@@ -11,7 +11,7 @@ class CreateDasarWbs extends CreateRecord
 {
     protected static string $resource = DasarWbsResource::class;
 
-    protected static ?string $title = 'Tambah';
+    protected static ?string $title = 'Buat Dasar WBS';
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {

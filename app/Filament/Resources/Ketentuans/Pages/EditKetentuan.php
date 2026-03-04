@@ -1,21 +1,24 @@
 <?php
 
-namespace App\Filament\Resources\WaktuDigunakans\Pages;
+namespace App\Filament\Resources\Ketentuans\Pages;
 
-use App\Filament\Resources\WaktuDigunakans\WaktuDigunakanResource;
+use App\Filament\Resources\Ketentuans\KetentuanResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Facades\Filament;
+use App\Models\DefinisiWbs;
 
-class EditWaktuDigunakan extends EditRecord
+class EditKetentuan extends EditRecord
 {
-    protected static string $resource = WaktuDigunakanResource::class;
-    protected static ?string $title = 'Ubah Waktu Digunakan';
+    protected static string $resource = KetentuanResource::class;
+
+    protected static ?string $title = 'Ubah Ketentuan & Kebijakan';
+
     protected function getHeaderActions(): array
     {
         return [
-            ViewAction::make(),
+            // ViewAction::make(),
             DeleteAction::make(),
         ];
     }

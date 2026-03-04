@@ -15,8 +15,8 @@ class ListDefinisiWbs extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Tambah')
-                ->visible(fn() => DefinisiWbs::count() === 0),
+                ->label('Buat')
+                ->visible(fn() => DefinisiWbs::where('i_wbls_about', '1')->count() === 0),
         ];
     }
 }

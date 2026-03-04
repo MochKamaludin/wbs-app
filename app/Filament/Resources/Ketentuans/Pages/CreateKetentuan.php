@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\DefinisiWbs\Pages;
+namespace App\Filament\Resources\Ketentuans\Pages;
 
-use App\Filament\Resources\DefinisiWbs\DefinisiWbsResource;
+use App\Filament\Resources\Ketentuans\KetentuanResource;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Facades\Filament;
 use App\Models\DefinisiWbs;
 
-class CreateDefinisiWbs extends CreateRecord
+class CreateKetentuan extends CreateRecord
 {
-    protected static string $resource = DefinisiWbsResource::class;
+    protected static string $resource = KetentuanResource::class;
+
+    protected static ?string $title = 'Buat Ketentuan & Kebijakan';
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
@@ -28,6 +30,9 @@ class CreateDefinisiWbs extends CreateRecord
 
     protected function authorizeAccess(): void
     {
-        abort_if(DefinisiWbs::where('i_wbls_about', '1')->count() > 0, 403);
+        abort_if(
+            DefinisiWbs::where('i_wbls_about', 4)->exists(),
+            403
+        );
     }
 }

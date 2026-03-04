@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TrQuestions\Schemas;
 
+use App\Models\Pertanyaan;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\{
     Hidden,
@@ -14,7 +15,6 @@ use Filament\Forms\Components\{
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use App\Models\ReferensiKategori;
-use App\Models\TrQuestion;
 
 class TrQuestionCreateForm
 {
@@ -32,7 +32,7 @@ class TrQuestionCreateForm
                     ->required()
                     ->live()
                     ->afterStateUpdated(function ($state, Set $set) {
-                        $lastSort = TrQuestion::where('c_wbls_categ', $state)
+                        $lastSort = Pertanyaan::where('c_wbls_categ', $state)
                             ->max('i_question_sort');
 
                         $set('base_question_sort', $lastSort ?? 0);
@@ -83,7 +83,7 @@ class TrQuestionCreateForm
                         Repeater::make('choices')
                             ->label('Opsi Jawaban')
                             ->visible(fn (Get $get) =>
-                                in_array($get('c_question'), [2, 4, 5, 6])
+                                in_array($get('c_question'), [2, 4, 5])
                             )
                             ->schema([
                                 TextInput::make('i_choice_sort')

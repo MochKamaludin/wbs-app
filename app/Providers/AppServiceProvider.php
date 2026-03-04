@@ -11,6 +11,8 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use App\Listeners\LogSuccessfulLogin;
 use App\Listeners\LogSuccessfulLogout;
+use Illuminate\Support\Facades\View;
+use App\Models\DefinisiWbs;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +29,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        View::composer('partials.modal_persetujuan', function ($view) {
+        $view->with(
+            'ketentuan',
+            DefinisiWbs::where('i_wbls_about', 4)->first()
+        );
+    });
+
         // Register ActivityLog Policy
         Gate::policy(Activity::class, ActivityLogPolicy::class);
 

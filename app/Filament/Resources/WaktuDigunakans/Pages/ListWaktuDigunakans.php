@@ -15,7 +15,7 @@ class ListWaktuDigunakans extends ListRecords
     {
         return [
             CreateAction::make()
-                ->label('Tambah')
+                ->label('Buat')
                 ->visible(fn() => DefinisiWbs::where('i_wbls_about', '2')->count() === 0),
         ];
     }

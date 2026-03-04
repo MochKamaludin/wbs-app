@@ -12,7 +12,7 @@ class EditDasarWbs extends EditRecord
 {
     protected static string $resource = DasarWbsResource::class;
 
-    protected static ?string $title = 'Edit';
+    protected static ?string $title = 'Ubah Dasar WBS';
     protected function getHeaderActions(): array
     {
         return [

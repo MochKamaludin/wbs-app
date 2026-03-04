@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\CekStatusController;
@@ -9,7 +10,7 @@ use App\Services\BaInvestigasiService;
 use App\Models\Verification;
 use App\Services\BaVerifikasiService;
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
+Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
 Route::get('/pengaduan', [PengaduanController::class, 'index'])

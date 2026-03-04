@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifikatorNotification;
 use App\Models\File;
 use App\Models\Jawaban;
+use App\Models\Pengaduan;
 use App\Models\User;
 
 class PengaduanController extends Controller
@@ -48,13 +49,15 @@ class PengaduanController extends Controller
         $request->validate([
             'c_wbls_categ'      => 'required',
             'uraian'            => 'required|string|max:2000',
-            'd_wbls_incident'   => 'required|date',
-            'n_wbls_categother' => $request->c_wbls_categ == '8'
+            'd_wbls_incident' => 'required|date|before_or_equal:today',
+        ], [
+            'd_wbls_incident.before_or_equal' => 'Tanggal kejadian tidak boleh melebihi hari ini.',
+            'n_wbls_categother' => $request->c_wbls_categ == 8
                 ? 'required|string|max:255'
                 : 'nullable',
         ]);
         $fileRules = [
-            1 => ['pdf', 'doc', 'docx', 'xls', 'xlsx'],
+            1 => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv'],
             2 => ['mp4', 'mov', 'avi', 'mkv'],
             3 => ['jpg', 'jpeg', 'png'],
         ];
@@ -118,7 +121,7 @@ class PengaduanController extends Controller
                 str_pad($seq, 4, '0', STR_PAD_LEFT) .
                 '/PTD/' . now()->format('m/Y');
 
-            \App\Models\Pengaduan::create([
+            Pengaduan::create([
                 'i_wbls'            => $i_wbls,
                 'i_wbls_seq'        => $seq,
                 'c_wbls_categ'      => $request->c_wbls_categ,
@@ -142,6 +145,10 @@ class PengaduanController extends Controller
                 ->where('c_wbls_categ', $request->c_wbls_categ)
                 ->get()
                 ->keyBy('i_id_question');
+            
+            $iEntry = $request->filled('i_entry') 
+                ? $request->i_entry 
+                : 'Anonim';
 
             foreach ($request->answers ?? [] as $questionId => $answer) {
 
@@ -176,7 +183,7 @@ class PengaduanController extends Controller
                     'i_id_question'       => $questionId,
                     'i_id_questionchoice' => $choiceId,
                     'e_answer'            => $text,
-                    'i_entry'             => 'Pelapor',
+                    'i_entry'             => $iEntry,
                     'd_entry'             => now(),
                 ]);
             }

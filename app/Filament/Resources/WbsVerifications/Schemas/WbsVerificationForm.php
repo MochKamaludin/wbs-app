@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\WbsVerifications\Schemas;
 
+use App\Models\Jawaban;
+use App\Models\Pengaduan;
+use Dom\Text;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -22,7 +25,7 @@ class WbsVerificationForm
                             ->label('No. WBS')
                             ->columnSpanFull(),
 
-                        TextEntry::make('kategori.n_wbls_categ')
+                        TextEntry::make('perihal')
                             ->label('Perihal')
                             ->columnSpanFull(),
 
@@ -38,6 +41,14 @@ class WbsVerificationForm
                         TextEntry::make('d_wbls_incident')
                             ->label('Perkiraan Waktu Kejadian')
                             ->dateTime('d M Y')
+                            ->columnSpanFull(),
+
+                        TextEntry::make('pelapor')
+                            ->label('Pelapor')
+                            ->state(function (Pengaduan $record) {
+                                return Jawaban::where('i_wbls', $record->i_wbls)
+                                    ->value('i_entry');
+                            })
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

@@ -18,6 +18,8 @@ class HomeController extends Controller
     {
         $definisi = DefinisiWbs::where('i_wbls_about', '1')->first();
         $kapanDigunakan = DefinisiWbs::where('i_wbls_about', '2')->first();
+        $dasarWbs = DefinisiWbs::where('i_wbls_about', '3')->first();
+        $ketentuan = DefinisiWbs::where('i_wbls_about', '4')->first();
         
         $tujuanWbs = TujuanWbs::where('f_wbls_purposestat', '1')
             ->orderBy('c_wbls_purposeord')
@@ -30,8 +32,6 @@ class HomeController extends Controller
         $perlindungan = PerlindunganPelapor::where('f_wbls_protectstat', '1')
             ->orderBy('c_wbls_protectord')
             ->get();
-
-        $dasarWbs = DefinisiWbs::where('n_wbls_about', 'Dasar WBS')->first();
 
         $items = [];
 
@@ -119,6 +119,7 @@ class HomeController extends Controller
             'definisi',
             'kapanDigunakan',
             'dasarWbs',
+            'ketentuan',
             'items',
             'tujuanWbs',
             'syaratMelapor',

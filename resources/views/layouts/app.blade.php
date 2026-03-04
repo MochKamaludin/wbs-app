@@ -37,23 +37,18 @@
 
 <body class="bg-gray-100 m-0 p-0">
     
-    {{-- CONTACT BAR --}}
     @include('partials.contact_bar')
 
-    {{-- NAVBAR --}}
     @include('partials.navbar')
 
-    <!-- MODAL PERSETUJUAN -->
     @include('partials.modal_persetujuan')
 
     <div class="pt-0 mt-0">
         @yield('content')
 
-        {{-- BUTTON UP --}}
         @include('partials.button_up')
     </div>
 
-    <!-- FOOTER -->
     @include('partials.footer')
 
     <script>

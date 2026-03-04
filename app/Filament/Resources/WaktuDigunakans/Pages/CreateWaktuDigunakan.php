@@ -9,8 +9,9 @@ use App\Models\DefinisiWbs;
 
 class CreateWaktuDigunakan extends CreateRecord
 {
-    protected static ?string $title = 'Tambah';
     protected static string $resource = WaktuDigunakanResource::class;
+
+    protected static ?string $title = 'Buat Waktu Digunakan';
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {

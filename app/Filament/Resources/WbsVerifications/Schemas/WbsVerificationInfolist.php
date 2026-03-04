@@ -34,12 +34,19 @@ class WbsVerificationInfolist
                         TextEntry::make('d_wbls_incident')
                             ->label('Perkiraan Waktu Kejadian'),
 
-                        TextEntry::make('kategori.n_wbls_categ')
+                        TextEntry::make('perihal')
                             ->label('Perihal'),
 
                         TextEntry::make('d_wbls')
                             ->label('Tanggal Pengaduan')
                             ->dateTime('d M Y H:i'),
+
+                        TextEntry::make('pelapor')
+                            ->label('Pelapor')
+                            ->state(function (Pengaduan $record) {
+                                return Jawaban::where('i_wbls', $record->i_wbls)
+                                    ->value('i_entry');
+                            }),
 
                         TextEntry::make('e_wbls')
                             ->label('Uraian'),

@@ -80,6 +80,15 @@ class Pengaduan extends Model
         return $this->belongsTo(User::class, 'i_wbls_adm');
     }
 
+    public function getPerihalAttribute()
+    {
+        if ($this->c_wbls_categ === 8) {
+            return $this->n_wbls_categother;
+        }
+
+        return $this->kategori?->n_wbls_categ;
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         $user = Auth::user();

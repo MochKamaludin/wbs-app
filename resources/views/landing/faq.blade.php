@@ -1,13 +1,11 @@
 <section id="faq" class="py-20 bg-white scroll-mt-24 reveal">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
 
-        <!-- TITLE -->
         <h2 class="text-2xl font-bold text-center">
             Frequently Asked Questions
         </h2>
         <div class="w-20 h-1 bg-blue-600 mx-auto my-4"></div>
 
-        <!-- FAQ LIST -->
         <div class="mt-8 space-y-4">
 
             @forelse ($faq as $index => $faq)

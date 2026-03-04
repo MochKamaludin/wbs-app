@@ -34,7 +34,7 @@ class WbsVerificationsTable
                     ->label('Tanggal Pengaduan')
                     ->dateTime('d M Y'),
 
-                TextColumn::make('kategori.n_wbls_categ')
+                TextColumn::make('perihal')
                     ->label('Perihal')
                     ->searchable(),
                 

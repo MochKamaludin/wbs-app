@@ -73,7 +73,17 @@ function copyResi() {
               enctype="multipart/form-data">
             @csrf
 
-            {{-- URAIAN --}}
+            <div class="mb-6">
+                <label class="font-semibold block mb-1">
+                    Email
+                </label>
+                <input type="text"
+                            name="i_entry"
+                            value="{{ old('i_entry') }}"
+                            placeholder="Masukkan Email Anda (Opsional)"
+                            class="w-full border rounded-lg px-4 py-2">
+            </div>
+
             <div class="mb-5">
                 <label class="font-semibold block mb-1">
                     Uraian Kejadian <span class="text-red-600">*</span>
@@ -82,35 +92,47 @@ function copyResi() {
                     class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300">{{ old('uraian') }}</textarea>
             </div>
 
-            {{-- TANGGAL KEJADIAN --}}
             <div class="mb-6">
                 <label class="font-semibold block mb-1">
                     Perkiraan Waktu Kejadian <span class="text-red-600">*</span>
                 </label>
                 <input type="date"
                     name="d_wbls_incident"
+                    max="{{ date('Y-m-d') }}"
                     value="{{ old('d_wbls_incident') }}"
                     class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300">
             </div>
 
-            {{-- KATEGORI --}}
             <div class="mb-6">
                 <label class="font-semibold block mb-1">
-                    Kategori Pengaduan <span class="text-red-600">*</span>
+                    Kategori Pelanggaran <span class="text-red-600">*</span>
                 </label>
+
                 <select id="kategori" name="c_wbls_categ"
                     class="w-full border rounded-lg px-4 py-2">
                     <option value="">-- Pilih Kategori --</option>
+
                     @foreach($kategori as $k)
                         <option value="{{ $k->c_wbls_categ }}"
+                            data-definisi="{{ $k->e_wbls_categ }}"
                             {{ old('c_wbls_categ') == $k->c_wbls_categ ? 'selected' : '' }}>
                             {{ $k->n_wbls_categ }}
                         </option>
                     @endforeach
                 </select>
+
+                <div id="definisi-wrapper"
+                    class="hidden mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p class="text-sm font-semibold text-blue-800 mb-2">
+                        Definisi Kategori
+                    </p>
+
+                    <div id="definisi-text"
+                        class="text-sm text-blue-900 leading-relaxed">
+                    </div>
+                </div>
             </div>
 
-            {{-- KATEGORI LAINNYA --}}
             <div class="mb-6 hidden" id="kategori-lainnya-wrapper">
                 <label class="font-semibold block mb-1">
                     Kategori Lainnya <span class="text-red-600">*</span>
@@ -121,11 +143,7 @@ function copyResi() {
                     class="w-full border rounded-lg px-4 py-2"
                     placeholder="Tuliskan kategori lainnya">
             </div>
-            {{-- DEBUG --}}
 
-
-
-            {{-- ================= PERTANYAAN ================= --}}
             @foreach($questions as $q)
                 <div class="question hidden mb-8"
                      data-kategori="{{ $q->c_wbls_categ }}">
@@ -137,20 +155,17 @@ function copyResi() {
                         @endif
                     </label>
 
-                    {{-- TEXT / CURRENCY --}}
                     @if(in_array($q->c_question, [1,6]))
                         <input type="text"
                             name="answers[{{ $q->i_id_question }}]"
                             value="{{ old('answers.' . $q->i_id_question) }}"
                             class="w-full border rounded-lg px-4 py-2">
 
-                    {{-- TEXTAREA --}}
                     @elseif($q->c_question == 3)
                         <textarea
                             name="answers[{{ $q->i_id_question }}]"
                             class="w-full border rounded-lg px-4 py-2">{{ old('answers.' . $q->i_id_question) }}</textarea>
 
-                    {{-- RADIO --}}
                     @elseif($q->c_question == 2)
                         <div class="space-y-2">
                             @foreach($q->choices as $c)
@@ -177,11 +192,9 @@ function copyResi() {
                             @endforeach
                         </select>
                     
-                    {{-- RADIO + TEXTAREA --}}
                     @elseif($q->c_question == 4)
                         <div class="space-y-3">
 
-                            {{-- Radio --}}
                             @foreach($q->choices as $c)
                                 <label class="flex items-center gap-2 cursor-pointer">
                                     <input type="radio"
@@ -193,7 +206,6 @@ function copyResi() {
                                 </label>
                             @endforeach
 
-                            {{-- Textarea --}}
                             <textarea
                                 name="answers[{{ $q->i_id_question }}][text]"
                                 placeholder="Keterangan tambahan..."
@@ -201,12 +213,10 @@ function copyResi() {
 
                         </div>
 
-                    {{-- FILE UPLOAD --}}
                     @elseif($q->c_question == 7)
                     <div class="space-y-4"
                         id="file-wrapper-{{ $q->i_id_question }}">
 
-                        {{-- FILE ROW --}}
                         <div class="file-row flex gap-3 items-start">
                             <select
                                 name="files[{{ $q->i_id_question }}][0][categ]"
@@ -226,7 +236,6 @@ function copyResi() {
                                 required>
                         </div>
 
-                        {{-- ADD BUTTON --}}
                         <button type="button"
                             onclick="addFile({{ $q->i_id_question }})"
                             class="text-blue-600 text-sm hover:underline">
@@ -243,7 +252,6 @@ function copyResi() {
                 </div>
             @endforeach
 
-            {{-- SUBMIT --}}
             <div class="mt-10 text-right">
                 <button
                     class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
@@ -256,9 +264,13 @@ function copyResi() {
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
     const kategori = document.getElementById('kategori');
     const wrapper = document.getElementById('kategori-lainnya-wrapper');
     const inputOther = wrapper.querySelector('input');
+
+    const definisiWrapper = document.getElementById('definisi-wrapper');
+    const definisiText = document.getElementById('definisi-text');
 
     function handleKategoriChange() {
         const selectedValue = kategori.value;
@@ -276,10 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             } else {
                 q.classList.add('hidden');
-
-                inputs.forEach(el => {
-                    el.required = false;
-                });
+                inputs.forEach(el => el.required = false);
             }
         });
 
@@ -290,6 +299,17 @@ document.addEventListener('DOMContentLoaded', function () {
             wrapper.classList.add('hidden');
             inputOther.required = false;
             inputOther.value = '';
+        }
+
+        const selectedOption = kategori.options[kategori.selectedIndex];
+        let definisi = selectedOption.getAttribute('data-definisi');
+
+        if (definisi) {
+            definisiWrapper.classList.remove('hidden');
+            definisiText.innerHTML = definisi;
+        } else {
+            definisiWrapper.classList.add('hidden');
+            definisiText.innerHTML = '';
         }
     }
 
