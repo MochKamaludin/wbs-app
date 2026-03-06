@@ -44,8 +44,8 @@ class UserInfolist
                                             ->label('Role')
                                             ->formatStateUsing(fn ($state) => match ($state) {
                                                 '0' => 'Admin',
-                                                '1' => 'Operator',
-                                                '2' => 'Verifikator',
+                                                '1' => 'Verifikator',
+                                                '2' => 'Investigator',
                                                 default => 'Tidak Diketahui',
                                             }),
 

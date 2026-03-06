@@ -13,9 +13,9 @@ class DefinisiWbsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin() || $user->isVerifikator();
+        return $user->isAdmin() || $user->isVerifikator(); 
     }
-
+ 
     /**
      * Determine whether the user can view the model.
      */

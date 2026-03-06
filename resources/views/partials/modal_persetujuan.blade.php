@@ -7,9 +7,9 @@
                 {{ $ketentuan->n_wbls_about }}
             </h2>
 
-            <div class="text-sm space-y-3 leading-6">
-                {!! $ketentuan->e_wbls_about !!}
-            </div>
+            <div class="p-5 text-sm leading-relaxed text-justify editor-content prose prose-sm max-w-none">
+                        {!! $ketentuan->e_wbls_about !!}
+                    </div>
 
             <div class="flex justify-end mt-6 gap-3">
                 <button onclick="closeModal()" class="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white">
@@ -25,7 +25,7 @@
 
         </div>
     </div>
-
+ 
     <script>
         function openModal() {
             const modal = document.getElementById("modalPersetujuan");

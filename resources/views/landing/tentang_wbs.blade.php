@@ -202,7 +202,6 @@
                     <div class="p-5 text-gray-700 text-sm leading-relaxed text-justify editor-content prose prose-sm max-w-none">
                         {!! $item->e_wbls_req !!}
                     </div>
-
                 </div>
             @endforeach
 

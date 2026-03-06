@@ -223,7 +223,7 @@ class PengaduanController extends Controller
         $verifikators = User::where('c_wbls_admauth', '1')->get();
         foreach ($verifikators as $verifikator) {
             Mail::to($verifikator->email ?? $verifikator->i_wbls_adm)->send(
-                new VerifikatorNotification($i_wbls, $request->uraian)
+                new VerifikatorNotification()
             );
         }
 

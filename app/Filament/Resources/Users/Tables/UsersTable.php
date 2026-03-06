@@ -35,8 +35,8 @@ class UsersTable
                     ->badge()
                     ->formatStateUsing(fn ($state) => match ($state) {
                         '0' => 'Admin',
-                        '1' => 'Operator',
-                        '2' => 'Verifikator',
+                        '1' => 'Verifikator',
+                        '2' => 'Investigator',
                         default => 'Tidak Diketahui',
                     })
                     ->color(fn ($state) => match ($state) {

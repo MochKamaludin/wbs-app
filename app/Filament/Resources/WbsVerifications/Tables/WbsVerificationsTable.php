@@ -157,7 +157,7 @@ class WbsVerificationsTable
         $investigators = User::where('c_wbls_admauth', '2')->get();
         foreach ($investigators as $investigator) {
             Mail::to($investigator->email ?? $investigator->i_wbls_adm)->send(
-                new InvestigatorNotification($record->i_wbls, $record->e_wbls)
+                new InvestigatorNotification()
             );
         }
     }

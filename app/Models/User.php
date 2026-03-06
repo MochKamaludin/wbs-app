@@ -37,6 +37,11 @@ class User extends Authenticatable implements FilamentUser, HasName
         return (string) $this->c_wbls_admpswd;
     }
 
+    public function getEmailForPasswordReset()
+    {
+        return $this->i_wbls_adm;
+    }
+
     public function getAuthIdentifierName(): string
     {
         return 'i_wbls_adm';
