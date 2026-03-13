@@ -30,7 +30,10 @@ class User extends Authenticatable implements FilamentUser, HasName
         'd_entry',
     ];
 
-    protected $hidden = ['c_wbls_admpswd'];
+    public static function findForPasswordReset($identifier)
+    {
+        return static::where('i_wbls_adm', $identifier)->first();
+    }
 
     public function getAuthPassword(): string
     {

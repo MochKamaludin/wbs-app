@@ -206,6 +206,7 @@ class PengaduanController extends Controller
                         str_pad($fileSeq, 3, '0', STR_PAD_LEFT) . '.' .
                         $file->getClientOriginalExtension();
 
+                    $checksum = hash_file('sha256', $file->getRealPath());
                     $file->storeAs('wbs', $filename, 'public');
 
                     File::create([
@@ -215,6 +216,7 @@ class PengaduanController extends Controller
                         'c_wbls_filecateg' => $row['categ'],
                         'i_wbls_fileseq'   => $fileSeq,
                         'd_wbls_file'      => now(),
+                        'checksum'         => $checksum,    
                     ]);
                 }
             }
@@ -229,6 +231,6 @@ class PengaduanController extends Controller
 
         return back()->with([
             'resi' => $resi,
-        ]);
+        ]); 
     }
 }

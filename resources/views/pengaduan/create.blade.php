@@ -155,8 +155,14 @@ function copyResi() {
                         @endif
                     </label>
 
-                    @if(in_array($q->c_question, [1,6]))
+                    @if($q->c_question == 1)
                         <input type="text"
+                            name="answers[{{ $q->i_id_question }}]"
+                            value="{{ old('answers.' . $q->i_id_question) }}"
+                            class="w-full border rounded-lg px-4 py-2">
+                    
+                    @elseif($q->c_question == 6)
+                        <input type="number"
                             name="answers[{{ $q->i_id_question }}]"
                             value="{{ old('answers.' . $q->i_id_question) }}"
                             class="w-full border rounded-lg px-4 py-2">
