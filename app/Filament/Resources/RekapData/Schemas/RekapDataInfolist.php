@@ -13,6 +13,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pengaduan;
+use Filament\Schemas\Components\Grid;
 
 class RekapDataInfolist
 {
@@ -168,6 +169,7 @@ class RekapDataInfolist
                                                     return [
                                                         'label' => 'Bukti ' . ($index + 1),
                                                         'filename' => $file->n_wbls_file,
+                                                        'checksum' => $file->checksum,
                                                     ];
                                                 })->values()->toArray(),
                                             ];
@@ -187,23 +189,39 @@ class RekapDataInfolist
                                     RepeatableEntry::make('files')
                                         ->label('Daftar Bukti')
                                         ->schema([
+                                            Grid::make(3)
+                                                ->schema([
 
-                                            TextEntry::make('label')
-                                                ->label('')
-                                                ->columnSpan(1),
+                                                    TextEntry::make('label')
+                                                        ->label('')
+                                                        ->columnSpan(1),
 
-                                            TextEntry::make('filename')
-                                                ->label('File')
-                                                ->formatStateUsing(fn () => 'Download')
-                                                ->url(fn ($state) => route('wbs.download', [
-                                                    'filename' => $state,
-                                                ]))
-                                                ->openUrlInNewTab()
-                                                ->color('primary')
-                                                ->icon('')
-                                                ->extraAttributes([
-                                                    'class' => 'inline-flex items-center px-3 py-1.5 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700 transition',
-                                                ]),
+                                                    TextEntry::make('filename')
+                                                        ->label('File')
+                                                        ->formatStateUsing(fn () => 'Download')
+                                                        ->url(fn ($state) => route('wbs.download', [
+                                                            'filename' => $state,
+                                                        ]))
+                                                        ->openUrlInNewTab()
+                                                        ->icon('heroicon-o-arrow-down-tray')
+                                                        ->color('primary')
+                                                        ->extraAttributes([
+                                                            'class' => 'inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700 transition',
+                                                        ]),
+
+                                                    TextEntry::make('checksum')
+                                                        ->label('')
+                                                        ->formatStateUsing(fn () => 'Checksum')
+                                                        ->icon('heroicon-o-shield-check')
+                                                        ->badge()
+                                                        ->color('success')
+                                                        ->copyable()
+                                                        ->copyableState(fn ($state) => $state)
+                                                        ->copyMessage('Checksum berhasil disalin')
+                                                        ->extraAttributes([
+                                                            'class' => 'cursor-pointer',
+                                                        ]),
+                                                ])
                                         ])
                                         ->columnSpanFull(),
                                 ])
