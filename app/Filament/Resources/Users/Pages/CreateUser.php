@@ -14,11 +14,9 @@ class CreateUser extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // password
         $data['c_wbls_admpswd'] = Hash::make($data['password']);
         unset($data['password']);
 
-        // audit fields
         $data['i_entry'] = Auth::user()?->n_wbls_adm ?? 'system';
         $data['d_entry'] = Carbon::now();
 

@@ -58,8 +58,13 @@ class PengaduanController extends Controller
         ]);
         $fileRules = [
             1 => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv'],
-            2 => ['mp4', 'mov', 'avi', 'mkv'],
-            3 => ['jpg', 'jpeg', 'png'],
+            2 => ['mp4', 'mov', 'avi', 'mkv'], 
+            3 => ['jpg', 'jpeg', 'png'], 
+        ];
+        $maxFileSizePerCategory = [
+            1 => 20 * 1024 * 1024,  
+            2 => 100 * 1024 * 1024, 
+            3 => 10 * 1024 * 1024,   
         ];
 
         $filesInput  = $request->input('files', []);
@@ -68,7 +73,6 @@ class PengaduanController extends Controller
 
         foreach ($filesInput as $questionId => $rows) {
             foreach ($rows as $index => $row) {
-
                 $categ = $row['categ'] ?? null;
                 $file  = $filesUpload[$questionId][$index]['file'] ?? null;
 
@@ -89,11 +93,21 @@ class PengaduanController extends Controller
                     continue;
                 }
 
-                if (!in_array(
-                    strtolower($file->getClientOriginalExtension()),
-                    $fileRules[$categ]
-                )) {
+                $ext = strtolower($file->getClientOriginalExtension());
+                if (!in_array($ext, $fileRules[$categ])) {
                     $errors["files.$questionId"] = 'Format file tidak sesuai kategori.';
+                    continue;
+                }
+
+                $maxSize = $maxFileSizePerCategory[$categ] ?? (2 * 1024 * 1024);
+                if ($file->getSize() > $maxSize) {
+                    $errors["files.$questionId"] = match ($categ) {
+                        1 => 'Ukuran file dokumen maksimal 2MB.',
+                        2 => 'Ukuran file video maksimal 20MB.',
+                        3 => 'Ukuran file gambar maksimal 5MB.',
+                        default => 'Ukuran file melebihi batas.',
+                    };
+                    continue;
                 }
             }
         }

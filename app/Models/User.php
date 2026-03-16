@@ -9,10 +9,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 class User extends Authenticatable implements FilamentUser, HasName
 {
     use Notifiable, LogsActivity;
+    use CanResetPassword;
 
     protected $table = 'trwblsadm';
     protected $primaryKey = 'i_wbls_adm';

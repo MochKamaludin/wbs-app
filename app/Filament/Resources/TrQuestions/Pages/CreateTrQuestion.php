@@ -67,7 +67,7 @@ class CreateTrQuestion extends CreateRecord
                     'c_question'      => $question['c_question'],
                     'f_required'      => $question['f_required'],
                     'f_active'        => $question['f_active'],
-                    'i_entry'         => $userId,
+                    'i_wbls_adm'      => $userId,
                     'd_entry'         => now(),
                 ]);
                 
@@ -78,7 +78,7 @@ class CreateTrQuestion extends CreateRecord
                             'i_choice_sort' => $choice['i_choice_sort'],
                             'n_choice'      => $choice['n_choice'],
                             'f_active'      => $choice['f_active'] ? 1 : 0,
-                            'i_entry'       => $userId,
+                            'i_wbls_adm'       => $userId,
                             'd_entry'       => now(),
                         ]);
                     }

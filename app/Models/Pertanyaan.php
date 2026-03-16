@@ -22,7 +22,7 @@ class Pertanyaan extends Model
         'n_question',
         'f_required',
         'f_active',
-        'i_entry',
+        'i_wbls_adm',
         'd_entry',
         'i_update',
         'd_update', 
@@ -72,7 +72,7 @@ class Pertanyaan extends Model
 
     public function entry_user()
     {
-        return $this->belongsTo(User::class, 'i_entry', 'i_wbls_adm');
+        return $this->belongsTo(User::class, 'i_wbls_adm', 'i_wbls_adm');
     }
 
     public function update_user()

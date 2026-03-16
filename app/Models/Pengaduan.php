@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Casts\EncryptedCast;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Support\Facades\Auth;
 
+#[ObservedBy(\App\Observers\PengaduanObserver::class)]
 class Pengaduan extends Model
 {
     use LogsActivity;

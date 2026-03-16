@@ -21,7 +21,7 @@ class PilihanPertanyaan extends Model
         'n_choice',
         'i_choice_sort',
         'f_active',
-        'i_entry',
+        'i_wbls_adm',
         'd_entry',
         'i_update',
         'd_update',
@@ -36,13 +36,13 @@ class PilihanPertanyaan extends Model
     {
         static::creating(function ($model) {
             $user = Auth::user();
-            $model->i_entry = $user?->i_wbls_adm_id ?? 0;
+            $model->i_wbls_adm = $user?->i_wbls_adm ?? 0;
             $model->d_entry = now();
         });
 
         static::updating(function ($model) {
             $user = Auth::user();
-            $model->i_update = $user?->i_wbls_adm_id ?? 0;
+            $model->i_update = $user?->i_wbls_adm ?? 0;
             $model->d_update = now();
         });
     }

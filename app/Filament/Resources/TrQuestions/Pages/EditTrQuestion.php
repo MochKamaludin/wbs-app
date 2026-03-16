@@ -125,7 +125,7 @@ class EditTrQuestion extends EditRecord
                         'i_choice_sort' => (int) $choice['i_choice_sort'],
                         'n_choice'      => $choice['n_choice'],
                         'f_active'      => 1,
-                        'i_entry'       => $userId,
+                        'i_wbls_adm'       => $userId,
                         'd_entry'       => now(),
                         'i_update'      => $userId,
                         'd_update'      => now(),

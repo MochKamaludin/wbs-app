@@ -2,12 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\EditProfile;
 use App\Filament\Pages\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
+use App\Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -19,7 +20,9 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\Filament\Administrator\Pages\Auth\RequestPasswordReset;
+use App\Filament\Pages\Auth\RequestPasswordReset;
+use Filament\Actions\Action;
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -30,7 +33,16 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(Login::class) 
+            ->pages([
+                Dashboard::class,
+            ])
             ->passwordReset(RequestPasswordReset::class)
+            ->userMenuItems([
+                'profile' => Action::make('profile')
+                    ->label('Profil Saya')
+                    ->url(fn():string => \App\Filament\Pages\Auth\Profile::getUrl())
+                    ->icon('heroicon-o-user-circle'),
+            ])
             ->colors([
                 'primary' => Color::Indigo,
             ])
@@ -60,6 +72,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])      
+            ->databaseNotifications();
     }
 }
