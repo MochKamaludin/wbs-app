@@ -74,7 +74,7 @@ class EncryptionService
 
         $replaced = strtr($token, '-_', '+/');
         $padding = strlen($replaced) % 4;
-
+        
         if ($padding > 0) {
             $replaced .= str_repeat('=', 4 - $padding);
         }
@@ -94,4 +94,4 @@ class EncryptionService
             $tag
         );
     }
-}
+}   
