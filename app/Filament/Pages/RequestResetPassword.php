@@ -1,10 +1,17 @@
 <?php
 
+<<<<<<< HEAD:app/Filament/Pages/Auth/RequestResetPassword.php
 namespace App\Filament\Pages\Auth;
 
 use Filament\Auth\Pages\PasswordReset\RequestPasswordReset as BaseRequestPasswordReset;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Support\Facades\Log;
+=======
+namespace App\Filament\Administrator\Pages\Auth;
+
+use Filament\Auth\Pages\PasswordReset\RequestPasswordReset as BaseRequestPasswordReset;
+use Filament\Forms\Components\TextInput;
+>>>>>>> 872cd6be2cd6e6f94beaf0372aa219999783b36a:app/Filament/Pages/RequestResetPassword.php
 
 class RequestPasswordReset extends BaseRequestPasswordReset
 {
@@ -24,6 +31,7 @@ class RequestPasswordReset extends BaseRequestPasswordReset
             'i_wbls_adm' => $data['i_wbls_adm'],
         ];
     }
+<<<<<<< HEAD:app/Filament/Pages/Auth/RequestResetPassword.php
 
     protected function sendPasswordResetNotification($user, $token)
     {
@@ -42,4 +50,6 @@ class RequestPasswordReset extends BaseRequestPasswordReset
             throw $e;
         }
     }
+=======
+>>>>>>> 872cd6be2cd6e6f94beaf0372aa219999783b36a:app/Filament/Pages/RequestResetPassword.php
 }

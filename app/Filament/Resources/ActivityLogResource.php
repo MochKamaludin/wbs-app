@@ -62,6 +62,14 @@ class ActivityLogResource extends Resource
 
                 TextColumn::make('event')
                     ->label('Event')
+                    ->icon(fn ($state) => match ($state) {
+                        'created' => 'heroicon-o-plus',
+                        'updated' => 'heroicon-o-pencil',
+                        'deleted' => 'heroicon-o-trash',
+                        'login' => 'heroicon-o-arrow-right-on-rectangle',
+                        'logout' => 'heroicon-o-arrow-left-on-rectangle',
+                        default => null,
+                    })
                     ->badge()
                     ->color(fn ($state) => match ($state) {
                         'created' => 'success',
