@@ -77,9 +77,9 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <span class="text-slate-500">Tanggal Kejadian</span>
+                    <span class="text-slate-500">Tanggal Laporan</span>
                     <span class="text-slate-800">
-                        {{ $wbls->d_wbls_incident }}
+                        {{ $wbls->d_wbls ? \Carbon\Carbon::parse($wbls->d_wbls)->translatedFormat('d F Y') : '-' }}
                     </span>
                 </div>
 

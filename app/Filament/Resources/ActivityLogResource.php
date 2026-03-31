@@ -86,8 +86,7 @@ class ActivityLogResource extends Resource
 
                 TextColumn::make('causer.n_wbls_adm')
                     ->label('User')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
 
                 TextColumn::make('causer.c_wbls_admauth')
                     ->label('Role')
@@ -139,7 +138,7 @@ class ActivityLogResource extends Resource
                     ->placeholder('Semua User'),
 
                 Filter::make('created_at')
-                    ->form([
+                    ->schema([
                         DatePicker::make('created_from')
                             ->label('Dari Tanggal'),
                         DatePicker::make('created_until')

@@ -143,7 +143,7 @@
     </p>
 
     <div class="box">
-        {{ $data->wbls->e_wbls ?? '-' }}
+        {{ $data->wbs->e_wbls ?? '-' }}
     </div>
 
     <br>
