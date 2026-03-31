@@ -40,7 +40,7 @@ class AdminPanelProvider extends PanelProvider
             ->userMenuItems([
                 'profile' => Action::make('profile')
                     ->label('Profil Saya')
-                    ->url(fn():string => \App\Filament\Pages\Auth\Profile::getUrl())
+                    ->url(fn():string => \App\Filament\Pages\Profile::getUrl())
                     ->icon('heroicon-o-user-circle'),
             ])
             ->colors([
