@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Services;
 
@@ -19,8 +19,8 @@ class EncryptionService
     {
         if (!$plainText) return null;
 
-        $keyData = $this->keyService->getActiveKey();
-        $key = $this->generateKey($keyData->key);
+        $rawKey = $this->keyService->getKey();
+        $key = $this->generateKey($rawKey);
 
         $iv = random_bytes(12);
 
@@ -33,30 +33,21 @@ class EncryptionService
             $tag
         );
 
-        return json_encode([
-            'v' => $keyData->version,
-            'd' => base64_encode($iv . $tag . $cipherText),
-        ]);
+        return base64_encode($iv . $tag . $cipherText);
     }
 
     public function decrypt(?string $payload): ?string
     {
         if (!$payload) return null;
 
-        $data = json_decode($payload, true);
+        $rawKey = $this->keyService->getKey();
+        $key = $this->generateKey($rawKey);
 
-        if (!isset($data['v'], $data['d'])) {
-            return $this->decryptLegacy($payload);
-        }
+        $data = base64_decode($payload);
 
-        $keyData = $this->keyService->getKeyByVersion($data['v']);
-        $key = $this->generateKey($keyData->key);
-
-        $decoded = base64_decode($data['d']);
-
-        $iv   = substr($decoded, 0, 12);
-        $tag  = substr($decoded, 12, 16);
-        $text = substr($decoded, 28);
+        $iv   = substr($data, 0, 12);
+        $tag  = substr($data, 12, 16);
+        $text = substr($data, 28);
 
         return openssl_decrypt(
             $text,
@@ -67,31 +58,4 @@ class EncryptionService
             $tag
         );
     }
-
-    private function decryptLegacy(string $token): ?string
-    {
-        $oldKey = hash('sha256', 'super-secret-32-char-wbs-key', true);
-
-        $replaced = strtr($token, '-_', '+/');
-        $padding = strlen($replaced) % 4;
-        
-        if ($padding > 0) {
-            $replaced .= str_repeat('=', 4 - $padding);
-        }
-
-        $data = base64_decode($replaced);
-
-        $iv   = substr($data, 0, 12);
-        $tag  = substr($data, 12, 16);
-        $text = substr($data, 28);
-
-        return openssl_decrypt(
-            $text,
-            self::CIPHER,
-            $oldKey,
-            OPENSSL_RAW_DATA,
-            $iv,
-            $tag
-        );
-    }
-}   
+}

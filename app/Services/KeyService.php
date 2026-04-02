@@ -2,17 +2,21 @@
 
 namespace App\Services;
 
-use App\Models\EncryptionKey;
-
 class KeyService
 {
-    public function getActiveKey(): EncryptionKey
+    protected string $path;
+
+    public function __construct()
     {
-        return EncryptionKey::where('is_active', 1)->firstOrFail();
+        $this->path = storage_path('keys/app.key');
     }
 
-    public function getKeyByVersion(string $version): EncryptionKey
+    public function getKey(): string
     {
-        return EncryptionKey::where('version', $version)->firstOrFail();
+        if (!file_exists($this->path)) {
+            throw new \Exception('Key file not found');
+        }
+
+        return trim(file_get_contents($this->path));
     }
 }

@@ -73,7 +73,16 @@
     <div class="header">
         <table>
             <tr>
-                <td style="width: 60%; text-align: center;">
+                <td style="width: 50%; text-align: left;">
+                    <img src="{{ public_path('images/logo/danantara.png') }}" class="logo">
+                </td>
+                {{-- <td style="width: 50%; text-align: right;">
+                    <img src="{{ public_path('images/logo/logo-blue2.png') }}" class="logo">
+                </td> --}}
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align: center; padding-top: 5px;">
                     <div class="title">LAPORAN WHISTLEBLOWING SYSTEM (WBS)</div>
                     <div class="subtitle">Rekapitulasi Data Pengaduan</div>
                 </td>
