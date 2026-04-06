@@ -7,6 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Validation\ValidationException;
 use Filament\Schemas\Components\Component;
+use Illuminate\Support\HtmlString;
 
 class Login extends BaseLogin
 {
@@ -29,6 +30,16 @@ class Login extends BaseLogin
             ->autocomplete()
             ->autofocus()
             ->extraInputAttributes(['tabindex' => 1]);
+    }
+
+    protected function getPasswordFormComponent(): Component
+    {
+        return parent::getPasswordFormComponent()
+            ->hint(new HtmlString('
+                <a href="' . route('forget.password.get') . '" class="text-sm text-primary-600 underline">
+                    Lupa Password?
+                </a>
+            '));
     }
 
     protected function getCredentialsFromFormData(array $data): array

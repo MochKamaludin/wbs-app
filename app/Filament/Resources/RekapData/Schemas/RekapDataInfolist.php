@@ -169,7 +169,7 @@ class RekapDataInfolist
                                                     return [
                                                         'label' => 'Bukti ' . ($index + 1),
                                                         'filename' => $file->n_wbls_file,
-                                                        'checksum' => $file->checksum,
+                                                        'checksum' => $file->i_wbs_checksum,
                                                     ];
                                                 })->values()->toArray(),
                                             ];
