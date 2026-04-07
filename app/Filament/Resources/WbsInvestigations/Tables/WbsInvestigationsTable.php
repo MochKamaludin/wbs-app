@@ -82,7 +82,7 @@ class WbsInvestigationsTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make()
-                    ->visible(fn (Pengaduan $record) => ! in_array($record->c_wbls_stat, [3, 5, 6])),
+                    ->visible(fn ($record) => ! in_array($record?->c_wbls_stat, [3, 5, 6])),
 
                 Action::make('generateBA')
                     ->label('Generate BA Investigasi')
@@ -94,7 +94,7 @@ class WbsInvestigationsTable
                             'i_wbls' => $record->i_wbls
                         ]);
 
-                        return route('ba.investigasi.pdf', $resume->i_wbls_resume);
+                        return route('ba.investigasi.pdf', $resume->id);
                     })
                     ->openUrlInNewTab(),
             ])

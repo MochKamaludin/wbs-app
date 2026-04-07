@@ -230,7 +230,7 @@ class PengaduanController extends Controller
                         'c_wbls_filecateg' => $row['categ'],
                         'i_wbls_fileseq'   => $fileSeq,
                         'd_wbls_file'      => now(),
-                        'i_wbs_checksum'   => $checksum,    
+                        'i_wbls_checksum'   => $checksum,    
                     ]);
                 }
             }

@@ -23,7 +23,7 @@ class File extends Model
         'i_wbls_fileseq',
         'i_id_question',
         'n_wbls_file',
-        'i_wbs_checksum',
+        'i_wbls_checksum',
         'c_wbls_filecateg',
         'd_wbls_file',
     ];

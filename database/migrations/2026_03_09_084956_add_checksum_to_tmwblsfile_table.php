@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tmwblsfile', function (Blueprint $table) {
-            $table->string('i_wbs_checksum')->nullable()->after('n_wbls_file');
+            $table->string('i_wbls_checksum')->nullable()->after('n_wbls_file');
         });
     }
 

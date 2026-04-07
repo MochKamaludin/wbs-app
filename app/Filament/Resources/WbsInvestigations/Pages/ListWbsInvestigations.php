@@ -21,7 +21,11 @@ class ListWbsInvestigations extends ListRecords
     public function getTabs(): array
     {
         return [
-            'open' => Tab::make()->query(fn ($query) => $query->whereIn('c_wbls_stat', [1,2,4])),
+            'open' => Tab::make()->query(fn ($query) => 
+                $query
+                    ->whereIn('c_wbls_stat', [1, 2, 4])
+                    ->where('f_wbls_agree', 1)
+            ),
             'close' => Tab::make()->query(fn ($query) => $query->whereIn('c_wbls_stat', [3,5,6])),
         ];
     }

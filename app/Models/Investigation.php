@@ -11,7 +11,7 @@ class Investigation extends Model
 {
     protected $table = 'tmwblsresume';
 
-    protected $primaryKey = 'i_wbls_resume';
+    protected $primaryKey = 'id';
 
     public $timestamps = true;
 

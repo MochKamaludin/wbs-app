@@ -112,7 +112,7 @@
     <table class="header-table">
         <tr>
             <td width="20%" class="center" style="padding:5px;">
-                <img src="{{ public_path('images/logo/logo-baru.png') }}" width="80">
+                <img src="{{ public_path('images/logo/logo-blue.png') }}" width="80">
             </td>
 
             <td width="50%" class="center bold">
