@@ -24,7 +24,7 @@ class EditTujuanWbs extends EditRecord
     {
         $user = Filament::auth()->user();
 
-        $data['i_wbls_adm'] = $user->i_wbls_adm; // ✅ BENAR
+        $data['i_wbls_adm'] = $user->i_wbls_adm;
         $data['d_wbls_purpose'] = now();
         $data['f_wbls_purposestat'] = (string) ($data['f_wbls_purposestat'] ?? '0');
 

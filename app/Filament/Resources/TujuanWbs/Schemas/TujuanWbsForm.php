@@ -23,18 +23,15 @@ class TujuanWbsForm
                 ->label('Urutan Tampil')
                 ->numeric()
                 ->required()
-                ->default(function () {
-                    $last = TujuanWbs::max('i_wbls_purpose');
-                    return $last ? $last + 1 : 1;
-                })
-                ->unique(
-                    table: TujuanWbs::class,
-                    column: 'i_wbls_purpose',
-                    ignoreRecord: true
-                )
-                ->validationMessages([
-                    'unique' => 'No urut sudah digunakan',
-                ]),
+                ->default(fn () => (TujuanWbs::max('c_wbls_purposeord') ?? 0) + 1)
+                    ->unique(
+                        table: TujuanWbs::class,
+                        column: 'c_wbls_purposeord',
+                        ignoreRecord: true
+                    )
+                    ->validationMessages([
+                        'unique' => 'No urut sudah digunakan',
+                    ]),
 
             RichEditor::make('e_wbls_purpose')
                 ->label('Deskripsi')

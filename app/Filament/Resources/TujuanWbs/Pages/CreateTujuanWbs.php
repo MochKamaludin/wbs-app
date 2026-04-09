@@ -29,29 +29,28 @@ class CreateTujuanWbs extends CreateRecord
     }
 
     protected function afterCreate(): void
-{
-    $state = $this->form->getRawState();
-    $record = $this->record;
+    {
+        $state = $this->form->getRawState();
+        $record = $this->record;
 
-    if (empty($state['icon_temp'])) {
-        return;
+        if (empty($state['icon_temp'])) {
+            return;
+        }
+
+        $from = is_array($state['icon_temp'])
+            ? $state['icon_temp'][0] ?? null
+            : $state['icon_temp'];
+
+        if (!$from) {
+            return;
+        }
+
+        $to = "images/tujuan/tujuan_{$record->c_wbls_purposeord}.png";
+
+        if (Storage::disk('public')->exists($from)) {
+            Storage::disk('public')->move($from, $to);
+        }
     }
-
-    // normalize path
-    $from = is_array($state['icon_temp'])
-        ? $state['icon_temp'][0] ?? null
-        : $state['icon_temp'];
-
-    if (!$from) {
-        return;
-    }
-
-    $to = "images/tujuan/tujuan_{$record->c_wbls_purposeord}.png";
-
-    if (Storage::disk('public')->exists($from)) {
-        Storage::disk('public')->move($from, $to);
-    }
-}
 
 
 }
