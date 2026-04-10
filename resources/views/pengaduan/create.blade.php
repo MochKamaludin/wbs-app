@@ -249,7 +249,10 @@ function copyResi() {
                         </button>
 
                         <small class="text-red-500 block">
-                            Bukti minimal satu
+                            Bukti minimal satu <br>
+                            Gambar (jpg, jpeg, png) Maksimal 5MB <br>
+                            Dokumen (pdf, doc, docx, xls, xlsx, ppt, pptx, csv) Maksimal 2MB <br>
+                            Video (mp4, mov, avi, mkv) Maksimal 20MB <br>
                         </small>
                     </div>
                     @endif
