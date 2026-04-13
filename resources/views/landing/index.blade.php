@@ -2,14 +2,23 @@
 
 @section('content')
 
-<section id="home"
-    class="h-screen w-full flex items-center justify-center text-white reveal"
-    style="
+<style>
+    #home {
         background-image: url('{{ asset('images/background/bg1.jpeg') }}');
         background-repeat: no-repeat;
         background-position: center;
         background-size: 100% 100%;
-    ">
+    }
+    
+    @media (max-width: 768px) {
+        #home {
+            background-size: cover;
+        }
+    }
+</style>
+
+<section id="home"
+    class="h-screen w-full flex items-center justify-center text-white reveal">
     
     <div class="text-center p-6">
         <h1 class="text-2xl md:text-4xl font-bold mb-3">

@@ -54,7 +54,7 @@ function copyResi() {
 <div class="min-h-screen bg-gray-100 py-10">
     <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8">
 
-        <h1 class="text-3xl font-bold mb-6">Form Pengaduan WBS</h1>
+        <h1 class="text-3xl font-bold mb-6">Form Pengaduan</h1>
 
         @if(session('success'))
             <div class="mb-6 bg-green-100 text-green-700 px-4 py-3 rounded">
