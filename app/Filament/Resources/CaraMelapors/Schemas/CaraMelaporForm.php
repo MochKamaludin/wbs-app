@@ -26,12 +26,12 @@ class CaraMelaporForm
                     ->required()
                     ->numeric()
                     ->default(function () {
-                        $last = CaraMelapor::max('i_wbls_proc');
+                        $last = CaraMelapor::max('c_wbls_procord');
                         return $last ? $last + 1 : 1;
                     })
                     ->unique(
                         table: CaraMelapor::class,
-                        column: 'i_wbls_proc',
+                        column: 'c_wbls_procord',
                         ignoreRecord: true
                     )
                     ->validationMessages([
